@@ -2,6 +2,8 @@ package com.user.activities;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 
 import com.user.activities.DBUtil.DatabaseConnection;
 import models.UserModel;
@@ -19,7 +22,7 @@ import models.UserModel;
 /**
  * Servlet implementation class UserRegister
  */
-@WebServlet("/register")
+@WebServlet("/Register")
 public class UserRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -46,18 +49,35 @@ public class UserRegister extends HttpServlet {
 		out.flush();
 		out.close();
 	}
-
+    
+    
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String password = request.getParameter("password");
+			String cpassword = request.getParameter("cpassword");
+			System.out.println(password.equals(cpassword));
+			if(password.equals(cpassword) == false){
+				System.out.println("Password not equal");
+//				JSONObject err = new JSONObject();
+//				err.put("error", "Password Mismatch");
+//				response.getWriter().print(err);
+//				response.sendError(400, "Password mismatch");
+				 response.getWriter().print("Password Mismatch");
+				 response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+				 return;
+			}
+			System.out.println("Registration start");
 			Connection con = DatabaseConnection.initializeDatabase();
-			PreparedStatement st = con.prepareStatement("insert into user (name, email, role) values(?, ?, ?)");
+			PreparedStatement st = con.prepareStatement("insert into user (name, email, password, role) values(?, ?, ?, ?)");
 			st.setString(1, request.getParameter("name"));
 			st.setString(2, request.getParameter("email"));
-			st.setString(3, "Employee");
+			String hashPassword = Authentication.hashPassword(request.getParameter("password"));
+			st.setString(3, hashPassword);
+			st.setString(4, "Employee");
 			st.executeUpdate();
 			st.close();
             con.close();
