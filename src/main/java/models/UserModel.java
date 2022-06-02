@@ -7,8 +7,7 @@ import org.json.JSONObject;
 
 public class UserModel {
 	public JSONObject find() {
-		JSONObject temp = toJSON(new User(1, "viswa", "viswa@gmail.com", "admin"));
-		return temp;
+		return toJSON(new User(1, "viswa", "viswa@gmail.com", "admin"));
 	}
 	
 	public List<JSONObject> findAll() {

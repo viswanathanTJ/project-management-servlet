@@ -6,8 +6,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-	var user;
 	function find(){
+		var user;
 		$.ajax({
 			type:'GET',
 			url:'register?action=find',
@@ -23,6 +23,32 @@
 			}
 		})
 	}
+	function table() {
+
+		let xhr = new XMLHttpRequest;
+		xhr.open('GET', 'your-url', true);
+	xhr.onload = function() 
+	{
+		if (this.status === 200) 
+		{
+			let data = JSON.parse(this.responseText).Table,
+			tbodyHtml = '';
+			
+			data.map(function(d) {
+				tbodyHtml =+ `
+				<tr>
+					<td>${d.Name}</td>
+					<td>${d.Email}</td>
+					<td>${d.Role}</td>
+					</tr>
+					`;
+				});
+				
+				document.querySelector('#dataTable tbody').innerHTML = tbodyHtml;
+			}
+		}
+		xhr.send();
+	}
 </script>
 
 </head>
@@ -34,6 +60,12 @@
 		<input type="submit" />
 	</form>
 	<input type='button' onclick='find()' value='Find'/>
+	<input type='button' onclick='table()' value='Table'/>
+	<table id="dataTable">
+		<tbody>
+
+		</tbody>
+	</table>
 	<p id="name"></p>
 </body>
 </html>

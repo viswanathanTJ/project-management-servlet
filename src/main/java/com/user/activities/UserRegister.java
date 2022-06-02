@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
 
 import com.user.activities.DBUtil.DatabaseConnection;
 import models.UserModel;
@@ -37,13 +36,8 @@ public class UserRegister extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		System.out.println("I ran");
 		UserModel userModel = new UserModel();
 		String action = request.getParameter("action");
-//		if(action.equalsIgnoreCase("find")) {
-//			JSONObject test = userModel.find();
-//		}
-//		out.print("hi");
 	
 		if(action.equalsIgnoreCase("find")) {
 			out.print(userModel.find());
