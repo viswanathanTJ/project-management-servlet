@@ -68,6 +68,7 @@ input{
 	background: #6d44b8;
 }
 #error {
+    text-align: center;
     color: rgb(255,255,0);
 }
 .name, .email, .password, .cpassword {

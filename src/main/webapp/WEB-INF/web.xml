@@ -33,4 +33,13 @@
     <url-pattern>/manager</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>employee</servlet-name>
+    <jsp-file>/template/employee.html</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>employee</servlet-name>
+    <url-pattern>/employee</url-pattern>
+  </servlet-mapping>
+
 </web-app>
