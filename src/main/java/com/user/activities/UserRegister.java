@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -41,7 +42,7 @@ public class UserRegister extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		UserModel userModel = new UserModel();
 		String action = request.getParameter("action");
-	
+		
 		if(action.equalsIgnoreCase("find")) {
 			out.print(userModel.find());
 		} else if(action.equalsIgnoreCase("findAll"))
@@ -50,6 +51,7 @@ public class UserRegister extends HttpServlet {
 		out.close();
 	}
     
+
     
 
 	/**
@@ -57,7 +59,17 @@ public class UserRegister extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			Connection con = DatabaseConnection.initializeDatabase();
 			String username = request.getParameter("name");
+			System.out.println("Post on for " + username);
+			PreparedStatement st = con.prepareStatement("select * from user where name=?");
+			st.setString(1,username);
+			ResultSet r1=st.executeQuery();
+			if(r1.next()) {
+				response.getWriter().print("Username already exists.");
+				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+				return;
+			}
 			String password = request.getParameter("password");
 			String cpassword = request.getParameter("cpassword");
 			System.out.println(password.equals(cpassword));
@@ -67,8 +79,7 @@ public class UserRegister extends HttpServlet {
 				 return;
 			}
 			System.out.println("Registration start");
-			Connection con = DatabaseConnection.initializeDatabase();
-			PreparedStatement st = con.prepareStatement("insert into user (name, email, password, role) values(?, ?, ?, ?)");
+			st = con.prepareStatement("insert into user (name, email, password, role) values(?, ?, ?, ?)");
 			st.setString(1, request.getParameter("name"));
 			st.setString(2, request.getParameter("email"));
 			String hashPassword = Authentication.hashPassword(request.getParameter("password"));
