@@ -67,6 +67,9 @@ input{
 .button:hover{
 	background: #6d44b8;
 }
+#error {
+    color: rgb(255,255,0);
+}
 .name, .email, .password, .cpassword {
     background: #e0dede;
 }

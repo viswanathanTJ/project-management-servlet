@@ -57,15 +57,11 @@ public class UserRegister extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String username = request.getParameter("name");
 			String password = request.getParameter("password");
 			String cpassword = request.getParameter("cpassword");
 			System.out.println(password.equals(cpassword));
-			if(password.equals(cpassword) == false){
-				System.out.println("Password not equal");
-//				JSONObject err = new JSONObject();
-//				err.put("error", "Password Mismatch");
-//				response.getWriter().print(err);
-//				response.sendError(400, "Password mismatch");
+			if(password.equals(cpassword) == false) {
 				 response.getWriter().print("Password Mismatch");
 				 response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 				 return;
@@ -81,7 +77,10 @@ public class UserRegister extends HttpServlet {
 			st.executeUpdate();
 			st.close();
             con.close();
-			response.getWriter().print("User inserted successfully");
+            JSONObject user = new JSONObject();
+            user.put("name", username);
+            user.put("role", "employee");
+			response.getWriter().print(user);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
