@@ -1,6 +1,7 @@
 package com.user.activities;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -11,7 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.user.activities.DBUtil.DatabaseConnection;
+import models.UserModel;
 
 /**
  * Servlet implementation class UserRegister
@@ -31,10 +35,24 @@ public class UserRegister extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		System.out.println("I ran");
+		UserModel userModel = new UserModel();
+		String action = request.getParameter("action");
+//		if(action.equalsIgnoreCase("find")) {
+//			JSONObject test = userModel.find();
+//		}
+//		out.print("hi");
+	
+		if(action.equalsIgnoreCase("find")) {
+			out.print(userModel.find());
+		} else if(action.equalsIgnoreCase("findAll"))
+			out.print(userModel.findAll());
+		out.flush();
+		out.close();
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

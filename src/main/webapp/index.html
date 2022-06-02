@@ -3,6 +3,28 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Test Database</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+	var user;
+	function find(){
+		$.ajax({
+			type:'GET',
+			url:'register?action=find',
+			headers:{
+				Accept : "application/json; charset=utf-8",
+				"Content-Type" : "application/json; charset=utf-8"
+			},
+			success: function(result) {
+				user= $.parseJSON(result);
+				alert(user.Name)
+				var name = document.getElementById('name');
+				name.innerHTML = user.Name;
+			}
+		})
+	}
+</script>
+
 </head>
 <body>
 	<form action="register" method="post">
@@ -11,5 +33,7 @@
 		Password <input type="password" name="password" required />
 		<input type="submit" />
 	</form>
+	<input type='button' onclick='find()' value='Find'/>
+	<p id="name"></p>
 </body>
 </html>
