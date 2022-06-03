@@ -20,7 +20,7 @@ body{
 #chk{
 	display: none;
 }
-.signup{
+.login{
 	position: relative;
 	width:100%;
 	height: 100%;
@@ -47,7 +47,7 @@ input{
 	outline: none;
 	border-radius: 5px;
 }
-.button{
+button{
 	width: 60%;
 	height: 40px;
 	margin: 10px auto;
@@ -64,34 +64,39 @@ input{
 	transition: .2s ease-in;
 	cursor: pointer;
 }
-.button:hover{
+button:hover{
 	background: #6d44b8;
 }
-#error {
+button:disabled{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+#error, #error1 {
     text-align: center;
     color: rgb(255,255,0);
 }
 .name, .email, .password, .cpassword {
     background: #e0dede;
 }
-.login{
+.signup{
 	height: 460px;
 	background: #eee;
 	border-radius: 60% / 10%;
 	transform: translateY(-180px);
 	transition: .8s ease-in-out;
 }
-.login label{
+.signup label{
 	color: #573b8a;
 	transform: scale(.6);
 }
 
-#chk:checked ~ .login{
-	transform: translateY(-550px);
-}
-#chk:checked ~ .login label{
-	transform: scale(1);	
+#chk:checked ~ .signup{
+	transform: translateY(-565px);
 }
 #chk:checked ~ .signup label{
+	transform: scale(1);	
+}
+#chk:checked ~ .login label{
 	transform: scale(.6);
 }

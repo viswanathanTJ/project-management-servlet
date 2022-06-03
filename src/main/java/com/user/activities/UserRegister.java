@@ -27,13 +27,6 @@ import models.UserModel;
 public class UserRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UserRegister() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,10 +54,18 @@ public class UserRegister extends HttpServlet {
 		try {
 			Connection con = DatabaseConnection.initializeDatabase();
 			String username = request.getParameter("name");
-			System.out.println("Post on for " + username);
-			PreparedStatement st = con.prepareStatement("select * from user where name=?");
-			st.setString(1,username);
+			String email = request.getParameter("email");
+			PreparedStatement st = con.prepareStatement("select * from user where email=?");
+			st.setString(1,email);
 			ResultSet r1=st.executeQuery();
+			if(r1.next()) {
+				response.getWriter().print("Mail ID already exists.");
+				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+				return;
+			}
+			st = con.prepareStatement("select * from user where name=?");
+			st.setString(1,username);
+			r1=st.executeQuery();
 			if(r1.next()) {
 				response.getWriter().print("Username already exists.");
 				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
@@ -84,7 +85,7 @@ public class UserRegister extends HttpServlet {
 			st.setString(2, request.getParameter("email"));
 			String hashPassword = Authentication.hashPassword(request.getParameter("password"));
 			st.setString(3, hashPassword);
-			st.setString(4, "Employee");
+			st.setString(4, "employee");
 			st.executeUpdate();
 			st.close();
             con.close();
