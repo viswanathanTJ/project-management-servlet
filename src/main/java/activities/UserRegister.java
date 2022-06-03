@@ -23,10 +23,10 @@ import models.UserModel;
 /**
  * Servlet implementation class UserRegister
  */
-@WebServlet("/Register")
+@WebServlet("/register")
 public class UserRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +45,6 @@ public class UserRegister extends HttpServlet {
 	}
     
 
-    
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

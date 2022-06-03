@@ -22,7 +22,6 @@ public class Authentication {
     public static String hashPassword(String in, String temp) {
     	  try {
     	    MessageDigest md = MessageDigest.getInstance("SHA-256");
-//    	    String newSalt = SALT + 
     	    md.update(SALT.getBytes());
     	    md.update(in.getBytes());
     	    md.update(temp.getBytes());

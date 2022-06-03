@@ -37,15 +37,16 @@ $("form[name=login]").submit(function (e) {
   var data = $form.serialize();
   var error = document.getElementById("error1");
   error.innerHTML = "";
+  console.log(data);
   $.ajax({
     url: "Login",
     type: "POST",
     data: data,
     success: function (resp) {
+      error.innerHTML = "Login Successful";
       var res = JSON.parse(resp);
       window.localStorage.setItem("name", res.name);
       window.localStorage.setItem("role", res.role);
-      error.innerHTML = "Successfully Login";
       window.location.replace(res.role);
     },
     error: function (resp) {
@@ -58,3 +59,14 @@ $("form[name=login]").submit(function (e) {
 
   e.preventDefault();
 });
+
+ function togglePassword(el) {
+   var checked = el.checked;
+   if (checked) {
+     document.getElementById("password").type = "text";
+     document.getElementById("toggleText").textContent = "Hide";
+   } else {
+     document.getElementById("password").type = "password";
+     document.getElementById("toggleText").textContent = "Show";
+   }
+ }

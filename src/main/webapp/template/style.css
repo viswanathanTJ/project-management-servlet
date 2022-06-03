@@ -21,6 +21,9 @@ header{
   background-color: #1982fa;
 }
 
+nav {
+	padding-top: 10px;
+}
 .logo{
   font-size: 1.6rem;
   cursor: pointer;

@@ -10,7 +10,7 @@ public class DBUtil {
         protected static Connection initializeDatabase()
             throws SQLException, ClassNotFoundException
         {
-            String dbDriver = "com.mysql.jdbc.Driver";
+            String dbDriver = "com.mysql.cj.jdbc.Driver";
             String dbURL = "jdbc:mysql://localhost:3306/";
             String dbName = "test";
             String dbUsername = "root";

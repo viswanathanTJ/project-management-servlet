@@ -8,6 +8,9 @@ body{
 	font-family: 'Jost', sans-serif;
 	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
+.show {
+	font-size: 14px;
+}
 .main{
 	width: 400px;
 	height: 560px;
@@ -76,6 +79,16 @@ button:disabled{
     text-align: center;
     color: rgb(255,255,0);
 }
+[type="checkbox"]
+{
+    vertical-align:middle;
+}
+label {
+  vertical-align: middle;
+}
+.navbar {
+	display: flex;
+}
 .name, .email, .password, .cpassword {
     background: #e0dede;
 }
@@ -122,3 +135,5 @@ button:disabled{
     0%   {transform: rotate(0deg);}
     100% {transform: rotate(360deg);}
 }
+
+
