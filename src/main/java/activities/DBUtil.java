@@ -1,4 +1,4 @@
-package com.user.activities;
+package activities;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

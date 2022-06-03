@@ -1,4 +1,4 @@
-package com.user.activities;
+package activities;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import com.user.activities.DBUtil.DatabaseConnection;
+import activities.DBUtil.DatabaseConnection;
 
 /**
  * Servlet implementation class UserLogin
@@ -32,9 +32,8 @@ public class UserLogin extends HttpServlet {
 		try {
 			TimeUnit.SECONDS.sleep(3);
 			Connection con = DatabaseConnection.initializeDatabase();
-			String email = request.getParameter("email");
 			String username = request.getParameter("name");
-			System.out.println("Loggin in "+email);
+			String password = request.getParameter("password");
 			PreparedStatement st = con.prepareStatement("select * from user where name=?");
 			st.setString(1, username);
 			ResultSet r1=st.executeQuery();
@@ -42,7 +41,7 @@ public class UserLogin extends HttpServlet {
 			if(r1.next()) {
 				String dbPassword = r1.getString("password");
 				dbrole = r1.getString("role");
-				String hashPassword = Authentication.hashPassword(request.getParameter("password"));
+				String hashPassword = Authentication.hashPassword(username, password);
 				if(dbPassword.equals(hashPassword) == false) {
 					response.getWriter().print("Invalid Password.");
 					response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);

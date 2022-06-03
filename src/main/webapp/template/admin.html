@@ -4,16 +4,93 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Admin Dashboard</title>
     <script src="assets/js/checkuser.js"></script>
     <script>
-      if (localStorage.getItem("role") === null || localStorage.getItem("role") != "admin") {
+      if (
+        localStorage.getItem("role") === null ||
+        localStorage.getItem("role") != "admin"
+      )
         window.location.replace("login");
-      }
     </script>
   </head>
   <body>
-    Hello Admin
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>Simple project management</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <table
+          id="productTable"
+          class="table table-bordered table-condensed table-striped"
+        >
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Introduction Date</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <button
+          type="button"
+          id="addButton"
+          class="btn btn-primary"
+          onclick="addClick();"
+        >
+          Add Product
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Product Information</div>
+          <div class="panel-body"></div>
+          <div class="panel-footer"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productname">Product Name</label>
+      <input type="text" id="productname" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="introdate">Introduction Date</label>
+      <input type="date" id="introdate" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="url">URL</label>
+      <input type="url" id="url" class="form-control" />
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button
+          type="button"
+          id="updateButton"
+          class="btn btn-primary"
+          onclick="updateClick();"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+
     <button onclick="logout()">Logout</button>
   </body>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </html>

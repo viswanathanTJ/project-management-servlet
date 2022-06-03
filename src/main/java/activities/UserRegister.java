@@ -1,4 +1,4 @@
-package com.user.activities;
+package activities;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import com.user.activities.DBUtil.DatabaseConnection;
+import activities.DBUtil.DatabaseConnection;
 import models.UserModel;
 
 /**
@@ -83,7 +83,7 @@ public class UserRegister extends HttpServlet {
 			st = con.prepareStatement("insert into user (name, email, password, role) values(?, ?, ?, ?)");
 			st.setString(1, request.getParameter("name"));
 			st.setString(2, request.getParameter("email"));
-			String hashPassword = Authentication.hashPassword(request.getParameter("password"));
+			String hashPassword = Authentication.hashPassword(username, password);
 			st.setString(3, hashPassword);
 			st.setString(4, "employee");
 			st.executeUpdate();

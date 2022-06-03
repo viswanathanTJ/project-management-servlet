@@ -1,4 +1,4 @@
-package com.user.activities;
+package activities;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,12 +19,13 @@ public class Authentication {
     	
     private static String SALT = "qI0%bW9!wK5<eL7+tQ7.kG7#kE3$kC9^\r\n";
     
-    public static String hashPassword(String in) {
+    public static String hashPassword(String in, String temp) {
     	  try {
     	    MessageDigest md = MessageDigest.getInstance("SHA-256");
+//    	    String newSalt = SALT + 
     	    md.update(SALT.getBytes());
     	    md.update(in.getBytes());
-
+    	    md.update(temp.getBytes());
     	    byte[] out = md.digest();
     	    return bytesToHex(out);
     	  } catch (NoSuchAlgorithmException e) {
