@@ -100,3 +100,33 @@ button:disabled{
 #chk:checked ~ .login label{
 	transform: scale(.6);
 }
+.loading{
+  font-size:0;
+  width:30px;
+  height:30px;
+  margin-top:5px;
+  border-radius:15px;
+  padding:0;
+  border:3px solid #FFFFFF;
+  border-bottom:3px solid rgba(255,255,255,0.0);
+  border-left:3px solid rgba(255,255,255,0.0);
+  background-color:transparent !important;
+  animation-name: rotateAnimation;
+  -webkit-animation-name: wk-rotateAnimation;
+  animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes rotateAnimation {
+    0%   {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+@-webkit-keyframes wk-rotateAnimation {
+    0%   {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}
+}
+
