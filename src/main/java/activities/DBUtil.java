@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBUtil {
 	
     public class DatabaseConnection {
-        protected static Connection initializeDatabase()
+        public static Connection initializeDatabase()
             throws SQLException, ClassNotFoundException
         {
             String dbDriver = "com.mysql.cj.jdbc.Driver";

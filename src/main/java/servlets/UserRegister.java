@@ -1,4 +1,4 @@
-package activities;
+package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import activities.Authentication;
+import activities.DBUtil;
 import activities.DBUtil.DatabaseConnection;
 import models.UserModel;
 

@@ -1,4 +1,4 @@
-package activities;
+package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import activities.Authentication;
 import activities.DBUtil.DatabaseConnection;
 
 /**

@@ -7,9 +7,15 @@
       type="text/css"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
     <script
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"
@@ -31,6 +37,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
       rel="stylesheet"
     />
+    <script src="assets/js/checkuser.js"></script>
     <script src="assets/js/admin.js"></script>
 
     <script src="assets/js/item-ajax.js"></script>
@@ -39,7 +46,7 @@
     <header>
       <div class="logo">
         <!-- <h2>SPM</h2> -->
-        <img src="assets/logo.svg" alt="logo" height=48px />
+        <img src="assets/logo.svg" alt="logo" height="48px" />
       </div>
       <nav>
         <ul>
@@ -48,16 +55,16 @@
           <li><a herf="tasks">Tasks</a></li>
         </ul>
       </nav>
-      <button class="navBtn">Logout</button>
+      <button class="navBtn" onclick="logout()">Logout</button>
     </header>
 
-    <div class="container" style="padding:10px">
+    <div class="container" style="padding: 10px">
       <div class="row">
         <div class="col-lg-12 margin-tb">
           <div class="pull-left">
             <h2>USERS</h2>
           </div>
-          <div class="pull-right" style="padding-top:18px">
+          <div class="pull-right" style="padding-top: 18px">
             <button
               type="button"
               class="btn btn-success"
@@ -82,7 +89,7 @@
         </thead>
         <tbody></tbody>
       </table>
-
+      <h1 id="message">Message</h1>
       <ul id="pagination" class="pagination-sm"></ul>
 
       <!-- Create Item Modal -->
@@ -108,16 +115,12 @@
             </div>
 
             <div class="modal-body">
-              <form
-                data-toggle="validator"
-                action="add-user"
-                method="POST"
-              >
+              <form data-toggle="validator" name="add_user" method="POST">
                 <div class="form-group">
                   <label class="control-label" for="username">Username:</label>
                   <input
                     type="text"
-                    name="username"
+                    name="name"
                     class="form-control"
                     data-error="Please enter username."
                     required
@@ -125,25 +128,23 @@
                   <div class="help-block with-errors"></div>
                 </div>
 
-                
                 <div class="form-group">
                   <label class="control-label" for="email">Email:</label>
                   <input
-                    type="text"
-                    name="username"
+                    type="email"
+                    name="email"
                     class="form-control"
-                    data-error="Please enter email."
+                    data-error="Please enter valid email."
                     required
                   />
                   <div class="help-block with-errors"></div>
                 </div>
 
-                
                 <div class="form-group">
                   <label class="control-label" for="password">Password:</label>
                   <input
                     type="text"
-                    name="username"
+                    name="password"
                     class="form-control"
                     data-error="Please enter password."
                     required
@@ -151,12 +152,11 @@
                   <div class="help-block with-errors"></div>
                 </div>
 
-                
                 <div class="form-group">
                   <label class="control-label" for="role">Role:</label>
                   <input
                     type="text"
-                    name="username"
+                    name="role"
                     class="form-control"
                     data-error="Please enter Role."
                     required
@@ -164,11 +164,15 @@
                   <div class="help-block with-errors"></div>
                 </div>
 
-                
                 <div class="form-group">
-                  <button type="submit" class="btn crud-submit btn-success">
+                  <button
+                    type="submit"
+                    id="createBtn"
+                    class="btn crud-submit btn-success"
+                  >
                     Submit
                   </button>
+                  <p style="color: red; padding: 10px" id="add-error"></p>
                 </div>
               </form>
             </div>
@@ -193,40 +197,62 @@
                 data-dismiss="modal"
                 aria-label="Close"
               >
-                <span aria-hidden="true"><i class="fa fa-window-close" aria-hidden="true"></i></span>
+                <span aria-hidden="true"
+                  ><i class="fa fa-window-close" aria-hidden="true"></i
+                ></span>
               </button>
               <h4 class="modal-title" id="myModalLabel">Edit Item</h4>
             </div>
 
             <div class="modal-body">
-              <form
-                data-toggle="validator"
-                name="add-user"
-                action="api/update.php"
-                method="put"
-              >
+              <form data-toggle="validator" name="update-user" method="put">
                 <input type="hidden" name="id" class="edit-id" />
 
                 <div class="form-group">
-                  <label class="control-label" for="title">Title:</label>
+                  <label class="control-label" for="username">Username:</label>
                   <input
                     type="text"
-                    name="title"
+                    name="name"
                     class="form-control"
-                    data-error="Please enter title."
+                    data-error="Please enter username."
                     required
                   />
                   <div class="help-block with-errors"></div>
                 </div>
 
                 <div class="form-group">
-                  <label class="control-label" for="title">Description:</label>
-                  <textarea
-                    name="description"
+                  <label class="control-label" for="email">Email:</label>
+                  <input
+                    type="email"
+                    name="email"
                     class="form-control"
-                    data-error="Please enter description."
+                    data-error="Please enter valid email."
                     required
-                  ></textarea>
+                  />
+                  <div class="help-block with-errors"></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label" for="password">Password:</label>
+                  <input
+                    type="text"
+                    name="password"
+                    class="form-control"
+                    data-error="Please enter password."
+                    required
+                  />
+                  <div class="help-block with-errors"></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label" for="role">Role:</label>
+                  <input
+                    type="text"
+                    name="role"
+                    class="form-control"
+                    data-error="Please enter Role."
+                    required
+                  />
                   <div class="help-block with-errors"></div>
                 </div>
 
