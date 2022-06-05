@@ -1,71 +1,68 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Test Database</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Test Database</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script type="text/javascript">
-	function find(){
-		var user;
-		$.ajax({
-			type:'GET',
-			url:'register?action=find',
-			headers:{
-				Accept : "application/json; charset=utf-8",
-				"Content-Type" : "application/json; charset=utf-8"
-			},
-			success: function(result) {
-				user= $.parseJSON(result);
-				alert(user.Name)
-				var name = document.getElementById('name');
-				name.innerHTML = user.Name;
-			}
-		})
-	}
-	function table() {
+	<script src="assets/js/user.js"></script>
+    <script type="text/javascript">
 
-		let xhr = new XMLHttpRequest;
-		xhr.open('GET', 'your-url', true);
-	xhr.onload = function() 
-	{
-		if (this.status === 200) 
-		{
-			let data = JSON.parse(this.responseText).Table,
-			tbodyHtml = '';
-			
-			data.map(function(d) {
-				tbodyHtml =+ `
+    //   if (parts.length === 2) return parts.pop().split(";").shift();
+      function find() {
+        var user;
+        $.ajax({
+          type: "GET",
+          url: "register?action=find",
+          headers: {
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          success: function (result) {
+            user = $.parseJSON(result);
+            alert(user.Name);
+            var name = document.getElementById("name");
+            name.innerHTML = user.Name;
+          },
+        });
+      }
+      function table() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "your-url", true);
+        xhr.onload = function () {
+          if (this.status === 200) {
+            let data = JSON.parse(this.responseText).Table,
+              tbodyHtml = "";
+
+            data.map(function (d) {
+              tbodyHtml = +`
 				<tr>
 					<td>${d.Name}</td>
 					<td>${d.Email}</td>
 					<td>${d.Role}</td>
 					</tr>
 					`;
-				});
-				
-				document.querySelector('#dataTable tbody').innerHTML = tbodyHtml;
-			}
-		}
-		xhr.send();
-	}
-</script>
+            });
 
-</head>
-<body>
-	<form action="register" method="post">
-		Username <input type="text" name="name" required />
-		Email <input type="text" name="email" required />
-		Password <input type="password" name="password" required />
-		<input type="submit" />
-	</form>
-	<input type='button' onclick='find()' value='Find'/>
-	<input type='button' onclick='table()' value='Table'/>
-	<table id="dataTable">
-		<tbody>
-
-		</tbody>
-	</table>
-	<p id="name"></p>
-</body>
+            document.querySelector("#dataTable tbody").innerHTML = tbodyHtml;
+          }
+        };
+        xhr.send();
+      }
+    </script>
+  </head>
+  <body>
+    <form action="register" method="post">
+      Username <input type="text" name="name" required /> Email
+      <input type="text" name="email" required /> Password
+      <input type="password" name="password" required />
+      <input type="submit" />
+    </form>
+    <input type="button" onclick="find()" value="Find" />
+    <input type="button" onclick="table()" value="Table" />
+    <table id="dataTable">
+      <tbody></tbody>
+    </table>
+    <p id="name"></p>
+  </body>
 </html>

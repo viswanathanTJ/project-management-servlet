@@ -5,64 +5,87 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.TimeUnit;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
+import java.security.Key;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import com.google.gson.Gson;
+
 import activities.Authentication;
 import activities.DBUtil.DatabaseConnection;
+import entities.User;
 
 /**
  * Servlet implementation class UserLogin
  */
 @WebServlet("/Login")
 public class UserLogin extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private void errorResponse(HttpServletResponse res, String message) throws IOException {
+		res.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+		res.getWriter().print(message);
+		return;
+	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
-			TimeUnit.SECONDS.sleep(3);
-			Connection con = DatabaseConnection.initializeDatabase();
+			System.out.println("Login1");
 			String username = request.getParameter("name");
 			String password = request.getParameter("password");
+			String enc = ResponseHandler.encrypt(username);
+			String dec = ResponseHandler.decrypt(enc);
+			System.out.println(username + " " + password + "-" + enc + " " + dec);
+
+			Connection con = DatabaseConnection.initializeDatabase();
+
 			PreparedStatement st = con.prepareStatement("select * from user where name=?");
 			st.setString(1, username);
-			ResultSet r1=st.executeQuery();
+			ResultSet r1 = st.executeQuery();
 			String dbrole = "";
-			if(r1.next()) {
+			if (r1.next()) {
 				String dbPassword = r1.getString("password");
 				dbrole = r1.getString("role");
+				String email = r1.getString("email");
 				String hashPassword = Authentication.hashPassword(username, password);
-				if(dbPassword.equals(hashPassword) == false) {
-					response.getWriter().print("Invalid Password.");
-					response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+				if (dbPassword.equals(hashPassword) == false) {
+					errorResponse(response, "Invalid password.");
 					return;
 				} else {
+					HttpSession session = request.getSession();
+					session.setAttribute("email", email);
+					session.setAttribute("name", username);
+					session.setAttribute("role", dbrole);
+					session.setMaxInactiveInterval(10 * 60);
 					JSONObject user = new JSONObject();
 					user.put("name", username);
-					user.put("role", dbrole);
-					response.getWriter().print(user);
+					user.put("role", "employee");
+					ResponseHandler.successResponse(response, user.toString());
 				}
-			}
-			else {
+			} else {
 				response.getWriter().print("Invalid Username.");
 				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 				return;
 			}
-			
-//			st.close();
-//            con.close();
-		} catch (ClassNotFoundException | SQLException | InterruptedException e) {
+
+			// st.close();
+			// con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			response.getWriter().print("Connection error123.");
+			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+		} catch (SQLException e) {
+			response.getWriter().print("SQL Exception error.");
+			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
