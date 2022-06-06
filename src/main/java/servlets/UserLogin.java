@@ -66,8 +66,9 @@ public class UserLogin extends HttpServlet {
 					session.setAttribute("role", dbrole);
 					session.setMaxInactiveInterval(10 * 60);
 					JSONObject user = new JSONObject();
-					user.put("name", username);
-					user.put("role", "employee");
+					user.put("name", ResponseHandler.encrypt(username));
+					user.put("role", ResponseHandler.encrypt(dbrole));
+					user.put("redirect", dbrole);
 					ResponseHandler.successResponse(response, user.toString());
 				}
 			} else {

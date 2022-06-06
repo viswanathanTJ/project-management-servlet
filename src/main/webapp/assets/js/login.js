@@ -1,17 +1,10 @@
-function setCookie(cname, cvalue, exdays) {
-  const d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  let expires = "expires=" + d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-
-
+console.log(window.location.pathname.split("/").pop());
 $(document).ready(function () {
   $("form[name=register]").submit(function (e) {
     $("#registerBtn").addClass("loading");
     var $form = $(this);
     var data = $form.serialize();
+    alert(data);
     var error = document.getElementById("error");
     error.innerHTML = "";
     $.ajax({
@@ -20,10 +13,18 @@ $(document).ready(function () {
       data: data,
       success: function (resp) {
         console.log(resp);
-        window.location.replace(resp.role);
-        setCookie('username', resp.name , 1);
-        setCookie('role', resp.role , 1);
+        CookieManager.setCookie({
+          name: "name",
+          value: resp.name,
+          days: 1,
+        });
+        CookieManager.setCookie({
+          name: "role",
+          value: resp.role,
+          days: 1,
+        });
         $("#registerBtn").removeClass("loading");
+        window.location.replace("employee");
       },
       error: function (resp) {
         if (resp.responseText == "Mail ID already exists.")
@@ -57,7 +58,18 @@ $(document).ready(function () {
         error.innerHTML = "Login Successful";
         $("#loginBtn").removeClass("loading");
         console.log(resp);
-        window.location.replace(resp.role);
+        CookieManager.setCookie({
+          name: "name",
+          value: resp.name,
+          days: 1,
+        });
+        CookieManager.setCookie({
+          name: "role",
+          value: resp.role,
+          days: 1,
+        });
+        console.log(resp.role);
+        window.location.replace(resp.redirect);
         $("#loginBtn").removeClass("loading");
       },
       error: function (resp) {
