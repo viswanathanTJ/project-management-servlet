@@ -66,8 +66,8 @@ public class UserRegister extends HttpServlet {
 			session.setAttribute("role", role);
 			session.setMaxInactiveInterval(10 * 60);
 			JSONObject user = new JSONObject();
-			user.put("name", username);
-			user.put("role", "employee");
+			user.put("name", ResponseHandler.encrypt(username));
+			user.put("role", ResponseHandler.encrypt(role));
 			ResponseHandler.successResponse(response, user.toString());
 			st.close();
 			con.close();

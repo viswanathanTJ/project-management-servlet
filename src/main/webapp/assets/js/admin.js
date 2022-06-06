@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+  
   $("form[name=add_user]").submit(function (e) {
     alert("hi");
       var $form = $(this);

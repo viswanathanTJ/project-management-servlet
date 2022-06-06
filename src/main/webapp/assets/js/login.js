@@ -1,12 +1,3 @@
-function setCookie(cname, cvalue, exdays) {
-  const d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  let expires = "expires=" + d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-
-
 $(document).ready(function () {
   $("form[name=register]").submit(function (e) {
     $("#registerBtn").addClass("loading");
@@ -20,9 +11,17 @@ $(document).ready(function () {
       data: data,
       success: function (resp) {
         console.log(resp);
-        window.location.replace(resp.role);
-        setCookie('username', resp.name , 1);
-        setCookie('role', resp.role , 1);
+        window.location.replace("employee");
+        CookieManager.setCookie({
+          name: "name",
+          value: resp.name,
+          days: 1,
+        });
+        CookieManager.setCookie({
+          name: "role",
+          value: resp.role,
+          days: 1,
+        });
         $("#registerBtn").removeClass("loading");
       },
       error: function (resp) {
@@ -57,7 +56,18 @@ $(document).ready(function () {
         error.innerHTML = "Login Successful";
         $("#loginBtn").removeClass("loading");
         console.log(resp);
-        window.location.replace(resp.role);
+        CookieManager.setCookie({
+          name: "name",
+          value: resp.name,
+          days: 1,
+        });
+        CookieManager.setCookie({
+          name: "role",
+          value: resp.role,
+          days: 1,
+        });
+        console.log(resp.role);
+        window.location.replace(resp.redirect);
         $("#loginBtn").removeClass("loading");
       },
       error: function (resp) {
