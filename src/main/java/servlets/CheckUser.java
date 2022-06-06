@@ -11,8 +11,30 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/check")
 public class CheckUser extends HttpServlet {
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String role = (String) session.getAttribute("role");
+		if(role == null)
+			response.getWriter().print("login");
+		else
+			response.getWriter().print(role);
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String role = request.getParameter("role");
 		response.getWriter().print(ResponseHandler.decrypt(role));
 	}
+}
+
+@WebServlet("/logout")
+class Logout extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.removeAttribute("role");
+		session.removeAttribute("name");
+		session.removeAttribute("email");
+		response.getWriter().print("success");
+	}
+
 }

@@ -2,10 +2,10 @@ const role = CookieManager.getCookie({ name: "role" });
 const crole = window.location.pathname.split("/").pop();
 $.ajax({
   url: "check",
-  type: "POST",
-  data: "role=" + role,
+  type: "GET",
   success: function (resp) {
-    if (resp != crole) window.location.replace("login");
+    // if(crole == index) window.location.replace(resp);
+    if (resp != crole) window.location.replace(resp);
   },
   error: function () {
     window.location.replace("login");
@@ -14,8 +14,10 @@ $.ajax({
 
 function logout() {
   if (confirm("Are you sure to logout?")) {
-    CookieManager.removeCookie({ name: "name" });
-    CookieManager.removeCookie({ name: "role" });
+    $.ajax({
+      url: "logout",
+      type: "GET",
+    });
     window.location.replace("login");
   }
 }

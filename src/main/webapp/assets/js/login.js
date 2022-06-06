@@ -12,16 +12,16 @@ $(document).ready(function () {
       data: data,
       success: function (resp) {
         console.log(resp);
-        CookieManager.setCookie({
-          name: "name",
-          value: resp.name,
-          days: 1,
-        });
-        CookieManager.setCookie({
-          name: "role",
-          value: resp.role,
-          days: 1,
-        });
+        // CookieManager.setCookie({
+        //   name: "name",
+        //   value: resp.name,
+        //   days: 1,
+        // });
+        // CookieManager.setCookie({
+        //   name: "role",
+        //   value: resp.role,
+        //   days: 1,
+        // });
         $("#registerBtn").removeClass("loading");
         window.location.replace("employee");
       },
@@ -57,16 +57,16 @@ $(document).ready(function () {
         error.innerHTML = "Login Successful";
         $("#loginBtn").removeClass("loading");
         console.log(resp);
-        CookieManager.setCookie({
-          name: "name",
-          value: resp.name,
-          days: 1,
-        });
-        CookieManager.setCookie({
-          name: "role",
-          value: resp.role,
-          days: 1,
-        });
+        // CookieManager.setCookie({
+        //   name: "name",
+        //   value: resp.name,
+        //   days: 1,
+        // });
+        // CookieManager.setCookie({
+        //   name: "role",
+        //   value: resp.role,
+        //   days: 1,
+        // });
         console.log(resp.role);
         window.location.replace(resp.redirect);
         $("#loginBtn").removeClass("loading");
