@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -20,7 +21,7 @@ public class ResponseHandler {
         response.getWriter().print(msg);
         response.getWriter().flush();
     }
-    
+
     public static void errorResponse(HttpServletResponse response, int scode, String message) throws IOException {
         response.setStatus(scode);
         response.getWriter().print(message);
@@ -32,10 +33,9 @@ public class ResponseHandler {
             Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-            byte[] encrypted;
-            encrypted = cipher.doFinal(in.getBytes());
-            System.err.println(new String(encrypted));
-            return new String(encrypted);
+            byte[] encrypted = cipher.doFinal(in.getBytes());
+            String encoded = Base64.getEncoder().encodeToString(encrypted);
+            return encoded;
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
@@ -44,13 +44,14 @@ public class ResponseHandler {
     }
 
     public static String decrypt(String in) {
-        byte[] encrypted = in.getBytes();
         Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
+        byte[] barr = Base64.getDecoder().decode(in);
         Cipher cipher;
         try {
+            System.out.println("Before");
             cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, aesKey);
-            String decrypted = new String(cipher.doFinal(encrypted));
+            String decrypted = new String(cipher.doFinal(barr));
             return decrypted;
         } catch (Exception e) {
             e.printStackTrace();

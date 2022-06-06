@@ -68,6 +68,7 @@ public class UserLogin extends HttpServlet {
 					JSONObject user = new JSONObject();
 					user.put("name", ResponseHandler.encrypt(username));
 					user.put("role", ResponseHandler.encrypt(dbrole));
+					user.put("redirect", dbrole);
 					ResponseHandler.successResponse(response, user.toString());
 				}
 			} else {

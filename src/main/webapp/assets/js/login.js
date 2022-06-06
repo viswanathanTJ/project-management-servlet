@@ -1,8 +1,10 @@
+console.log(window.location.pathname.split("/").pop());
 $(document).ready(function () {
   $("form[name=register]").submit(function (e) {
     $("#registerBtn").addClass("loading");
     var $form = $(this);
     var data = $form.serialize();
+    alert(data);
     var error = document.getElementById("error");
     error.innerHTML = "";
     $.ajax({
@@ -11,7 +13,6 @@ $(document).ready(function () {
       data: data,
       success: function (resp) {
         console.log(resp);
-        window.location.replace("employee");
         CookieManager.setCookie({
           name: "name",
           value: resp.name,
@@ -23,6 +24,7 @@ $(document).ready(function () {
           days: 1,
         });
         $("#registerBtn").removeClass("loading");
+        window.location.replace("employee");
       },
       error: function (resp) {
         if (resp.responseText == "Mail ID already exists.")
