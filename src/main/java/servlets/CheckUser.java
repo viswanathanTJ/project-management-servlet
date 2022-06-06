@@ -13,8 +13,6 @@ public class CheckUser extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String role = request.getParameter("role");
-		System.out.println("Check called");
-		// response.getWriter().print(role);
 		response.getWriter().print(ResponseHandler.decrypt(role));
 	}
 }

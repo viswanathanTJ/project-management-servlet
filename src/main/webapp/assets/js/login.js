@@ -4,7 +4,6 @@ $(document).ready(function () {
     $("#registerBtn").addClass("loading");
     var $form = $(this);
     var data = $form.serialize();
-    alert(data);
     var error = document.getElementById("error");
     error.innerHTML = "";
     $.ajax({

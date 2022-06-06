@@ -48,7 +48,6 @@ public class ResponseHandler {
         byte[] barr = Base64.getDecoder().decode(in);
         Cipher cipher;
         try {
-            System.out.println("Before");
             cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, aesKey);
             String decrypted = new String(cipher.doFinal(barr));

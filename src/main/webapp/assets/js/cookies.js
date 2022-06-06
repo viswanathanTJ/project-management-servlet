@@ -1,7 +1,6 @@
-// very simple cookie manager class
 class CookieManager {
   static setCookie({ name = "", days = 0, value = "", path = "/" }) {
-    let expire = "";
+    let expire = ""; 
     if (days) {
       const date = new Date();
       date.setTime(date.getTime() + days * 1000 * 60 * 60 * 24);
@@ -42,7 +41,8 @@ class CookieManager {
 // });
 
 //get Cookie value
-// CookieManager.getCookie({ name: "hi.cookie" }); // return = m9yhRuPk7xlCpkEGk8qdx
+// CookieManager.getCookie({ name: "name" }); 
 //remove cookie
 // CookieManager.removeCookie({ name: "hi.cookie" }); // noting return
+//check cookie
 // CookieManager.checkCookie({ name: "hi.cookie" });
