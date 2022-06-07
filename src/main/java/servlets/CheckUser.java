@@ -25,16 +25,3 @@ public class CheckUser extends HttpServlet {
 		response.getWriter().print(ResponseHandler.decrypt(role));
 	}
 }
-
-@WebServlet("/logout")
-class Logout extends HttpServlet {
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.removeAttribute("role");
-		session.removeAttribute("name");
-		session.removeAttribute("email");
-		response.getWriter().print("success");
-	}
-
-}

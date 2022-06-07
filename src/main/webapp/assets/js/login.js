@@ -1,4 +1,14 @@
-console.log(window.location.pathname.split("/").pop());
+const lusername = document.getElementById("lname");
+const lpassword = document.getElementById("lpassword");
+
+lusername.addEventListener("keyup", function () {
+  validator(lusername, nameRegex);
+});
+
+lpassword.addEventListener("keyup", function () {
+  validator(lpassword, passwordRegex);
+});
+
 $(document).ready(function () {
   $("form[name=register]").submit(function (e) {
     $("#registerBtn").addClass("loading");
@@ -6,22 +16,23 @@ $(document).ready(function () {
     var data = $form.serialize();
     var error = document.getElementById("error");
     error.innerHTML = "";
+    if (
+      !username.value.match(nameRegex) ||
+      !password.value.match(passwordRegex) ||
+      !email.value.match(emailRegex) ||
+      !cpassword.value.match(passwordRegex) ||
+      !cpassword.value == password.value
+    ) {
+      $("#registerBtn").removeClass("loading");
+      error.innerHTML = "Please correct all the fields";
+      return false;
+    }
     $.ajax({
       url: "register",
       type: "POST",
       data: data,
       success: function (resp) {
         console.log(resp);
-        // CookieManager.setCookie({
-        //   name: "name",
-        //   value: resp.name,
-        //   days: 1,
-        // });
-        // CookieManager.setCookie({
-        //   name: "role",
-        //   value: resp.role,
-        //   days: 1,
-        // });
         $("#registerBtn").removeClass("loading");
         window.location.replace("employee");
       },
@@ -48,7 +59,14 @@ $(document).ready(function () {
     var data = $form.serialize();
     var error = document.getElementById("error1");
     error.innerHTML = "";
-    console.log(data);
+    if (
+      username.value.match(nameRegex) ||
+      password.value.match(passwordRegex)
+    ) {
+      $("#loginBtn").removeClass("loading");
+      error.innerHTML = "Please correct all the fields";
+      return false;
+    }
     $.ajax({
       url: "Login",
       type: "POST",
@@ -72,8 +90,11 @@ $(document).ready(function () {
         $("#loginBtn").removeClass("loading");
       },
       error: function (resp) {
-        if (resp.responseText == "Invalid Password.") $("#password").val("");
-        else $("#login")[0].reset();
+        if (resp.responseText == "Invalid Password.") {
+          alert("changed");
+          lpassword.style.borderColor = "red";
+          lpassword.value("");
+        }
         $("#loginBtn").removeClass("loading");
         error.innerHTML = resp.responseText;
       },

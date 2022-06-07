@@ -2,6 +2,10 @@
   color: #fff;
 }
 
+button {
+  cursor:pointer;
+}
+
 .navBtn{
   padding: 0.4rem 1.4rem;
   border: 3;
