@@ -1,27 +1,37 @@
 const swipeHandler = new SwipeHandler();
 const toastsFactory = new ToastsFactory(swipeHandler);
 
-
 $(document).ready(function () {
-  $("form[username=add-user]").submit(function (e) {
-    $("#exampleModal").modal("hide");
+  $("form[name=add-user]").submit(function (e) {
+    if (
+      !username.value.match(nameRegex) ||
+      !email.value.match(emailRegex) ||
+      !password.value.match(passwordRegex)
+    ) {
+      toastsFactory.createToast({
+        type: "error",
+        icon: "info-circle",
+        message: "Please correct all the fields",
+        duration: 1000,
+      });
+      return false;
+    }
     var $form = $(this);
     var data = $form.serialize();
-    var error = document.getElementById("add-error");
-    var msg = document.getElementById("message");
-    error.innerHTML = "";
     $.ajax({
       url: "AddUser",
       type: "POST",
       data: data,
       success: function (resp) {
-        alert(resp.responseText);
-        error.innerHTML = "Added Successfully";
-        $("#add_user")[0].reset();
+        $("#add-user")[0].reset();
+        $("#formModal").modal("hide");
+        [username, email, password].forEach((ele) =>
+          ele.style.removeProperty("border")
+        );
         toastsFactory.createToast({
-          type: "success",
-          icon: "info-circle",
-          message: resp.responseText,
+          type: "system",
+          icon: "check-circle",
+          message: resp,
           duration: 1000,
         });
       },
@@ -29,9 +39,10 @@ $(document).ready(function () {
         toastsFactory.createToast({
           type: "error",
           icon: "info-circle",
-          message: resp,
+          message: resp.responseText,
           duration: 1000,
         });
+        $("#formModal").modal("show");
       },
     });
 

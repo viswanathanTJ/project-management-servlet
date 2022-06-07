@@ -39,11 +39,12 @@ function validator(element, regex) {
   })
 );
 
-
-cpassword.addEventListener("keyup", function () {
-  if (password.value != cpassword.value) {
-    cpassword.style.borderColor = "red";
-  } else {
-    cpassword.style.borderColor = "green";
-  }
-});
+if (cpassword instanceof Element) {
+  cpassword.addEventListener("keyup", function () {
+    if (password.value != cpassword.value) {
+      cpassword.style.borderColor = "red";
+    } else {
+      cpassword.style.borderColor = "green";
+    }
+  });
+}
