@@ -1,10 +1,12 @@
 package servlets;
 
 import java.io.IOException;
+import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+
 import activities.Authentication;
 import activities.DBUtil.DatabaseConnection;
-
+import entities.User;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  * Servlet implementation class AddUser
  */
@@ -54,9 +62,14 @@ public class AddUser extends HttpServlet {
 			st.setString(3, hashPassword);
 			st.setString(4, role);
 			st.executeUpdate();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(new Date());
+			User user = new User(username, email, role, currentTime);
+			response.setStatus(HttpServletResponse.SC_OK);
+			// System.out.println(new Gson().toJson(user));
+			response.getWriter().print(new Gson().toJson(user));
 			st.close();
 			con.close();
-			response.getWriter().print("Added successfully");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

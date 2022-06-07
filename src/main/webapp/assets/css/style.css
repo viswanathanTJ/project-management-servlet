@@ -3,11 +3,20 @@
 }
 
 button {
-  cursor:pointer;
+  cursor: pointer;
 }
 
-.navBtn{
+span {
+  padding-right: 10px;
+}
+
+div#usersTable_filter {
+  float: right;
+}
+
+.navBtn {
   padding: 0.4rem 1.4rem;
+  cursor: pointer !important;
   border: 3;
   border-radius: 5rem;
   background-color: #fff;

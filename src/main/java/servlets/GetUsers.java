@@ -2,15 +2,24 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import activities.Authentication;
 import activities.DBUtil.DatabaseConnection;
@@ -21,43 +30,33 @@ import activities.DBUtil.DatabaseConnection;
 @WebServlet("/getUsers")
 public class GetUsers extends HttpServlet {
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		JSONObject jsonObject = new JSONObject();
+		JSONArray array = new JSONArray();
+		int sno = 1;
 		try {
-			String username = request.getParameter("name");
-			String email = request.getParameter("email");
-			String password = request.getParameter("password");
-			String role = request.getParameter("role");
-			response.getWriter().print(username+" "+email+" "+password+" "+role);
-			 Connection con;
-			 	con = DatabaseConnection.initializeDatabase();
-			
-			 PreparedStatement st = con.prepareStatement("select * from user where email=?");
-			st.setString(1,email);
-			ResultSet r1=st.executeQuery();
-			if(r1.next()) {
-				response.getWriter().print("Mail ID already exists.");
-				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-				return;
+			Connection con;
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement st = con.prepareStatement("select * from user");
+			ResultSet r1 = st.executeQuery();
+			while (r1.next()) {
+				JSONObject obj = new JSONObject();
+				obj.put("uid", r1.getInt("u_id"));
+				// obj.put("sno", sno++);
+				obj.put("name", r1.getString("name"));
+				obj.put("email", r1.getString("email"));
+				obj.put("role", r1.getString("role"));
+				Timestamp t = r1.getTimestamp("createdat");
+				SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+				String time = df.format(t);
+				obj.put("createdat", time);
+				array.put(obj);
 			}
-			st = con.prepareStatement("select * from user where name=?");
-			st.setString(1,username);
-			r1=st.executeQuery();
-			if(r1.next()) {
-				response.getWriter().print("Username already exists.");
-				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-				return;
-			}
-			st = con.prepareStatement("insert into user (name, email, password, role) values(?, ?, ?, ?)");
-			st.setString(1, username);
-			st.setString(2, email);
-			String hashPassword = Authentication.hashPassword(username, password);
-			st.setString(3, hashPassword);
-			st.setString(4, role);
-			st.executeUpdate();
-			st.close();
-			con.close();
-			response.getWriter().print("Added successfully");
+			jsonObject.put("users", array);
+			response.getWriter().print(jsonObject);
 		} catch (ClassNotFoundException | SQLException e) {
+			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
 		}
 	}
