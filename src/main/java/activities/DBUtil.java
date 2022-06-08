@@ -20,8 +20,6 @@ public class DBUtil {
     public class DatabaseConnection {
         public static Connection initializeDatabase()
                 throws SQLException, ClassNotFoundException {
-            if (con != null)
-                return con;
             String dbDriver = "com.mysql.jdbc.Driver";
             String dbURL = "jdbc:mysql://localhost:3306/";
             String dbName = "test";
@@ -35,16 +33,34 @@ public class DBUtil {
     }
 
     public class Query {
+        static PreparedStatement st;
+        static ResultSet r1;
+
         public static String getUserNameByID(int id) {
-            PreparedStatement st;
             try {
                 st = con.prepareStatement("select name from user where u_id=?");
                 st.setInt(1, id);
-                ResultSet r1 = st.executeQuery();
+                r1 = st.executeQuery();
                 if (r1.next())
                     return r1.getString("name");
                 else
                     return "username not found";
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "Error " + e.getMessage();
+            }
+        }
+
+        public static String getUserIDByName(String name) {
+            PreparedStatement st;
+            try {
+                st = con.prepareStatement("select u_id from user where name=?");
+                st.setString(1, name);
+                r1 = st.executeQuery();
+                if (r1.next())
+                    return r1.getString("u_id");
+                else
+                    return null;
             } catch (SQLException e) {
                 e.printStackTrace();
                 return "Error " + e.getMessage();

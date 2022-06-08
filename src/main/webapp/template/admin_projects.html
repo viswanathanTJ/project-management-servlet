@@ -18,13 +18,12 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <!-- <link href="https://cdn.datatables.net/1.12.1/css/bootstrap/dataTables.bootstrap5.min.css" rel="stylesheet" /> -->
+    <link href="https://cdn.datatables.net/1.12.1/css/bootstrap/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <!-- <script src="assets/js/jquery.jquery/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap/bootstrap.min.js"></script> -->
   </head>
 
   <body>
-    <!-- example 5 left and center only with empty space right -->
     <nav
       class="navbar navbar-expand-sm navbar-dark bg-primary flex-sm-nowrap flex-wrap"
     >
@@ -176,13 +175,13 @@
       id="formEditModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="formEditModalLabel"
+      aria-labelledby="formModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="formModalLabel">Edit Project</h5>
+            <h5 class="modal-title" id="formEditModalLabel">Update Project</h5>
             <button
               type="button"
               class="close"
@@ -193,49 +192,40 @@
             </button>
           </div>
           <div class="modal-body">
-            <form id="edit-user" name="edit-user">
+            <form name="edit-project" id="edit-project">
               <div class="form-group">
-                <label for="name">Username</label>
+                <label for="ename">Name</label>
                 <input
                   type="text"
                   class="form-control"
                   id="ename"
                   name="ename"
-                  aria-describedby="enameHelp"
-                  placeholder="Enter username"
+                  aria-describedby="nameHelp"
+                  placeholder="Enter Project Name"
                   required
                 />
               </div>
               <div class="form-group">
-                <label for="email">Email address</label>
-                <input
-                  type="email"
+                <label for="edesc">Description</label>
+                <textarea
                   class="form-control"
-                  id="eemail"
-                  name="eemail"
-                  aria-describedby="eemailHelp"
-                  placeholder="Enter email"
+                  id="edesc"
+                  name="edesc"
+                  aria-describedby="edescHelp"
+                  rows="7"
+                  placeholder="Enter Description atleast 20 characters"
                   required
-                />
+                ></textarea>
               </div>
-              <!-- <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="epassword"
-                  name="epassword"
-                  placeholder="New Password"
-                />
-              </div> -->
               <div class="form-group">
-                <label for="role">Role</label>
-                <br />
-                <select class="form-control" id="erole" name="erole" aria-label=".form-select-lg example">
-                  <option value="employee" selected>Employee</option>
-                  <option value="manager">Manager</option>
-                  <option value="admin">Admin</option>
-                </select>
+                <label for="eowner">Owner Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="eowner"
+                  name="eowner"
+                  placeholder="Owner Name"
+                />
               </div>
             </div>
             <div class="modal-footer">
@@ -246,7 +236,7 @@
               >
               Close
             </button>
-            <input type="submit" id="esubmit" class="btn btn-primary" value="Update" />
+            <input type="submit" id="submit" class="btn btn-primary" value="Submit" />
           </div>
         </form>
         </div>
@@ -265,7 +255,7 @@
 				<h4 class="modal-title w-100">Are you sure?</h4>	
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
-          <form id="delete-user" name="delete-user">
+          <form id="delete-project" name="delete-project">
 
 			<div class="modal-body">
 				<p>Do you really want to delete these records? This process cannot be undone.</p>

@@ -51,7 +51,7 @@ public class AddProject extends HttpServlet {
 				if (r1.next())
 					uid = r1.getString("u_id");
 				else {
-					response.getWriter().print("Username not found." + uid);
+					response.getWriter().print("Username not found.");
 					response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 					return;
 				}

@@ -1,5 +1,6 @@
 var table;
 var eusername = document.getElementById("ename");
+// var epassword = document.getElementById("epassword");
 var eemail = document.getElementById("eemail");
 var erole = document.getElementById("erole");
 var uid, rowData, row;
