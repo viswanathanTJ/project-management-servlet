@@ -1,15 +1,28 @@
-$(document).ready(function () {
-  // Initialize DataTable
-  var table = $("#usersTable").DataTable({
-    columnDefs: [{ width: "2%", targets: 0 }],
+var sno;
+var table;
+function initializeDatabase() {
+  table = $("#usersTable").DataTable({
+    columnDefs: [
+      { targets: 0, visible: false },
+      { targets: 1, width: ".3%" },
+      { targets: 3, width: "2%" },
+      { targets: [2, 4], width: "1%" },
+      { targets: 5, width: "2%" },
+      {
+        className: "text-center",
+        targets: -1,
+        width: "2%",
+        defaultContent: [
+          `<a href="#" id="btnEdit"><span><i class="fas fa-edit"></i></span></a>
+            <a href="#" id="btnDelete"><span><i class="fas fa-trash"></i></span></a>`,
+        ],
+      },
+    ],
     fixedColumns: true,
   });
-  table.columns.adjust().draw();
+}
 
-  const swipeHandler = new SwipeHandler();
-  const toastsFactory = new ToastsFactory(swipeHandler);
-  var sno;
-
+function loadData() {
   let users;
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "http://localhost:8080/Project_Management/getUsers", true);
@@ -20,18 +33,59 @@ $(document).ready(function () {
         sno = index + 1;
         table.row
           .add([
+            item.uid,
             sno,
             item.name,
             item.email,
             item.role,
             item.createdat,
-            '<span><i class="fas fa-edit"></i></span><span><i class="fas fa-trash"></i></span>',
           ])
           .draw(false);
       });
     }
   };
   xhr.send();
+}
+
+
+// Edit Button
+$("#usersTable").on("click", "#btnEdit", function () {
+  $("#formModal").modal("show");
+  var row = $(this).parents("tr")[0];
+  var data = table.row(row).data();
+  // Set data
+  username.setAttribute("value", data[2]);
+  email.setAttribute("value", data[3]);
+  document.getElementById("role").value = data[4];
+  // Change modal
+  document.getElementById("formModalLabel").innerHTML = "Edit User";
+  password.placeholder = "New Password";
+});
+
+// Delete Button 
+$("#usersTable").on("click", "#btnDelete", function () {
+  var row = $(this).parents("tr")[0];
+  var data = table.row(row).data();
+  var xhr = new XMLHttpRequest();
+  xhr.open("DELETE", "http://localhost:8080/Project_Management/deleteUser/" + data[0], true);
+  xhr.onload = function () {
+    if (this.status === 200) {
+      table.row(row).remove().draw();
+    }
+  };
+  xhr.send();
+});
+
+
+$(document).ready(function () {
+  // Initialize DataTable
+  initializeDatabase();
+  // Load DataTable
+  loadData();
+
+  const swipeHandler = new SwipeHandler();
+  const toastsFactory = new ToastsFactory(swipeHandler);
+  var sno;
 
   // Form Handling
   $("form[name=add-user]").submit(function (e) {

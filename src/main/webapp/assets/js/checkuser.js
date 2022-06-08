@@ -1,4 +1,4 @@
-const role = CookieManager.getCookie({ name: "role" });
+// const role = CookieManager.getCookie({ name: "role" });
 const crole = window.location.pathname.split("/").pop();
 $.ajax({
   url: "check",
