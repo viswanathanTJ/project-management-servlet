@@ -4,8 +4,7 @@ $.ajax({
   url: "check",
   type: "GET",
   success: function (resp) {
-    // if(crole == index) window.location.replace(resp);
-    if (resp != crole) window.location.replace(resp);
+    if (!crole.startsWith(resp)) window.location.replace(resp);
   },
   error: function () {
     window.location.replace("login");

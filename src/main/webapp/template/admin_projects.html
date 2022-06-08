@@ -19,7 +19,7 @@
       referrerpolicy="no-referrer"
     />
     <link href="https://cdn.datatables.net/1.12.1/css/bootstrap/dataTables.bootstrap5.min.css" rel="stylesheet" />
-    <!-- <script src="assets/js/jquery.jquery/jquery.dataTables.min.js"></script>
+    <!-- <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap/bootstrap.min.js"></script> -->
   </head>
 
@@ -44,13 +44,13 @@
         >
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#users">Users</a>
+              <a class="nav-link" href="admin">Users</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="admin_projects">Projects</a>
+              <a class="nav-link" href="#projects">Projects</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#tasks">Tasks</a>
+              <a class="nav-link" href="admin_tasks">Tasks</a>
             </li>
           </ul>
           <div class="flex-grow-1"></div>
@@ -63,14 +63,14 @@
       </div>
     </nav>
     <div class="container mt-4" id="users">
-      <div class="float-left"><h3>Users</h3></div>
+      <div class="float-left"><h3>Projects</h3></div>
       <div class="float-right">
         <button
           class="btn btn-primary"
           data-toggle="modal"
           data-target="#formModal"
         >
-          <i class="fa fa-add"></i>Add User
+          <i class="fa fa-add"></i>  Create Project
         </button>
       </div>
       <br /><br /><br />
@@ -84,10 +84,9 @@
           <tr>
             <th>uid</th>
             <th>SNo</th>
-            <th>Username</th>
-            <th>E-Mail</th>
-            <th>Role</th>
-            <th>Joined</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Owner Name</th>
             <th>Actions</th>
           </tr>
         </thead>

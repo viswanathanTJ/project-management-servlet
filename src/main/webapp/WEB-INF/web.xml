@@ -25,6 +25,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>admin_projects</servlet-name>
+    <jsp-file>/template/admin_projects.html</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>admin_projects</servlet-name>
+    <url-pattern>/admin_projects</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>manager</servlet-name>
     <jsp-file>/template/manager.html</jsp-file>
   </servlet>
