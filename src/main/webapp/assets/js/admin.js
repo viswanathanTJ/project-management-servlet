@@ -1,5 +1,10 @@
-var sno;
 var table;
+var eusername = document.getElementById("ename");
+// var epassword = document.getElementById("epassword");
+var eemail = document.getElementById("eemail");
+var erole = document.getElementById("erole");
+var uid, rowData, row;
+
 function initializeDatabase() {
   table = $("#usersTable").DataTable({
     columnDefs: [
@@ -47,27 +52,28 @@ function loadData() {
   xhr.send();
 }
 
-
 // Edit Button
 $("#usersTable").on("click", "#btnEdit", function () {
-  $("#formModal").modal("show");
-  var row = $(this).parents("tr")[0];
-  var data = table.row(row).data();
+  $("#formEditModal").modal("show");
+  row = $(this).parents("tr")[0];
+  rowData = table.row(row).data();
+  uid = rowData[0];
   // Set data
-  username.setAttribute("value", data[2]);
-  email.setAttribute("value", data[3]);
-  document.getElementById("role").value = data[4];
-  // Change modal
-  document.getElementById("formModalLabel").innerHTML = "Edit User";
-  password.placeholder = "New Password";
+  eusername.setAttribute("value", rowData[2]);
+  eemail.setAttribute("value", rowData[3]);
+  erole.value = rowData[4];
 });
 
-// Delete Button 
+// Delete Button
 $("#usersTable").on("click", "#btnDelete", function () {
   var row = $(this).parents("tr")[0];
   var data = table.row(row).data();
   var xhr = new XMLHttpRequest();
-  xhr.open("DELETE", "http://localhost:8080/Project_Management/deleteUser/" + data[0], true);
+  xhr.open(
+    "DELETE",
+    "http://localhost:8080/Project_Management/deleteUser/" + data[0],
+    true
+  );
   xhr.onload = function () {
     if (this.status === 200) {
       table.row(row).remove().draw();
@@ -76,8 +82,9 @@ $("#usersTable").on("click", "#btnDelete", function () {
   xhr.send();
 });
 
-
 $(document).ready(function () {
+  var sno = 1;
+
   // Initialize DataTable
   initializeDatabase();
   // Load DataTable
@@ -85,7 +92,6 @@ $(document).ready(function () {
 
   const swipeHandler = new SwipeHandler();
   const toastsFactory = new ToastsFactory(swipeHandler);
-  var sno;
 
   // Form Handling
   $("form[name=add-user]").submit(function (e) {
@@ -144,6 +150,62 @@ $(document).ready(function () {
           duration: 1000,
         });
         $("#formModal").modal("show");
+      },
+    });
+
+    e.preventDefault();
+  });
+
+  // Put request
+  $("form[name=edit-user]").submit(function (e) {
+    var $form = $(this);
+    var data = $form.serialize();
+    if (
+      eusername.value == rowData[2] &&
+      eemail.value == rowData[3] &&
+      erole.value == rowData[4]
+    ) {
+      toastsFactory.createToast({
+        type: "system",
+        icon: "info-circle",
+        message: "Kindly make some changes",
+        duration: 1000,
+      });
+      return false;
+    }
+    $.ajax({
+      type: "POST",
+      url: "updateUser",
+      data: data + "&id=" + uid,
+      success: function (data, status, xhr) {
+        sno += 1;
+        table
+          .row(row)
+          .data([
+            uid,
+            rowData[1],
+            eusername.value,
+            eemail.value,
+            erole.value,
+            rowData[5],
+          ])
+          .draw(false);
+        $("#formEditModal").modal("hide");
+        toastsFactory.createToast({
+          type: "system",
+          icon: "check-circle",
+          message: "Updated successfully",
+          duration: 1000,
+        });
+        $("#edit-user")[0].reset();
+      },
+      error: function (resp, status, error) {
+        toastsFactory.createToast({
+          type: "error",
+          icon: "info-circle",
+          message: resp.responseText,
+          duration: 1000,
+        });
       },
     });
 

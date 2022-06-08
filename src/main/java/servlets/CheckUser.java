@@ -27,3 +27,4 @@ public class CheckUser extends HttpServlet {
 		response.getWriter().print(ResponseHandler.decrypt(role));
 	}
 }
+

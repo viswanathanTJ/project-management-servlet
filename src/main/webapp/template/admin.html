@@ -132,7 +132,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form name="add-user" id="add-user">
+            <form name="add-user" id="user">
               <div class="form-group">
                 <label for="name">Username</label>
                 <input
@@ -187,6 +187,89 @@
               Close
             </button>
             <input type="submit" id="submit" class="btn btn-primary" value="Submit" />
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- Modal end -->
+    <!-- Edit Modal -->
+    <div
+      class="modal fade"
+      id="formEditModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="formEditModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formModalLabel">Edit User</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="edit-user" name="edit-user">
+              <div class="form-group">
+                <label for="name">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="ename"
+                  name="ename"
+                  aria-describedby="enameHelp"
+                  placeholder="Enter username"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="eemail"
+                  name="eemail"
+                  aria-describedby="eemailHelp"
+                  placeholder="Enter email"
+                  required
+                />
+              </div>
+              <!-- <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="epassword"
+                  name="epassword"
+                  placeholder="New Password"
+                />
+              </div> -->
+              <div class="form-group">
+                <label for="role">Role</label>
+                <br />
+                <select class="form-control" id="erole" name="erole" aria-label=".form-select-lg example">
+                  <option value="employee" selected>Employee</option>
+                  <option value="manager">Manager</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              >
+              Close
+            </button>
+            <input type="submit" id="esubmit" class="btn btn-primary" value="Update" />
           </div>
         </form>
         </div>
