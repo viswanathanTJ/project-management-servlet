@@ -14,15 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import java.security.Key;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import com.google.gson.Gson;
-
 import activities.Authentication;
 import activities.DBUtil.DatabaseConnection;
-import entities.User;
 
 /**
  * Servlet implementation class UserLogin
@@ -62,6 +55,7 @@ public class UserLogin extends HttpServlet {
 				} else {
 					HttpSession session = request.getSession();
 					session.setAttribute("email", email);
+					session.setAttribute("uid", r1.getString("u_id"));
 					session.setAttribute("name", username);
 					session.setAttribute("role", dbrole);
 					session.setMaxInactiveInterval(-1);

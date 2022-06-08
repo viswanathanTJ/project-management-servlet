@@ -66,7 +66,6 @@ public class AddUser extends HttpServlet {
 			String currentTime = sdf.format(new Date());
 			User user = new User(username, email, role, currentTime);
 			response.setStatus(HttpServletResponse.SC_OK);
-			// System.out.println(new Gson().toJson(user));
 			response.getWriter().print(new Gson().toJson(user));
 			st.close();
 			con.close();

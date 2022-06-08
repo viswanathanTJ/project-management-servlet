@@ -10,7 +10,7 @@ span {
   padding-right: 10px;
 }
 
-div#usersTable_filter {
+div#usersTable_filter, div#projectsTable_filter {
   float: right;
 }
 
