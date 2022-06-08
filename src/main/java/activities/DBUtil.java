@@ -20,8 +20,6 @@ public class DBUtil {
     public class DatabaseConnection {
         public static Connection initializeDatabase()
                 throws SQLException, ClassNotFoundException {
-            if (con != null)
-                return con;
             String dbDriver = "com.mysql.jdbc.Driver";
             String dbURL = "jdbc:mysql://localhost:3306/";
             String dbName = "test";

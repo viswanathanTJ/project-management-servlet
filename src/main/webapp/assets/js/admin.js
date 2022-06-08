@@ -74,7 +74,6 @@ $("#usersTable").on("click", "#btnDelete", function () {
 });
 
 $(document).ready(function () {
-
   // Initialize DataTable
   initializeDatabase();
   // Load DataTable
@@ -119,14 +118,7 @@ $(document).ready(function () {
         addId += 1;
         var item = JSON.parse(resp);
         table.row
-          .add([
-            addId,
-            sno,
-            item.username,
-            item.email,
-            item.role,
-            item.joined,
-          ])
+          .add([addId, sno, item.username, item.email, item.role, item.joined])
           .draw(false);
         toastsFactory.createToast({
           type: "system",

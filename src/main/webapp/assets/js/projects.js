@@ -30,14 +30,14 @@ function initializeDatabase() {
   table = $("#projectsTable").DataTable({
     columnDefs: [
       { targets: 0, visible: false },
-      { targets: 1, width: "1%" },
+      { targets: 1, width: ".2%" },
       { targets: 2, width: "2%" },
       { targets: 3, width: "4%" },
-      { targets: 4, width: "2%" },
+      { targets: 4, width: "1%" },
       {
         className: "text-center",
         targets: -1,
-        width: "2%",
+        width: "1%",
         defaultContent: [
           `<a href="#" id="btnEdit"><span><i class="fas fa-edit"></i></span></a>
             <a href="#" id="btnDelete"><span><i class="fas fa-trash"></i></span></a>`,
@@ -49,13 +49,13 @@ function initializeDatabase() {
 }
 
 function loadData() {
-  let users;
+  let projects;
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "http://localhost:8080/Project_Management/getProjects", true);
   xhr.onload = function () {
     if (this.status === 200) {
-      users = JSON.parse(this.responseText).projects;
-      $.each(users, function (index, item) {
+      projects = JSON.parse(this.responseText).projects;
+      $.each(projects, function (index, item) {
         sno = index + 1;
         addId = item.p_id;
         table.row
@@ -65,7 +65,6 @@ function loadData() {
             item.name,
             item.desc,
             item.oname,
-            item.createdat,
           ])
           .draw(false);
       });
@@ -90,13 +89,10 @@ $("#projectsTable").on("click", "#btnDelete", function () {
   row = $(this).parents("tr")[0];
   rowData = table.row(row).data();
   uid = rowData[0];
-  alert(uid);
 });
 
 $(document).ready(function () {
   // Initialize DataTable
-  var addId = 0,
-    sno = 0;
   initializeDatabase();
   const swipeHandler = new SwipeHandler();
   const toastsFactory = new ToastsFactory(swipeHandler);
@@ -106,8 +102,7 @@ $(document).ready(function () {
   // Form Handling
   $("form[name=create-project]").submit(function (e) {
     // Validation
-    // alert('create project');
-    if (!username.value.length < 10 || !desc.value.length < 20) {
+    if (username.value.length < 10 || desc.value.length < 20) {
       toastsFactory.createToast({
         type: "error",
         icon: "info-circle",
@@ -132,7 +127,7 @@ $(document).ready(function () {
         sno = sno + 1;
         addId += 1;
         table.row
-          .add([addId, sno, item.name, item.desc, item.owner, item.created])
+          .add([addId, sno, item.name, item.desc, item.oname])
           .draw(false);
         toastsFactory.createToast({
           type: "system",
@@ -152,6 +147,34 @@ $(document).ready(function () {
       },
     });
 
+    e.preventDefault();
+  });
+
+  // Delete User
+  $("form[name=delete-project]").submit(function (e) {
+    $.ajax({
+      type: "POST",
+      url: "deleteProject",
+      data: "id=" + uid,
+      success: function (data, status, xhr) {
+        table.row(row).remove().draw();
+        $("#deleteModal").modal("hide");
+        toastsFactory.createToast({
+          type: "system",
+          icon: "check-circle",
+          message: "Deleted successfully",
+          duration: 1000,
+        });
+      },
+      error: function (resp, status, error) {
+        toastsFactory.createToast({
+          type: "error",
+          icon: "info-circle",
+          message: resp.responseText,
+          duration: 1000,
+        });
+      },
+    });
     e.preventDefault();
   });
 });
