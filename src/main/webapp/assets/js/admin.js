@@ -4,6 +4,7 @@ var eusername = document.getElementById("ename");
 var eemail = document.getElementById("eemail");
 var erole = document.getElementById("erole");
 var uid, rowData, row;
+var addId, sno;
 
 function initializeDatabase() {
   table = $("#usersTable").DataTable({
@@ -36,6 +37,7 @@ function loadData() {
       users = JSON.parse(this.responseText).users;
       $.each(users, function (index, item) {
         sno = index + 1;
+        addId = item.uid;
         table.row
           .add([
             item.uid,
@@ -73,7 +75,6 @@ $("#usersTable").on("click", "#btnDelete", function () {
 });
 
 $(document).ready(function () {
-  var sno = 1;
 
   // Initialize DataTable
   initializeDatabase();
@@ -103,6 +104,8 @@ $(document).ready(function () {
     // Ajax Call
     var $form = $(this);
     var data = $form.serialize();
+    alert(addId);
+    alert(sno);
     $.ajax({
       url: "AddUser",
       type: "POST",
@@ -114,15 +117,16 @@ $(document).ready(function () {
           ele.style.removeProperty("border")
         );
         sno += 1;
+        addId += 1;
         var item = JSON.parse(resp);
         table.row
           .add([
+            addId,
             sno,
             item.username,
             item.email,
             item.role,
             item.joined,
-            '<span><i class="fas fa-edit"></i></span><span><i class="fas fa-trash"></i></span>',
           ])
           .draw(false);
         toastsFactory.createToast({
