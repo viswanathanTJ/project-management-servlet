@@ -34,7 +34,6 @@ public class GetUsers extends HttpServlet {
 			throws ServletException, IOException {
 		JSONObject jsonObject = new JSONObject();
 		JSONArray array = new JSONArray();
-		int sno = 1;
 		try {
 			Connection con;
 			con = DatabaseConnection.initializeDatabase();

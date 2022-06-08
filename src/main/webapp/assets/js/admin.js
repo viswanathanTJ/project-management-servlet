@@ -66,20 +66,10 @@ $("#usersTable").on("click", "#btnEdit", function () {
 
 // Delete Button
 $("#usersTable").on("click", "#btnDelete", function () {
-  var row = $(this).parents("tr")[0];
-  var data = table.row(row).data();
-  var xhr = new XMLHttpRequest();
-  xhr.open(
-    "DELETE",
-    "http://localhost:8080/Project_Management/deleteUser/" + data[0],
-    true
-  );
-  xhr.onload = function () {
-    if (this.status === 200) {
-      table.row(row).remove().draw();
-    }
-  };
-  xhr.send();
+  $("#deleteModal").modal("show");
+  row = $(this).parents("tr")[0];
+  rowData = table.row(row).data();
+  uid = rowData[0];
 });
 
 $(document).ready(function () {
@@ -156,7 +146,7 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
-  // Put request
+  // Update User
   $("form[name=edit-user]").submit(function (e) {
     var $form = $(this);
     var data = $form.serialize();
@@ -178,7 +168,6 @@ $(document).ready(function () {
       url: "updateUser",
       data: data + "&id=" + uid,
       success: function (data, status, xhr) {
-        sno += 1;
         table
           .row(row)
           .data([
@@ -208,7 +197,34 @@ $(document).ready(function () {
         });
       },
     });
+    e.preventDefault();
+  });
 
+  // Delete User
+  $("form[name=delete-user]").submit(function (e) {
+    $.ajax({
+      type: "POST",
+      url: "deleteUser",
+      data: "id=" + uid,
+      success: function (data, status, xhr) {
+        table.row(row).remove().draw();
+        $("#deleteModal").modal("hide");
+        toastsFactory.createToast({
+          type: "system",
+          icon: "check-circle",
+          message: "Deleted successfully",
+          duration: 1000,
+        });
+      },
+      error: function (resp, status, error) {
+        toastsFactory.createToast({
+          type: "error",
+          icon: "info-circle",
+          message: resp.responseText,
+          duration: 1000,
+        });
+      },
+    });
     e.preventDefault();
   });
 });
