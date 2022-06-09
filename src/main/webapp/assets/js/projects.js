@@ -6,8 +6,10 @@ const pTitle = document.getElementById("pTitle");
 const listMembers = document.getElementById("listMembers");
 const eowner = document.getElementById("eowner");
 const ownerList = document.getElementById("ownerList");
-
+var jsonObj = {};
 var sno = 0,
+    pid,
+    coname,
     addId = 0;
 
 // VALIDATION
@@ -102,21 +104,37 @@ function loadOwner() {
     });
 }
 
-// Edit Button
+// Get Users selected
+$(document).on("click", "input:checkbox[name=filter]:checked", function() {});
+
+// Add Button
 $("#projectsTable").on("click", "#btnAdd", function(e) {
     // alert('add')
     $("#formAddModal").modal("show");
     // $("#formEditModal").modal("show");
     row = $(this).parents("tr")[0];
     rowData = table.row(row).data();
+    pid = rowData[0];
+    coname = rowData[4];
     pTitle.innerHTML = "Project: " + rowData[2];
-    var data = getProjectMembers();
-    listMembers.innerHTML = `<li class="list-group-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="check2">
-                                        <label class="custom-control-label" for="check2">Check me</label>
-                                    </div>
-                                </li>`;
+    $.ajax({
+        url: "getProjectMembers?pid=" + rowData[0],
+        type: "GET",
+        success: function(resp) {
+            let members = JSON.parse(resp).members;
+            console.log(members);
+            $.each(members, function(index, item) {
+                if (item.isMember != "" || item.isMember != null)
+                    jsonObj[item.uid] = item.name;
+                listMembers.innerHTML += `<li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" id="${item.uid}" name="${item.uid}" class="custom-control-input" ${item.isMember} value="${item.uid}">
+                                                    <label class="custom-control-label" for="${item.uid}">${item.name}</label>
+                                                </div>
+                                            </li>`;
+            });
+        },
+    });
 });
 
 // Edit Button
@@ -169,6 +187,7 @@ $(document).ready(function() {
     loadOwner();
 
     // Form Handling
+    // Create Project
     $("form[name=create-project]").submit(function(e) {
         // Validation
         if (pname.value.length < 3 || desc.value.length < 20) {
@@ -181,7 +200,6 @@ $(document).ready(function() {
             return false;
         }
 
-        // Ajax Call
         var $form = $(this);
         var data = $form.serialize();
         $.ajax({
@@ -216,6 +234,38 @@ $(document).ready(function() {
             },
         });
 
+        e.preventDefault();
+    });
+
+    // Add Members
+    $("form[name=add-members]").submit(function(e) {
+        var $form = $(this);
+        var data = $form.serialize();
+        console.log(data);
+        $.ajax({
+            url: "AddMembers",
+            type: "POST",
+            data: data + "&pid=" + pid + "&oname=" + coname,
+            success: function(resp) {
+                $("#add-members")[0].reset();
+                $("#formAddModal").modal("hide");
+                // var item = JSON.parse(resp);
+                toastsFactory.createToast({
+                    type: "system",
+                    icon: "check-circle",
+                    message: "Modified successfully",
+                    duration: 1000,
+                });
+            },
+            error: function(resp) {
+                toastsFactory.createToast({
+                    type: "error",
+                    icon: "info-circle",
+                    message: resp.responseText,
+                    duration: 1000,
+                });
+            },
+        });
         e.preventDefault();
     });
 

@@ -50,6 +50,7 @@ public class GetProjects extends HttpServlet {
 			}
 			jsonObject.put("projects", array);
 			response.getWriter().print(jsonObject);
+			response.setStatus(200);
 		} catch (ClassNotFoundException | SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
