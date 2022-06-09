@@ -1,12 +1,16 @@
-const username = document.getElementById("name");
+const pname = document.getElementById("name");
 const desc = document.getElementById("desc");
 const eusername = document.getElementById("ename");
 const edesc = document.getElementById("edesc");
+const pTitle = document.getElementById("pTitle");
+const listMembers = document.getElementById("listMembers");
 const eowner = document.getElementById("eowner");
+const ownerList = document.getElementById("ownerList");
 
-var sno, addId;
+var sno = 0,
+    addId = 0;
+
 // VALIDATION
-
 function validator(element, count) {
     element.addEventListener("keyup", function() {
         if (element.value.length > count) {
@@ -18,13 +22,13 @@ function validator(element, count) {
 }
 
 ["keyup", "focus"].forEach((evt) =>
-    username.addEventListener(evt, function() {
-        validator(username, 10);
+    pname.addEventListener(evt, function() {
+        validator(pname, 3);
     })
 );
 ["keyup", "focus"].forEach((evt) =>
     eusername.addEventListener(evt, function() {
-        validator(username, 10);
+        validator(pname, 3);
     })
 );
 ["keyup", "focus"].forEach((evt) =>
@@ -35,30 +39,6 @@ function validator(element, count) {
 ["keyup", "focus"].forEach((evt) =>
     edesc.addEventListener(evt, function() {
         validator(edesc, 20);
-    })
-);
-
-["keyup", "focus"].forEach((evt) =>
-    username.addEventListener(evt, function() {
-        username.addEventListener("keyup", function() {
-            if (username.value.length > 10) {
-                username.style.borderColor = "green";
-            } else {
-                username.style.borderColor = "red";
-            }
-        });
-    })
-);
-
-["keyup", "focus"].forEach((evt) =>
-    desc.addEventListener(evt, function() {
-        desc.addEventListener("keyup", function() {
-            if (desc.value.length > 20) {
-                desc.style.borderColor = "green";
-            } else {
-                desc.style.borderColor = "red";
-            }
-        });
     })
 );
 
@@ -75,9 +55,9 @@ function initializeDatabase() {
                 targets: -1,
                 width: "90",
                 defaultContent: [
-                    `<a href="#" id="btnAdd"><span><i class="fas fa-plus"></i></span></a>
-          <a href="#" id="btnEdit"><span><i class="fas fa-edit"></i></span></a>
-            <a href="#" id="btnDelete"><span><i class="fas fa-trash"></i></span></a>`,
+                    `<a href="#" title="Add members" id="btnAdd"><span><i class="fas fa-plus"></i></span></a>
+          <a href="#" title="Edit project" id="btnEdit"><span><i class="fas fa-edit"></i></span></a>
+            <a href="#" title="Delete project" id="btnDelete"><span><i class="fas fa-trash"></i></span></a>`,
                 ],
             },
         ],
@@ -87,12 +67,12 @@ function initializeDatabase() {
 }
 
 function loadData() {
-    let projects;
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8080/Project_Management/getProjects", true);
-    xhr.onload = function() {
-        if (this.status === 200) {
-            projects = JSON.parse(this.responseText).projects;
+    var projects;
+    $.ajax({
+        url: "getProjects",
+        type: "GET",
+        success: function(resp) {
+            projects = JSON.parse(resp).projects;
             $.each(projects, function(index, item) {
                 sno = index + 1;
                 addId = item.p_id;
@@ -100,9 +80,26 @@ function loadData() {
                     .add([item.p_id, sno, item.name, item.desc, item.oname])
                     .draw(false);
             });
-        }
-    };
-    xhr.send();
+        },
+    });
+}
+
+// Load Owner
+function loadOwner() {
+    let users;
+    $.ajax({
+        url: "getUsers",
+        type: "GET",
+        success: function(resp) {
+            users = JSON.parse(resp).users;
+            $.each(users, function(index, item) {
+                if (index === 0)
+                    ownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
+                else
+                    ownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+            });
+        },
+    });
 }
 
 // Edit Button
@@ -110,13 +107,16 @@ $("#projectsTable").on("click", "#btnAdd", function(e) {
     // alert('add')
     $("#formAddModal").modal("show");
     // $("#formEditModal").modal("show");
-    // row = $(this).parents("tr")[0];
-    // rowData = table.row(row).data();
-    // uid = rowData[0];
-    // // Set data
-    // eusername.value = rowData[2];
-    // edesc.value = rowData[3];
-    // eowner.value = rowData[4];
+    row = $(this).parents("tr")[0];
+    rowData = table.row(row).data();
+    pTitle.innerHTML = "Project: " + rowData[2];
+    var data = getProjectMembers();
+    listMembers.innerHTML = `<li class="list-group-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="check2">
+                                        <label class="custom-control-label" for="check2">Check me</label>
+                                    </div>
+                                </li>`;
 });
 
 // Edit Button
@@ -166,11 +166,12 @@ $(document).ready(function() {
     const toastsFactory = new ToastsFactory(swipeHandler);
     // Load DataTable
     loadData();
+    loadOwner();
 
     // Form Handling
     $("form[name=create-project]").submit(function(e) {
         // Validation
-        if (username.value.length < 10 || desc.value.length < 20) {
+        if (pname.value.length < 3 || desc.value.length < 20) {
             toastsFactory.createToast({
                 type: "error",
                 icon: "info-circle",
@@ -188,6 +189,7 @@ $(document).ready(function() {
             type: "POST",
             data: data,
             success: function(resp) {
+                [pname, desc].forEach((ele) => ele.style.removeProperty("border"));
                 $("#create-project")[0].reset();
                 $("#formModal").modal("hide");
                 var item = JSON.parse(resp);

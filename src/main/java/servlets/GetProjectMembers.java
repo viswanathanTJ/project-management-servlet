@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,32 +21,30 @@ import activities.DBUtil.Query;
 /**
  * Servlet implementation class AddUser
  */
-@WebServlet("/getProjects")
-public class GetProjects extends HttpServlet {
+@WebServlet("/getProjectMembers")
+public class GetProjectMembers extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String pid = request.getParameter("pid");
+		System.out.println("GetProjectMembers " + pid);
 		JSONObject jsonObject = new JSONObject();
 		JSONArray array = new JSONArray();
 		try {
 			Connection con;
 			con = DatabaseConnection.initializeDatabase();
-			PreparedStatement st = con.prepareStatement("select * from projects");
+			PreparedStatement st = con.prepareStatement("select u_id from project_users p1 where p1.p_id = ?");
+			st.setString(1, pid);
 			ResultSet r1 = st.executeQuery();
 			while (r1.next()) {
 				JSONObject obj = new JSONObject();
-				obj.put("p_id", r1.getInt("p_id"));
-				obj.put("owner_id", r1.getInt("owner_id"));
-				obj.put("oname", Query.getUserNameByID(r1.getInt("owner_id")));
-				obj.put("name", r1.getString("name"));
-				obj.put("desc", r1.getString("description"));
-				Timestamp t = r1.getTimestamp("createdat");
-				SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-				String time = df.format(t);
-				obj.put("createdat", time);
+				int uid = r1.getInt("u_id");
+				System.out.println("UID:" + uid);
+				obj.put("uid", uid);
+				obj.put("name", Query.getUserNameByID(uid));
 				array.put(obj);
 			}
-			jsonObject.put("projects", array);
+			jsonObject.put("members", array);
 			response.getWriter().print(jsonObject);
 		} catch (ClassNotFoundException | SQLException e) {
 			response.getWriter().print(e.getMessage());

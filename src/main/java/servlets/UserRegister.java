@@ -15,10 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
 import activities.Authentication;
 import activities.DBUtil.DatabaseConnection;
-import entities.User;
 
 @WebServlet("/register")
 public class UserRegister extends HttpServlet {

@@ -1,15 +1,12 @@
 package servlets;
 
 import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
-
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpServletResponse;
 
 public class ResponseHandler {
 

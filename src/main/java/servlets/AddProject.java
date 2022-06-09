@@ -31,7 +31,7 @@ public class AddProject extends HttpServlet {
 		try {
 			String name = request.getParameter("name");
 			String desc = request.getParameter("desc");
-			String owner = request.getParameter("owner");
+			String owner = request.getParameter("ownerList");
 			System.out.println("Add Project: " + name + " " + desc + " " + owner);
 			HttpSession session = request.getSession();
 			String uid = (String) session.getAttribute("uid");
@@ -41,21 +41,12 @@ public class AddProject extends HttpServlet {
 			Connection con;
 			ResultSet r1;
 			con = DatabaseConnection.initializeDatabase();
-			if (owner == null || owner == "") {
-				System.out.println("Owner is null");
-				owner = ownerName;
-			} else {
-				st = con.prepareStatement("select u_id from user where name=?");
-				st.setString(1, owner);
-				r1 = st.executeQuery();
-				if (r1.next())
-					uid = r1.getString("u_id");
-				else {
-					response.getWriter().print("Username not found.");
-					response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-					return;
-				}
-			}
+
+			st = con.prepareStatement("select u_id from user where name=?");
+			st.setString(1, owner);
+			r1 = st.executeQuery();
+			if (r1.next())
+				uid = r1.getString("u_id");
 
 			st = con.prepareStatement("select * from projects where name=?");
 			st.setString(1, name);

@@ -1,18 +1,10 @@
 package activities;
 
-import java.security.Key;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Base64;
-import java.util.Collection;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
-import com.mysql.cj.xdevapi.PreparableStatement;
 
 public class DBUtil {
     public static Connection con = null;

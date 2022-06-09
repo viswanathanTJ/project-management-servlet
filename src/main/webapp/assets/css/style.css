@@ -2,7 +2,18 @@
     color: #fff;
 }
 
-tr {
+
+/* Modal scroll view  */
+
+.modal-dialog {
+    overflow-y: initial !important;
+}
+
+.modal-body {
+    overflow-y: auto;
+}
+
+#projectsTable tr {
     cursor: pointer;
 }
 
