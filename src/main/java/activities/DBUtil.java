@@ -44,7 +44,7 @@ public class DBUtil {
                 if (r1.next())
                     return r1.getString("name");
                 else
-                    return "username not found";
+                    return "admin";
             } catch (SQLException e) {
                 e.printStackTrace();
                 return "Error " + e.getMessage();

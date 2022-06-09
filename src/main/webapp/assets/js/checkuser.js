@@ -1,8 +1,9 @@
 // const role = CookieManager.getCookie({ name: "role" });
-const crole = window.location.pathname.split("/").pop();
+const crole = window.location.pathname.split("/").pop(); // admin
 $.ajax({
   url: "check",
   type: "GET",
+
   success: function (resp) {
     if (!crole.startsWith(resp)) window.location.replace(resp);
   },

@@ -1,38 +1,52 @@
 .nav-item {
-  color: #fff;
+    color: #fff;
+}
+
+tr {
+    cursor: pointer;
+}
+
+table.dataTable tbody td {
+    word-break: break-word;
+    vertical-align: top;
 }
 
 button {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 span {
-  padding-right: 10px;
+    padding-right: 10px;
 }
 
-div#usersTable_filter, div#projectsTable_filter {
-  float: right;
+div#usersTable_filter,
+div#projectsTable_filter {
+    float: right;
+}
+
+.modal-body {
+    word-wrap: break-word;
 }
 
 .navBtn {
-  padding: 0.4rem 1.4rem;
-  cursor: pointer !important;
-  border: 3;
-  border-radius: 5rem;
-  background-color: #fff;
-  color: #000;
-  font-weight: 600;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease 0s;
+    padding: 0.4rem 1.4rem;
+    cursor: pointer !important;
+    border: 3;
+    border-radius: 5rem;
+    background-color: #fff;
+    color: #000;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
 }
 
 @media (min-width: 768px) {
-  .navbar-brand.abs {
-    position: absolute;
-    width: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-  }
+    .navbar-brand.abs {
+        position: absolute;
+        width: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
 }

@@ -59,6 +59,7 @@ public class UserLogin extends HttpServlet {
 					session.setAttribute("name", username);
 					session.setAttribute("role", dbrole);
 					session.setMaxInactiveInterval(-1);
+					// session.setMaxInactiveInterval(8092);
 					JSONObject user = new JSONObject();
 					user.put("name", ResponseHandler.encrypt(username));
 					user.put("role", ResponseHandler.encrypt(dbrole));
