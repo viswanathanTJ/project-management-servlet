@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 import activities.Authentication;
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 
 /**
@@ -41,7 +42,7 @@ public class UserLogin extends HttpServlet {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 
-			PreparedStatement st = con.prepareStatement("select * from user where name=?");
+			PreparedStatement st = con.prepareStatement(Queries.getUserByName);
 			st.setString(1, username);
 			ResultSet r1 = st.executeQuery();
 			String dbrole = "";

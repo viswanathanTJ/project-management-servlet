@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
 
@@ -33,7 +34,7 @@ public class GetProjects extends HttpServlet {
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
-			PreparedStatement st = con.prepareStatement("select * from projects");
+			PreparedStatement st = con.prepareStatement(Queries.getProjects);
 			ResultSet r1 = st.executeQuery();
 			while (r1.next()) {
 				JSONObject obj = new JSONObject();

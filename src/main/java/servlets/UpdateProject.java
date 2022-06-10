@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
 
@@ -30,14 +31,14 @@ public class UpdateProject extends HttpServlet {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 			PreparedStatement st;
-			st = con.prepareStatement("select name, description, owner_id from projects where p_id=?");
+			st = con.prepareStatement(Queries.getProjectByID);
 			st.setString(1, id);
 			ResultSet r1 = st.executeQuery();
 
 			if (r1.next()) {
 				String oldProjectname = r1.getString("name");
 				if (!oldProjectname.equals(projectName)) {
-					st = con.prepareStatement("select * from projects where name=?");
+					st = con.prepareStatement(Queries.getProjectByName);
 					st.setString(1, projectName);
 					ResultSet r2 = st.executeQuery();
 					if (r2.next()) {

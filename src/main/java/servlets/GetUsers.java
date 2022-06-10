@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 
 /**
@@ -32,7 +33,7 @@ public class GetUsers extends HttpServlet {
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
-			PreparedStatement st = con.prepareStatement("select * from user");
+			PreparedStatement st = con.prepareStatement(Queries.getUsers);
 			ResultSet r1 = st.executeQuery();
 			while (r1.next()) {
 				JSONObject obj = new JSONObject();

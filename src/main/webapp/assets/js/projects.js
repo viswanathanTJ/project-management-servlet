@@ -59,7 +59,7 @@ function initializeDatabase() {
                 width: "200",
                 defaultContent: [
                     `<button class="btn btn-success btn-sm" title="Add members" id="btnAdd">Members</button>
-          <button class="btn btn-warning btn-sm" title="Edit project" id="btnEdit">Edit</button>
+          <button class="btn btn-primary btn-sm" title="Edit project" id="btnEdit">Edit</button>
             <button class="btn btn-danger btn-sm" title="Delete project" id="btnDelete">Delete</button>`,
                 ],
             },
@@ -120,7 +120,6 @@ $("#projectsTable").on("click", "#btnAdd", function(e) {
         type: "GET",
         success: function(resp) {
             let members = JSON.parse(resp).members;
-            console.log(members);
             $.each(members, function(index, item) {
                 if (item.isMember != "" || item.isMember != null)
                     jsonObj[item.uid] = item.name;
@@ -174,18 +173,18 @@ $("#projectsTable tbody").on("click", "td", function() {
         success: function(resp) {
             var displayMembers = document.getElementById("displayMembers");
             let members = JSON.parse(resp).members;
+            console.log(members);
             $.each(members, function(index, member) {
-                hasMembers = true;
                 if (member.isMember == "checked") {
+                    hasMembers = true;
                     displayMembers.innerHTML += `<li class="list-group-item">${member.name}</li>`;
                 }
             });
             if (!hasMembers)
-                projectDetails.innerHTML += `<li class="list-group-item">No members available in this project</li>`;
+                listMembers.innerHTML =
+                "<p>No member is available in this project.</p>";
         },
-        timeout: 3000,
     });
-    // projectDetails.innerHTML += `</ul>`;
 });
 
 $(document).ready(function() {

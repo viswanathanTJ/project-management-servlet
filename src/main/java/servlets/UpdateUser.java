@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 
 @WebServlet("/updateUser")
@@ -30,14 +31,14 @@ public class UpdateUser extends HttpServlet {
 			con = DatabaseConnection.getDatabase();
 
 			PreparedStatement st;
-			st = con.prepareStatement("select name, email from user where u_id=?");
+			st = con.prepareStatement(Queries.getUserNameEmailByID);
 			st.setString(1, id);
 			ResultSet r1 = st.executeQuery();
 			if (r1.next()) {
 				String oldUsername = r1.getString("name");
 				String oldEmail = r1.getString("email");
 				if (!oldUsername.equals(username)) {
-					st = con.prepareStatement("select * from user where name=?");
+					st = con.prepareStatement(Queries.getUserByName);
 					st.setString(1, username);
 					ResultSet r2 = st.executeQuery();
 					if (r2.next()) {
@@ -47,7 +48,7 @@ public class UpdateUser extends HttpServlet {
 					}
 				}
 				if (!oldEmail.equals(email)) {
-					st = con.prepareStatement("select * from user where email=?");
+					st = con.prepareStatement(Queries.getUserByEmail);
 					st.setString(1, email);
 					ResultSet r2 = st.executeQuery();
 					if (r2.next()) {
@@ -57,7 +58,7 @@ public class UpdateUser extends HttpServlet {
 					}
 				}
 			}
-			st = con.prepareStatement("update user set name=?, email=?, role=? where u_id=?");
+			st = con.prepareStatement(Queries.updateUserByID);
 			st.setString(1, username);
 			st.setString(2, email);
 			// st.setString(3, password);

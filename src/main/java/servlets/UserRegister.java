@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 import activities.Authentication;
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 
 @WebServlet("/register")
@@ -29,14 +30,14 @@ public class UserRegister extends HttpServlet {
 
 			String username = request.getParameter("name");
 			String email = request.getParameter("email");
-			PreparedStatement st = con.prepareStatement("select * from user where email=?");
+			PreparedStatement st = con.prepareStatement(Queries.getUserByEmail);
 			st.setString(1, email);
 			ResultSet r1 = st.executeQuery();
 			if (r1.next()) {
 				ResponseHandler.errorResponse(response, 406, "Mail ID already exists.");
 				return;
 			}
-			st = con.prepareStatement("select * from user where name=?");
+			st = con.prepareStatement(Queries.getUserByName);
 			st.setString(1, username);
 			r1 = st.executeQuery();
 			if (r1.next()) {

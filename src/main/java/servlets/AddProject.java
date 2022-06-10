@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
+import activities.DBUtil.Query;
 import entities.Project;
 import java.text.SimpleDateFormat;
 
@@ -34,21 +36,19 @@ public class AddProject extends HttpServlet {
 			String owner = request.getParameter("ownerList");
 			System.out.println("Add Project: " + name + " " + desc + " " + owner);
 			HttpSession session = request.getSession();
-			String uid = (String) session.getAttribute("uid");
+			String cuid = (String) session.getAttribute("uid");
 			String ownerName = (String) session.getAttribute("name");
-			System.out.println("Session: " + uid + " " + ownerName);
+			System.out.println("Session: " + cuid + " " + ownerName);
 			PreparedStatement st;
 			Connection con;
 			ResultSet r1;
 			con = DatabaseConnection.getDatabase();
 
-			st = con.prepareStatement("select u_id from user where name=?");
-			st.setString(1, owner);
-			r1 = st.executeQuery();
-			if (r1.next())
-				uid = r1.getString("u_id");
+			String uid = Query.getUserIDByName(owner);
+			if (uid == "" || uid == null)
+				uid = cuid;
 
-			st = con.prepareStatement("select * from projects where name=?");
+			st = con.prepareStatement(Queries.getProjectByName);
 			st.setString(1, name);
 			r1 = st.executeQuery();
 			if (r1.next()) {
@@ -56,7 +56,7 @@ public class AddProject extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 				return;
 			}
-			st = con.prepareStatement("insert into projects (name, description, owner_id) values(?, ?, ?)");
+			st = con.prepareStatement(Queries.putIntoProject);
 			st.setString(1, name);
 			st.setString(2, desc);
 			st.setString(3, uid);

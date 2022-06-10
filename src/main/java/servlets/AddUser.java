@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import activities.Authentication;
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 import entities.User;
 
@@ -36,7 +37,7 @@ public class AddUser extends HttpServlet {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 
-			PreparedStatement st = con.prepareStatement("select * from user where email=?");
+			PreparedStatement st = con.prepareStatement(Queries.getUserByEmail);
 			st.setString(1, email);
 			ResultSet r1 = st.executeQuery();
 			if (r1.next()) {
@@ -44,7 +45,7 @@ public class AddUser extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 				return;
 			}
-			st = con.prepareStatement("select * from user where name=?");
+			st = con.prepareStatement(Queries.getProjectByName);
 			st.setString(1, username);
 			r1 = st.executeQuery();
 			if (r1.next()) {

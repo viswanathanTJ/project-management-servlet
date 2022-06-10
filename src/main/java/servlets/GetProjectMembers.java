@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 
 /**
@@ -34,7 +35,7 @@ public class GetProjectMembers extends HttpServlet {
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
-			PreparedStatement st = con.prepareStatement("select u_id, o_id from project_users p1 where p1.p_id = ?");
+			PreparedStatement st = con.prepareStatement(Queries.getProjectMembers);
 			st.setString(1, pid);
 			ResultSet r1 = st.executeQuery();
 			int oid = 1;
@@ -42,7 +43,7 @@ public class GetProjectMembers extends HttpServlet {
 				oid = r1.getInt("o_id");
 				set.add(r1.getInt("u_id"));
 			}
-			st = con.prepareStatement("select u_id, name from user");
+			st = con.prepareStatement(Queries.getUserIDName);
 			r1 = st.executeQuery();
 			while (r1.next()) {
 				int uid = r1.getInt("u_id");

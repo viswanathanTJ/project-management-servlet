@@ -36,13 +36,13 @@ public class DBUtil {
 
         public static String getUserNameByID(int id) {
             try {
-                st = con.prepareStatement("select name from user where u_id=?");
+                st = con.prepareStatement(Queries.getUserNameByID);
                 st.setInt(1, id);
                 r1 = st.executeQuery();
                 if (r1.next())
                     return r1.getString("name");
                 else
-                    return "admin";
+                    return "";
             } catch (SQLException e) {
                 e.printStackTrace();
                 return "Error " + e.getMessage();
@@ -52,7 +52,7 @@ public class DBUtil {
         public static String getUserIDByName(String name) {
             PreparedStatement st;
             try {
-                st = con.prepareStatement("select u_id from user where name=?");
+                st = con.prepareStatement(Queries.getUserIDByName);
                 st.setString(1, name);
                 r1 = st.executeQuery();
                 if (r1.next())
