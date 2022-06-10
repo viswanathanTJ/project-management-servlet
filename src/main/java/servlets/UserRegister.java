@@ -24,7 +24,9 @@ public class UserRegister extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			Connection con = DatabaseConnection.initializeDatabase();
+			Connection con;
+			con = DatabaseConnection.getDatabase();
+
 			String username = request.getParameter("name");
 			String email = request.getParameter("email");
 			PreparedStatement st = con.prepareStatement("select * from user where email=?");

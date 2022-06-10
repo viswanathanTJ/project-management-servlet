@@ -13,6 +13,13 @@
     overflow-y: auto;
 }
 
+.list-group {
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
 #projectsTable tr {
     cursor: pointer;
 }

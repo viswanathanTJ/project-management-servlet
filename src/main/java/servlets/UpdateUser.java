@@ -27,7 +27,7 @@ public class UpdateUser extends HttpServlet {
 			String id = request.getParameter("id");
 			System.out.println("Update Request: " + username + " " + email + " " + role + " " + id);
 			Connection con;
-			con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.getDatabase();
 
 			PreparedStatement st;
 			st = con.prepareStatement("select name, email from user where u_id=?");

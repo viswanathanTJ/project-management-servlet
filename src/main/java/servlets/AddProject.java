@@ -40,7 +40,7 @@ public class AddProject extends HttpServlet {
 			PreparedStatement st;
 			Connection con;
 			ResultSet r1;
-			con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.getDatabase();
 
 			st = con.prepareStatement("select u_id from user where name=?");
 			st.setString(1, owner);

@@ -36,7 +36,7 @@ function loadData() {
         url: "getUsers",
         type: "GET",
         success: function(resp) {
-            users = JSON.parse(resp.responseText).users;
+            users = resp.users;
             $.each(users, function(index, item) {
                 sno = index + 1;
                 addId = item.uid;

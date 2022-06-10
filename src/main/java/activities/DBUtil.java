@@ -9,17 +9,23 @@ import java.sql.SQLException;
 public class DBUtil {
     public static Connection con = null;
 
-    public class DatabaseConnection {
-        public static Connection initializeDatabase()
-                throws SQLException, ClassNotFoundException {
-            String dbDriver = "com.mysql.jdbc.Driver";
-            String dbURL = "jdbc:mysql://localhost:3306/";
-            String dbName = "test";
-            String dbUsername = "root";
-            String dbPassword = "";
+    // public static Connection createConnection() throws ClassNotFoundException,
+    // SQLException {
 
-            Class.forName(dbDriver);
-            con = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
+    // }
+
+    public class DatabaseConnection {
+        public static Connection getDatabase()
+                throws SQLException, ClassNotFoundException {
+            if (con == null) {
+                String dbDriver = "com.mysql.cj.jdbc.Driver";
+                String dbURL = "jdbc:mysql://localhost:3306/";
+                String dbName = "test";
+                String dbUsername = "root";
+                String dbPassword = "";
+                Class.forName(dbDriver);
+                con = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
+            }
             return con;
         }
     }
@@ -52,7 +58,7 @@ public class DBUtil {
                 if (r1.next())
                     return r1.getString("u_id");
                 else
-                    return null;
+                    return "";
             } catch (SQLException e) {
                 e.printStackTrace();
                 return "Error " + e.getMessage();

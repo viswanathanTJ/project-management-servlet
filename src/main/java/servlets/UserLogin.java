@@ -38,7 +38,8 @@ public class UserLogin extends HttpServlet {
 			String dec = ResponseHandler.decrypt(enc);
 			System.out.println(username + " " + password + "-" + enc + " " + dec);
 
-			Connection con = DatabaseConnection.initializeDatabase();
+			Connection con;
+			con = DatabaseConnection.getDatabase();
 
 			PreparedStatement st = con.prepareStatement("select * from user where name=?");
 			st.setString(1, username);

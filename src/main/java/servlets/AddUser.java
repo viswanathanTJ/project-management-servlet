@@ -34,7 +34,7 @@ public class AddUser extends HttpServlet {
 			String password = request.getParameter("password");
 			String role = request.getParameter("role");
 			Connection con;
-			con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.getDatabase();
 
 			PreparedStatement st = con.prepareStatement("select * from user where email=?");
 			st.setString(1, email);

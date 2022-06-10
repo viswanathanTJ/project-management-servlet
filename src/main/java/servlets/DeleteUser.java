@@ -22,7 +22,8 @@ public class DeleteUser extends HttpServlet {
 		System.out.println("Delete Request: " + id);
 		try {
 			Connection con;
-			con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.getDatabase();
+
 			PreparedStatement st;
 			st = con.prepareStatement("delete from user where u_id=?");
 			st.setString(1, id);

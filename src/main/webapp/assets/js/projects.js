@@ -10,6 +10,7 @@ var jsonObj = {};
 var sno = 0,
     pid,
     coname,
+    prname,
     addId = 0;
 
 // VALIDATION
@@ -93,7 +94,7 @@ function loadOwner() {
         url: "getUsers",
         type: "GET",
         success: function(resp) {
-            users = JSON.parse(resp).users;
+            users = resp.users;
             $.each(users, function(index, item) {
                 if (index === 0)
                     ownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
@@ -104,19 +105,16 @@ function loadOwner() {
     });
 }
 
-// Get Users selected
-$(document).on("click", "input:checkbox[name=filter]:checked", function() {});
-
 // Add Button
 $("#projectsTable").on("click", "#btnAdd", function(e) {
-    // alert('add')
     $("#formAddModal").modal("show");
-    // $("#formEditModal").modal("show");
     row = $(this).parents("tr")[0];
     rowData = table.row(row).data();
     pid = rowData[0];
     coname = rowData[4];
+    prname = rowData[2];
     pTitle.innerHTML = "Project: " + rowData[2];
+    listMembers.innerHTML = "";
     $.ajax({
         url: "getProjectMembers?pid=" + rowData[0],
         type: "GET",
@@ -158,23 +156,36 @@ $("#projectsTable").on("click", "#btnDelete", function(e) {
 });
 
 // Info Modal
-// $("#projectsTable tbody").on("click", "tr", function () {
 $("#projectsTable tbody").on("click", "td", function() {
     if ($(this).index() == 4) return;
     const projectDetails = document.getElementById("projectDetails");
     row = $(this).parents("tr")[0];
     $("#formShowModal").modal("show");
     var proData = table.row(row).data();
-    console.log(proData);
+    var hasMembers = false;
     projectDetails.innerHTML = `<h4>Title: ${proData[2]}</h4>
   <p>Description: ${proData[3]}</p>
   <hr>
   <h5>Members</h5>
-  <ul>
-    <li>Test</li>
-    <li>Another</li>
-  </ul>
-  `;
+  <ul class="list-group" id="displayMembers"></ul>`;
+    $.ajax({
+        url: "getProjectMembers?pid=" + proData[0],
+        type: "GET",
+        success: function(resp) {
+            var displayMembers = document.getElementById("displayMembers");
+            let members = JSON.parse(resp).members;
+            hasMembers = true;
+            $.each(members, function(index, member) {
+                if (member.isMember == "checked") {
+                    displayMembers.innerHTML += `<li class="list-group-item">${member.name}</li>`;
+                }
+            });
+        },
+        timeout: 3000,
+    });
+    if (!hasMembers)
+        projectDetails.innerHTML += `<li class="list-group-item">No members available in this project</li>`;
+    // projectDetails.innerHTML += `</ul>`;
 });
 
 $(document).ready(function() {
@@ -241,21 +252,35 @@ $(document).ready(function() {
     $("form[name=add-members]").submit(function(e) {
         var $form = $(this);
         var data = $form.serialize();
-        console.log(data);
+        console.log(data + "&pid=" + pid + "&oname=" + coname);
         $.ajax({
-            url: "AddMembers",
+            url: "ModifyMembers",
             type: "POST",
             data: data + "&pid=" + pid + "&oname=" + coname,
             success: function(resp) {
                 $("#add-members")[0].reset();
                 $("#formAddModal").modal("hide");
-                // var item = JSON.parse(resp);
-                toastsFactory.createToast({
-                    type: "system",
-                    icon: "check-circle",
-                    message: "Modified successfully",
-                    duration: 1000,
-                });
+                if (resp.inserted == 0 && resp.removed == 0)
+                    toastsFactory.createToast({
+                        type: "system",
+                        icon: "check-circle",
+                        message: "Kindly add/remove members to submit",
+                        duration: 1000,
+                    });
+                if (resp.inserted > 0)
+                    toastsFactory.createToast({
+                        type: "system",
+                        icon: "check-circle",
+                        message: "Added " + resp.inserted + " members to " + prname,
+                        duration: 1000,
+                    });
+                if (resp.removed > 0)
+                    toastsFactory.createToast({
+                        type: "system",
+                        icon: "check-circle",
+                        message: "Removed " + resp.removed + " members to " + prname,
+                        duration: 1000,
+                    });
             },
             error: function(resp) {
                 toastsFactory.createToast({

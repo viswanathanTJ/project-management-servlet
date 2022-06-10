@@ -22,7 +22,8 @@ public class DeleteProject extends HttpServlet {
 		System.out.println("Delete Project Request: " + id);
 		try {
 			Connection con;
-			con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.getDatabase();
+
 			PreparedStatement st;
 			st = con.prepareStatement("delete from projects where p_id=?");
 			st.setString(1, id);

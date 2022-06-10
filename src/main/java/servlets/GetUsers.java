@@ -31,7 +31,7 @@ public class GetUsers extends HttpServlet {
 		JSONArray array = new JSONArray();
 		try {
 			Connection con;
-			con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.getDatabase();
 			PreparedStatement st = con.prepareStatement("select * from user");
 			ResultSet r1 = st.executeQuery();
 			while (r1.next()) {
@@ -48,7 +48,10 @@ public class GetUsers extends HttpServlet {
 				array.put(obj);
 			}
 			jsonObject.put("users", array);
-			response.getWriter().print(jsonObject);
+			// response set json
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(jsonObject.toString());
 		} catch (ClassNotFoundException | SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();

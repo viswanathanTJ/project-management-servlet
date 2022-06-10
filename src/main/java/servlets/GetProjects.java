@@ -32,7 +32,7 @@ public class GetProjects extends HttpServlet {
 		JSONArray array = new JSONArray();
 		try {
 			Connection con;
-			con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.getDatabase();
 			PreparedStatement st = con.prepareStatement("select * from projects");
 			ResultSet r1 = st.executeQuery();
 			while (r1.next()) {

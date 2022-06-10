@@ -28,7 +28,7 @@ public class UpdateProject extends HttpServlet {
 			System.out.println("Update Project Request: " + projectName + " " + edesc + " " + eowner + " " + id);
 			// Update project
 			Connection con;
-			con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.getDatabase();
 			PreparedStatement st;
 			st = con.prepareStatement("select name, description, owner_id from projects where p_id=?");
 			st.setString(1, id);
