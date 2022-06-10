@@ -20,8 +20,8 @@ function initializeDatabase() {
                 targets: -1,
                 width: "50",
                 defaultContent: [
-                    `<a href="#" id="btnEdit"><span><i class="fas fa-edit"></i></span></a>
-            <a href="#" id="btnDelete"><span><i class="fas fa-trash"></i></span></a>`,
+                    `<button type="button" class="btn btn-primary btn-sm" id="btnEdit">Edit</button>
+            <button type="button" class="btn btn-danger btn-sm" id="btnDelete">Delete</button>`,
                 ],
             },
         ],

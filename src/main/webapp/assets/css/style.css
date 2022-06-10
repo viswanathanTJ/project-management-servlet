@@ -2,17 +2,6 @@
     color: #fff;
 }
 
-
-/* Modal scroll view  */
-
-.modal-dialog {
-    overflow-y: initial !important;
-}
-
-.modal-body {
-    overflow-y: auto;
-}
-
 .list-group {
     max-height: 300px;
     margin-bottom: 10px;
@@ -24,9 +13,22 @@
     cursor: pointer;
 }
 
-table.dataTable tbody td {
-    word-break: break-word;
-    vertical-align: top;
+#projectsTable td {
+    max-width: 100px;
+    text-overflow: ellipsis;
+}
+
+.action {
+    height: 20px;
+    width: 50px;
+    font-size: 12px;
+    text-align: center;
+}
+
+table.dataTable td {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 button {

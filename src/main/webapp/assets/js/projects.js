@@ -51,16 +51,16 @@ function initializeDatabase() {
             { targets: 0, visible: false },
             { targets: 1, width: "50" },
             { targets: 2, width: "200" },
-            { targets: 3, width: "400" },
+            { targets: 3, width: "400", className: "text-overflow: ellipsis;" },
             { targets: 4, width: "80" },
             {
                 className: "text-center",
                 targets: -1,
-                width: "90",
+                width: "200",
                 defaultContent: [
-                    `<a href="#" title="Add members" id="btnAdd"><span><i class="fas fa-plus"></i></span></a>
-          <a href="#" title="Edit project" id="btnEdit"><span><i class="fas fa-edit"></i></span></a>
-            <a href="#" title="Delete project" id="btnDelete"><span><i class="fas fa-trash"></i></span></a>`,
+                    `<button class="btn btn-success btn-sm" title="Add members" id="btnAdd">Members</button>
+          <button class="btn btn-warning btn-sm" title="Edit project" id="btnEdit">Edit</button>
+            <button class="btn btn-danger btn-sm" title="Delete project" id="btnDelete">Delete</button>`,
                 ],
             },
         ],
@@ -174,17 +174,17 @@ $("#projectsTable tbody").on("click", "td", function() {
         success: function(resp) {
             var displayMembers = document.getElementById("displayMembers");
             let members = JSON.parse(resp).members;
-            hasMembers = true;
             $.each(members, function(index, member) {
+                hasMembers = true;
                 if (member.isMember == "checked") {
                     displayMembers.innerHTML += `<li class="list-group-item">${member.name}</li>`;
                 }
             });
+            if (!hasMembers)
+                projectDetails.innerHTML += `<li class="list-group-item">No members available in this project</li>`;
         },
         timeout: 3000,
     });
-    if (!hasMembers)
-        projectDetails.innerHTML += `<li class="list-group-item">No members available in this project</li>`;
     // projectDetails.innerHTML += `</ul>`;
 });
 

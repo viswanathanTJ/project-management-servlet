@@ -3,13 +3,9 @@ package activities;
 public class Queries {
     public static String addMembers = """
                     INSERT INTO project_users (p_id, u_id, o_id)
-                    SELECT * FROM (SELECT ?
-                        AS p_id,?
-                        AS u_id,?
-                        AS o_id)
-                        AS tmp
-                        WHERE NOT
-                        EXISTS (
+                    SELECT * FROM (SELECT ? AS p_id, ? AS u_id, ? AS o_id) AS tmp
+                    WHERE NOT
+                    EXISTS (
                         SELECT p_id, u_id FROM project_users WHERE p_id = ? AND u_id = ?
                     ) LIMIT 1;
             """;
