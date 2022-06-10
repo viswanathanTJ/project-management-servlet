@@ -10,12 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.json.JSONObject;
 
 import activities.Authentication;
 import activities.Queries;
+import activities.SessionHandler;
 import activities.DBUtil.DatabaseConnection;
 
 /**
@@ -35,9 +33,7 @@ public class UserLogin extends HttpServlet {
 			System.out.println("Login1");
 			String username = request.getParameter("name");
 			String password = request.getParameter("password");
-			String enc = ResponseHandler.encrypt(username);
-			String dec = ResponseHandler.decrypt(enc);
-			System.out.println(username + " " + password + "-" + enc + " " + dec);
+			System.out.println(username + " " + password);
 
 			Connection con;
 			con = DatabaseConnection.getDatabase();
@@ -55,27 +51,22 @@ public class UserLogin extends HttpServlet {
 					errorResponse(response, "Invalid password.");
 					return;
 				} else {
-					HttpSession session = request.getSession();
-					session.setAttribute("email", email);
-					session.setAttribute("uid", r1.getString("u_id"));
-					session.setAttribute("name", username);
-					session.setAttribute("role", dbrole);
-					session.setMaxInactiveInterval(-1);
-					// session.setMaxInactiveInterval(8092);
-					JSONObject user = new JSONObject();
-					user.put("name", ResponseHandler.encrypt(username));
-					user.put("role", ResponseHandler.encrypt(dbrole));
-					user.put("redirect", dbrole);
-					ResponseHandler.successResponse(response, user.toString());
+					System.out.println("Login successful");
+					SessionHandler session = new SessionHandler(request);
+					session.setEmail(email);
+					session.setName(username);
+					session.setRole(dbrole);
+					session.setUID(r1.getString("u_id"));
+					session.setInterval(-1);
+					response.getWriter().print(dbrole);
 				}
 			} else {
 				response.getWriter().print("Invalid Username.");
 				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 				return;
 			}
-
-			// st.close();
-			// con.close();
+			st.close();
+			con.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			response.getWriter().print("Connection error123.");

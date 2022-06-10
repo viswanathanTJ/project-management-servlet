@@ -6,16 +6,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import activities.SessionHandler;
 
 @WebServlet("/check")
 public class CheckUser extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		String role = (String) session.getAttribute("role");
-		if (role == null)
+		SessionHandler session = new SessionHandler(request);
+		String role = session.getRole();
+		if (role == null || role == "")
 			response.getWriter().print("login");
 		else
 			response.getWriter().print(role);
@@ -27,4 +28,3 @@ public class CheckUser extends HttpServlet {
 		response.getWriter().print(ResponseHandler.decrypt(role));
 	}
 }
-

@@ -2,63 +2,188 @@
 <html lang="en">
 
 <head>
-    <script src="assets/js/jquery/jquery.min.js"></script>
-    <script src="assets/js/checkuser.js"></script>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/toast.css" />
-    <link rel="stylesheet" href="assets/css/modal.css" />
-    <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
-    <!-- <script src="assets/js/jquery.jquery/jquery.dataTables.min.js"></script>
+  <script src="assets/js/jquery/jquery.min.js"></script>
+  <script src="assets/js/checkuser.js"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/toast.css" />
+  <link rel="stylesheet" href="assets/css/modal.css" />
+  <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+  <!-- <script src="assets/js/jquery.jquery/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap/bootstrap.min.js"></script> -->
 </head>
 
 <body>
-    <!-- example 5 left and center only with empty space right -->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary flex-sm-nowrap flex-wrap">
-        <div class="container-fluid">
-            <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbar5">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-            <span class="navbar-brand flex-grow-1">Admin</span>
-            <div class="navbar-collapse collapse flex-grow-1 justify-content-center" id="navbar5">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin_projects">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin_tasks">Tasks</a>
-                    </li>
-                </ul>
-                <div class="flex-grow-1"></div>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <button class="navBtn" onclick="logout()">
-                <i class="fa fa-sign-out"></i> Logout
-              </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container mt-4" id="tasks"></div>
+  <!-- example 5 left and center only with empty space right -->
+  <nav class="navbar navbar-expand-sm navbar-dark bg-primary flex-sm-nowrap flex-wrap">
+    <div class="container-fluid">
+      <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbar5">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <span class="navbar-brand flex-grow-1">Admin</span>
+      <div class="navbar-collapse collapse flex-grow-1 justify-content-center" id="navbar5">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="admin">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="admin_projects">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="admin_tasks">Tasks</a>
+          </li>
+        </ul>
+        <div class="flex-grow-1"></div>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <button class="navBtn" onclick="logout()">
+              <i class="fa fa-sign-out"></i> Logout
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-2">
+    <div class="float-left">
+      <h3>Tasks</h3>
+    </div>
+    <div class="float-right">
+      <button class="btn btn-primary" id="createBtn" data-toggle="modal" data-target="#formModal">
+        <i class="fa fa-add"></i> Create Tasks
+      </button>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <br />
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mb-4">
+        <div class="card">
+          <img class="card-img-top" src="" alt="" />
 
-    <script src="assets/js/jquery/jquery.min.js"></script>
-    <script src="assets/js/bootstrap/bootstrap.min.js"></script>
-    <script src="assets/js/toast.js"></script>
-    <script src="assets/js/validator.js"></script>
-    <script src="assets/js/admin.js"></script>
-    <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
-    <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>
+          <div class="card-body">
+            <h5 class="card-title">Task title</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Project title</h6>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up
+              the bulk of the card's content.
+            </p>
+
+            <button class="btn btn-primary btn-sm"> Edit task </button>
+            <button class="btn btn-danger btn-sm"> Delete task </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mb-4">
+        <div class="card">
+          <img class="card-img-top" src="" alt="" />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up
+              the bulk of the card's content.
+            </p>
+
+            <a href="#" class="btn btn-outline-primary btn-sm"> Card link </a>
+            <a href="#" class="btn btn-outline-secondary btn-sm">
+              <i class="far fa-heart"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Container -->
+  <!-- Modal -->
+  <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formModalLabel">Create Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form name="add-task" id="add-taks">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" id="title" name="title" aria-describedby="titleHelp"
+                placeholder="Enter Task Title" required />
+            </div>
+            <div class="form-group">
+              <label for="desc">Description</label>
+              <textarea class="form-control" id="desc" name="desc" aria-describedby="descHelp" rows="5"
+                placeholder="Enter Description atleast 10 characters" required></textarea>
+            </div>
+            <div class="row" style="justify-content:space-around; display:flex">
+              <div class="form-group col-xs-6">
+                <label for="startDate">Start</label>
+                <input id="startDate" class="form-control" min="2022-06-10" max="2024-12-31" type="date" required />
+              </div>
+              <div class="form-group col-xs-6">
+                <label for="endDate">End</label>
+                <input id="endDate" class="form-control" min="2022-06-10" max="2024-12-31" type="date" required />
+              </div>
+            </div>
+
+            <div class="row" style="justify-content:space-around; display:flex">
+              <div class="form-group col-xs-6">
+                <label for="priority">Assignee</label>
+                <br />
+                <select class="form-control form-two" id="assignee" name="assignee"
+                  aria-label=".form-select-lg example">
+                  <!-- Filled by JS -->
+                </select>
+              </div>
+              <div class="form-group col-xs-6">
+                <label for="priority">Priority</label>
+                <br />
+                <select class="form-control form-two" id="priority" name="priority"
+                  aria-label=".form-select-lg example">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="project">Project</label>
+              <br />
+              <select class="form-control" id="project" name="project" aria-label=".form-select-lg example">
+                <!-- Filled by JS -->
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <input type="submit" id="submit" class="btn btn-primary" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal end -->
+
+  <script src="assets/js/jquery/jquery.min.js"></script>
+  <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+  <script src="assets/js/tasks.js"></script>
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
+  <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>
 </body>
 
 </html>

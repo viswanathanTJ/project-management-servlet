@@ -75,18 +75,7 @@ $(document).ready(function () {
         error.innerHTML = "Login Successful";
         $("#loginBtn").removeClass("loading");
         console.log(resp);
-        // CookieManager.setCookie({
-        //   name: "name",
-        //   value: resp.name,
-        //   days: 1,
-        // });
-        // CookieManager.setCookie({
-        //   name: "role",
-        //   value: resp.role,
-        //   days: 1,
-        // });
-        console.log(resp.role);
-        window.location.replace(resp.redirect);
+        window.location.replace(resp);
         $("#loginBtn").removeClass("loading");
       },
       error: function (resp) {

@@ -1,72 +1,81 @@
 .nav-item {
-    color: #fff;
+  color: #fff;
+}
+
+.card-container {
+  display: flex;
+}
+
+input[type="date"],
+.form-two {
+  width: 200px !important;
 }
 
 .list-group {
-    max-height: 300px;
-    margin-bottom: 10px;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+  max-height: 300px;
+  margin-bottom: 10px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 #projectsTable tr {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #projectsTable td {
-    max-width: 100px;
-    text-overflow: ellipsis;
+  max-width: 100px;
+  text-overflow: ellipsis;
 }
 
 .action {
-    height: 20px;
-    width: 50px;
-    font-size: 12px;
-    text-align: center;
+  height: 20px;
+  width: 50px;
+  font-size: 12px;
+  text-align: center;
 }
 
 table.dataTable td {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 span {
-    padding-right: 10px;
+  padding-right: 10px;
 }
 
 div#usersTable_filter,
 div#projectsTable_filter {
-    float: right;
+  float: right;
 }
 
 .modal-body {
-    word-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .navBtn {
-    padding: 0.4rem 1.4rem;
-    cursor: pointer !important;
-    border: 3;
-    border-radius: 5rem;
-    background-color: #fff;
-    color: #000;
-    font-weight: 600;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+  padding: 0.4rem 1.4rem;
+  cursor: pointer !important;
+  border: 3;
+  border-radius: 5rem;
+  background-color: #fff;
+  color: #000;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
 }
 
 @media (min-width: 768px) {
-    .navbar-brand.abs {
-        position: absolute;
-        width: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-    }
+  .navbar-brand.abs {
+    position: absolute;
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
 }

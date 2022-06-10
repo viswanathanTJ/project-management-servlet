@@ -12,11 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import activities.Queries;
+import activities.SessionHandler;
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
 import entities.Project;
@@ -35,9 +35,10 @@ public class AddProject extends HttpServlet {
 			String desc = request.getParameter("desc");
 			String owner = request.getParameter("ownerList");
 			System.out.println("Add Project: " + name + " " + desc + " " + owner);
-			HttpSession session = request.getSession();
-			String cuid = (String) session.getAttribute("uid");
-			String ownerName = (String) session.getAttribute("name");
+			SessionHandler session = new SessionHandler(request);
+
+			String cuid = session.getUID();
+			String ownerName = session.getName();
 			System.out.println("Session: " + cuid + " " + ownerName);
 			PreparedStatement st;
 			Connection con;

@@ -45,7 +45,7 @@ public class AddUser extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 				return;
 			}
-			st = con.prepareStatement(Queries.getProjectByName);
+			st = con.prepareStatement(Queries.getUserByName);
 			st.setString(1, username);
 			r1 = st.executeQuery();
 			if (r1.next()) {

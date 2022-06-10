@@ -12,20 +12,20 @@
     <link rel="stylesheet" href="assets/css/toast.css" />
     <link rel="stylesheet" href="assets/css/modal.css" />
     <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-    <!-- <script src="assets/js/jquery.jquery/jquery.dataTables.min.js"></script>
-    <script src="assets/js/dataTables.bootstrap/bootstrap.min.js"></script> -->
 </head>
 
 <body>
     <!-- example 5 left and center only with empty space right -->
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary flex-sm-nowrap flex-wrap">
         <div class="container-fluid">
-            <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbar5">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar5">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <span class="navbar-brand flex-grow-1">Admin</span>
             <div class="navbar-collapse collapse flex-grow-1 justify-content-center" id="navbar5">
                 <ul class="navbar-nav mx-auto">
@@ -48,14 +48,14 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-4" id="users">
+    <div class="container mt-1" id="users">
         <div class="float-left">
             <h3>Users</h3>
         </div>
         <div class="float-right">
             <button class="btn btn-primary" data-toggle="modal" data-target="#formModal">
-          <i class="fa fa-add"></i>Add User
-        </button>
+                <i class="fa fa-add"></i>Add User
+            </button>
         </div>
         <br /><br /><br />
         <table id="usersTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -72,112 +72,96 @@
             </thead>
 
             <tbody id="tbody">
-                <!-- <tr>
-            <td>1</td>
-            <td>admin</td>
-            <td>admin@admin.com</td>
-            <td>admin</td>
-            <td>2022/04/25</td>
-            <td>
-              &nbsp;&nbsp;
-              <span><i class="fas fa-edit"></i></span>
-              &nbsp;
-              <span><i class="fas fa-trash"></i></span>
-            </td>
-          </tr> -->
             </tbody>
         </table>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="formModalLabel">Add User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <form name="add-user" id="add-user">
+                <form name="add-user" id="add-user">
+                    <div class="modal-body">
                         <div class="form-group">
                             <label for="name">Username</label>
-                            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter username" required />
+                            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp"
+                                placeholder="Enter username" required />
                         </div>
                         <div class="form-group">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" required />
+                            <input type="email" class="form-control" id="email" name="email"
+                                aria-describedby="emailHelp" placeholder="Enter email" required />
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" required />
                         </div>
                         <div class="form-group">
                             <label for="role">Role</label>
                             <br />
                             <select class="form-control" id="role" name="role" aria-label=".form-select-lg example">
-                  <option value="employee" selected>Employee</option>
-                  <option value="manager">Manager</option>
-                  <option value="admin">Admin</option>
-                </select>
+                                <option value="employee" selected>Employee</option>
+                                <option value="manager">Manager</option>
+                                <option value="admin">Admin</option>
+                            </select>
                         </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              Close
-            </button>
-                    <input type="submit" id="submit" class="btn btn-primary" value="Submit" />
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                        <input type="submit" id="submit" class="btn btn-primary" value="Submit" />
+                    </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Modal end -->
     <!-- Edit Modal -->
-    <div class="modal fade" id="formEditModal" tabindex="-1" role="dialog" aria-labelledby="formEditModalLabel" aria-hidden="true">
+    <div class="modal fade" id="formEditModal" tabindex="-1" role="dialog" aria-labelledby="formEditModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="formModalLabel">Edit User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form id="edit-user" name="edit-user">
                         <div class="form-group">
                             <label for="name">Username</label>
-                            <input type="text" class="form-control" id="ename" name="ename" aria-describedby="enameHelp" placeholder="Enter username" required />
+                            <input type="text" class="form-control" id="ename" name="ename" aria-describedby="enameHelp"
+                                placeholder="Enter username" required />
                         </div>
                         <div class="form-group">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="eemail" name="eemail" aria-describedby="eemailHelp" placeholder="Enter email" required />
+                            <input type="email" class="form-control" id="eemail" name="eemail"
+                                aria-describedby="eemailHelp" placeholder="Enter email" required />
                         </div>
-                        <!-- <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="epassword"
-                  name="epassword"
-                  placeholder="New Password"
-                />
-              </div> -->
                         <div class="form-group">
                             <label for="role">Role</label>
                             <br />
                             <select class="form-control" id="erole" name="erole" aria-label=".form-select-lg example">
-                  <option value="employee" selected>Employee</option>
-                  <option value="manager">Manager</option>
-                  <option value="admin">Admin</option>
-                </select>
+                                <option value="employee" selected>Employee</option>
+                                <option value="manager">Manager</option>
+                                <option value="admin">Admin</option>
+                            </select>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              Close
-            </button>
+                        Close
+                    </button>
                     <input type="submit" id="esubmit" class="btn btn-primary" value="Update" />
                 </div>
                 </form>
@@ -212,13 +196,11 @@
         </div>
 
     </div>
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <script src="assets/js/jquery/jquery.min.js"></script>
     <script src="assets/js/bootstrap/bootstrap.min.js"></script>
     <script src="assets/js/toast.js"></script>
     <script src="assets/js/validator.js"></script>
     <script src="assets/js/admin.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
     <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
     <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>
 </body>

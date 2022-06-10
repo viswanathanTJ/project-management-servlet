@@ -50,6 +50,7 @@ public class GetProjects extends HttpServlet {
 				array.put(obj);
 			}
 			jsonObject.put("projects", array);
+			response.setContentType("application/json");
 			response.getWriter().print(jsonObject);
 			response.setStatus(200);
 		} catch (ClassNotFoundException | SQLException e) {

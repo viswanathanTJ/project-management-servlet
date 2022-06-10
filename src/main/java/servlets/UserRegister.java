@@ -11,12 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
 import activities.Authentication;
 import activities.Queries;
+import activities.SessionHandler;
 import activities.DBUtil.DatabaseConnection;
 
 @WebServlet("/register")
@@ -60,12 +60,24 @@ public class UserRegister extends HttpServlet {
 			String hashPassword = Authentication.hashPassword(username, password);
 			st.setString(3, hashPassword);
 			st.setString(4, role);
-			st.executeUpdate();
-			HttpSession session = request.getSession();
-			session.setAttribute("email", email);
-			session.setAttribute("name", username);
-			session.setAttribute("role", role);
-			session.setMaxInactiveInterval(10 * 60);
+			int row = st.executeUpdate();
+			if (row == 0) {
+				throw new SQLException("Creating user failed, no rows affected.");
+			}
+			SessionHandler session = new SessionHandler(request);
+			try (ResultSet generatedKeys = st.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					session.setUID(generatedKeys.getLong(1) + "");
+					System.out.println("User registered successfully with ID = " + generatedKeys.getLong(1));
+				} else {
+					throw new SQLException("Creating user failed, no ID obtained.");
+				}
+			}
+
+			session.setEmail(email);
+			session.setName(username);
+			session.setRole(role);
+			session.setInterval(60 * 10);
 			JSONObject user = new JSONObject();
 			user.put("name", ResponseHandler.encrypt(username));
 			user.put("role", ResponseHandler.encrypt(role));
