@@ -6,6 +6,7 @@ const pTitle = document.getElementById("pTitle");
 const listMembers = document.getElementById("listMembers");
 const eowner = document.getElementById("eowner");
 const ownerList = document.getElementById("ownerList");
+const eownerList = document.getElementById("eownerList");
 var jsonObj = {};
 var sno = 0,
   pid,
@@ -75,7 +76,7 @@ function loadData() {
     url: "getProjects",
     type: "GET",
     success: function (resp) {
-      projects = JSON.parse(resp).projects;
+      projects = resp.projects;
       $.each(projects, function (index, item) {
         sno = index + 1;
         addId = item.p_id;
@@ -96,10 +97,15 @@ function loadOwner() {
     success: function (resp) {
       users = resp.users;
       $.each(users, function (index, item) {
-        if (index === 0)
-          ownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
-        else
-          ownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+        if (item.role == "admin" || item.role == "manager") {
+          if (index === 0) {
+            eownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
+            ownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
+          } else {
+            eownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+            ownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+          }
+        }
       });
     },
   });
@@ -278,7 +284,7 @@ $(document).ready(function () {
           toastsFactory.createToast({
             type: "system",
             icon: "check-circle",
-            message: "Removed " + resp.removed + " members to " + prname,
+            message: "Removed " + resp.removed + " members from " + prname,
             duration: 1000,
           });
       },

@@ -11,47 +11,55 @@
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/toast.css" />
   <link rel="stylesheet" href="assets/css/modal.css" />
+  <link rel="icon" type="image/png" href="assets/icons/icon.png" sizes="96x96">
   <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
   <!-- <script src="assets/js/jquery.jquery/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap/bootstrap.min.js"></script> -->
 </head>
 
-<body>
-  <!-- example 5 left and center only with empty space right -->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-primary flex-sm-nowrap flex-wrap">
-    <div class="container-fluid">
-      <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbar5">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <span class="navbar-brand flex-grow-1">Admin</span>
-      <div class="navbar-collapse collapse flex-grow-1 justify-content-center" id="navbar5">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="admin">Users</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="admin_projects">Projects</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="admin_tasks">Tasks</a>
-          </li>
-        </ul>
-        <div class="flex-grow-1"></div>
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <button class="navBtn" onclick="logout()">
-              <i class="fa fa-sign-out"></i> Logout
-            </button>
-          </li>
-        </ul>
-      </div>
+<body id="body-pd">
+  <header class="header" id="header">
+    <div>
+      <h3>Tasks</h3>
     </div>
-  </nav>
+    <div class="profile_img">
+      <!-- <img src='assets/icons/profile.png' style='width: 50px;height: 50px;vertical-align: middle' /> -->
+      A
+    </div>
+  </header>
+  <div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+      <div>
+        <a href="#" class="nav_logo">
+          <i class='bx bx-menu nav_logo-icon' id="header-toggle"></i>
+          <span class="nav_logo-name"><img width="37px" src="assets/icons/icon.png" alt="project_management"></span>
+        </a>
+        <div class="nav_list"> <a href="#" class="nav_link">
+            <i class='bx bx-grid-alt nav_icon'></i>
+            <span class="nav_name">Dashboard</span>
+          </a>
+          <a href="#" class="nav_link">
+            <i class='bx bx-user nav_icon'></i>
+            <span class="nav_name">Users</span> </a>
+          <a href="admin_projects" class="nav_link">
+            <i class='fa-solid fa-diagram-project nav_icon'></i>
+            <span class="nav_name">Projects</span>
+          </a>
+          <a href="admin_tasks" class="nav_link active">
+            <i class='bx bx-task nav_icon'></i>
+            <span class="nav_name">Tasks</span>
+          </a>
+        </div>
+      </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span>
+      </a>
+    </nav>
+  </div>
+
   <div class="container mt-2">
     <div class="float-left">
       <h3>Tasks</h3>
@@ -77,25 +85,34 @@
               Some quick example text to build on the card title and make up
               the bulk of the card's content.
             </p>
+            <p class="card-text text-muted">
+              Assigned to &nbsp;&nbsp;&nbsp;<img width="40px" src="assets/icons/arrow-right.png" />
+              &nbsp;&nbsp;&nbsp;viswanathan
+            </p>
 
             <button class="btn btn-primary btn-sm"> Edit task </button>
             <button class="btn btn-danger btn-sm"> Delete task </button>
           </div>
         </div>
       </div>
+      <!-- Row end -->
       <div class="col-lg-6 mb-4">
         <div class="card">
           <img class="card-img-top" src="" alt="" />
+
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
+            <h5 class="card-title">Task title</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Project title</h6>
             <p class="card-text">
               Some quick example text to build on the card title and make up
               the bulk of the card's content.
             </p>
+            <p class="card-text text-muted">
+              Assigned to &nbsp;&nbsp;&nbsp;<img width="40px" src="assets/icons/arrow-right.png" />
+            </p>
 
-            <a href="#" class="btn btn-outline-primary btn-sm"> Card link </a>
-            <a href="#" class="btn btn-outline-secondary btn-sm">
-              <i class="far fa-heart"></i></a>
+            <button class="btn btn-primary btn-sm"> Edit task </button>
+            <button class="btn btn-danger btn-sm"> Delete task </button>
           </div>
         </div>
       </div>

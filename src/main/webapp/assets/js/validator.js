@@ -11,31 +11,33 @@ var nameRegex = /^[a-zA-Z0-9]{3,}$/;
 var passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,}$/;
 
-function validator(element, regex) {
+function validator(element, elementHelp, regex) {
   element.addEventListener("keyup", function () {
     if (element.value.match(regex)) {
       element.style.borderColor = "green";
+      elementHelp.hidden = true;
     } else {
       element.style.borderColor = "red";
+      elementHelp.hidden = false;
     }
   });
 }
 
 ["keyup", "focus"].forEach((evt) =>
   password.addEventListener(evt, function () {
-    validator(password, passwordRegex);
+    validator(password, passwordHelp, passwordRegex);
   })
 );
 
 ["keyup", "focus"].forEach((evt) =>
   username.addEventListener(evt, function () {
-    validator(username, nameRegex);
+    validator(username, nameHelp, nameRegex);
   })
 );
 
 ["keyup", "focus"].forEach((evt) =>
   email.addEventListener(evt, function () {
-    validator(email, emailRegex);
+    validator(email, emailHelp, emailRegex);
   })
 );
 

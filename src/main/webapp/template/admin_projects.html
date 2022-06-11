@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/toast.css" />
     <link rel="stylesheet" href="assets/css/modal.css" />
+    <link rel="icon" type="image/png" href="assets/icons/icon.png" sizes="96x96">
     <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -21,35 +23,45 @@
     <script src="assets/js/dataTables.bootstrap/bootstrap.min.js"></script> -->
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary flex-sm-nowrap flex-wrap">
-        <div class="container-fluid">
-            <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbar5">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <span class="navbar-brand flex-grow-1">Admin</span>
-            <div class="navbar-collapse collapse flex-grow-1 justify-content-center" id="navbar5">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin_projects">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin_tasks">Tasks</a>
-                    </li>
-                </ul>
-                <div class="flex-grow-1"></div>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <button class="navBtn" onclick="logout()"><i class="fa fa-sign-out"></i> Logout</button>
-                    </li>
-                </ul>
-            </div>
+<body id="body-pd">
+    <header class="header" id="header">
+        <div>
+            <h3>Projects</h3>
         </div>
-    </nav>
+        <div class="profile_img">
+            <!-- <img src='assets/icons/profile.png' style='width: 50px;height: 50px;vertical-align: middle' /> -->
+            A
+        </div>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div>
+                <a href="#" class="nav_logo">
+                    <i class='bx bx-menu nav_logo-icon' id="header-toggle"></i>
+                    <span class="nav_logo-name">
+                        <img width="37px" src="assets/icons/icon.png" alt="project_management">
+                    </span>
+                </a>
+                <div class="nav_list"> <a href="#" class="nav_link">
+                        <i class='bx bx-grid-alt nav_icon'></i>
+                        <span class="nav_name">Dashboard</span>
+                    </a>
+                    <a href="#" class="nav_link">
+                        <i class='bx bx-user nav_icon'></i>
+                        <span class="nav_name">Users</span> </a>
+                    <a href="admin_projects" class="nav_link active">
+                        <i class='fa-solid fa-diagram-project nav_icon'></i>
+                        <span class="nav_name">Projects</span>
+                    </a>
+                    <a href="admin_tasks" class="nav_link">
+                        <i class='bx bx-task nav_icon'></i>
+                        <span class="nav_name">Tasks</span>
+                    </a>
+                </div>
+            </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
+                    class="nav_name">SignOut</span> </a>
+        </nav>
+    </div>
     <div class="container mt-1" id="projects">
         <div class="float-left">
             <h3>Projects</h3>
@@ -101,7 +113,7 @@
                                 placeholder="Enter Description atleast 20 characters" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="owner">Owner Name</label>
+                            <label for="ownerList">Owner Name</label>
                             <select class="form-control" id="ownerList" name="ownerList"
                                 aria-label=".form-select-lg example">
                             </select>
@@ -142,9 +154,10 @@
                                 placeholder="Enter Description atleast 20 characters" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="eowner">Owner Name</label>
-                            <input type="text" class="form-control" id="eowner" name="eowner"
-                                placeholder="Owner Name" />
+                            <label for="eownerList">Owner Name</label>
+                            <select class="form-control" id="eownerList" name="eownerList"
+                                aria-label=".form-select-lg example">
+                            </select>
                         </div>
                 </div>
                 <div class="modal-footer">
