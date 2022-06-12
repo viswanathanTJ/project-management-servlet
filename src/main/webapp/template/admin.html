@@ -38,11 +38,12 @@
                     <span class="nav_logo-name"><img width="37px" src="assets/icons/icon.png"
                             alt="project_management"></span>
                 </a>
-                <div class="nav_list"> <a href="#" class="nav_link active">
+                <div class="nav_list">
+                    <a href="#" class="nav_link">
                         <i class='bx bx-grid-alt nav_icon'></i>
                         <span class="nav_name">Dashboard</span>
                     </a>
-                    <a href="#" class="nav_link">
+                    <a href="admin" class="nav_link active">
                         <i class='bx bx-user nav_icon'></i>
                         <span class="nav_name">Users</span> </a>
                     <a href="admin_projects" class="nav_link">
@@ -97,7 +98,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="formModalLabel">Add User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form name="add-user" id="add-user">
                     <div class="modal-body">
@@ -154,7 +155,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="formModalLabel">Edit User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="formModal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="edit-user" name="edit-user">

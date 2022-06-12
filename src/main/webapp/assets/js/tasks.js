@@ -1,26 +1,38 @@
 var createBtn = document.getElementById("createBtn");
-var assignee = document.getElementById("assignee");
-var startDate = document.getElementById("startDate");
-var endDate = document.getElementById("endDate");
-var project = document.getElementById("project");
 var rowEditForm = document.getElementById("rowEditForm");
 var tableResize = document.getElementById("tableSize");
-var table;
+var table, row, rowData;
+var tid = 0;
+// Create form variables
+const completed = document.getElementById("completed");
+const startDate = document.getElementById("startDate");
+const endDate = document.getElementById("endDate");
+const project = document.getElementById("project");
+const priority = document.getElementById("priority");
+const description = document.getElementById("description");
+const title = document.getElementById("title");
+// Edit form variables
+const etitle = document.getElementById("etitle");
+const ecompleted = document.getElementById("ecompleted");
+const eassignee = document.getElementById("eassignee");
+const edescription = document.getElementById("edescription");
+const epriority = document.getElementById("epriority");
+const estartDate = document.getElementById("estartDate");
+const edueDate = document.getElementById("dueDate");
+const eBtn = document.getElementById("eBtn");
 
 function initializeDatabase() {
   table = $("#tasksTable").DataTable({
     columnDefs: [
       { targets: 0, visible: false },
-      { targets: 1, width: "10px" },
-      { targets: 2, width: "500", className: "text-overflow: ellipsis;" },
-      { targets: 3, width: "50" },
-      { targets: 4, width: "150" },
-      { targets: 4, width: "150" },
+      { targets: 1, width: "10px", orderable: false, className: "dt-center" },
+      { targets: 2, width: "600", className: "text-overflow: ellipsis;" },
     ],
     columns: [
       { width: ".3%" },
       { width: "1px" },
       { width: "600px" },
+      { width: "20px" },
       { width: "20px" },
       { width: "20px" },
       { width: "20px" },
@@ -31,64 +43,66 @@ function initializeDatabase() {
 }
 
 function loadData() {
-  var tasks = [
-    {
-      t_id: 1,
-      end_date: "2022-06-11",
-      createdat: "2022-06-10",
-      cname: "admin",
-      c_id: 1,
-      title: "Frontend",
-      priority: "High",
-      p_id: "1",
-      desc: "Use HTML, CSS, JS, Ajax, JQuery",
-      start_date: "2022-06-10",
+  var tr;
+  $.ajax({
+    url: "getTasks",
+    type: "GET",
+    success: function (resp) {
+      var tasks = resp.tasks;
+      var tmp;
+      $.each(tasks, function (index, item) {
+        tmp = item.priority;
+        if (tmp == 0) tmp = "Low";
+        else if (tmp == 1) tmp = "Medium";
+        else if (tmp == 2) tmp = "High";
+        else if (tmp == 3) tmp = "Urgent";
+        var checkStatus = `<input type="checkbox" id="completed${item.t_id}" ${
+          item.completed === 1 ? "checked" : ""
+        }>`;
+        tid = item.t_id;
+        tr = table.row
+          .add([
+            item.t_id,
+            checkStatus,
+            item.title,
+            item.cname,
+            item.assignee,
+            tmp,
+            item.start_date,
+          ])
+          .draw(false)
+          .node();
+        if (item.completed === 1) $(tr).addClass("strikeout");
+      });
     },
-    {
-      t_id: 2,
-      end_date: "2022-06-13",
-      createdat: "2022-06-10",
-      cname: "admin",
-      c_id: 1,
-      title: "Backend",
-      priority: "urgent",
-      p_id: "1",
-      desc: "Java",
-      start_date: "2022-06-10",
-    },
-  ];
-  $.each(tasks, function (index, item) {
-    table.row
-      .add([
-        item.t_id,
-        '<input type="checkbox">',
-        item.title,
-        item.priority,
-        item.cname,
-        item.start_date,
-      ])
-      .draw(false);
   });
-  // $.ajax({
-  //   url: "getTasks",
-  //   type: "GET",
-  //   success: function (resp) {
-  //     var tasks = resp.tasks;
-  //     console.log(tasks);
-  //     $.each(tasks, function (index, item) {
-  //       table.row
-  //         .add([
-  //           item.t_id,
-  //           item.title,
-  //           item.priority,
-  //           item.cname,
-  //           item.start_date,
-  //         ])
-  //         .draw(false);
-  //     });
-  //   },
-  // });
 }
+
+eBtn.addEventListener("click", function () {
+  console.log("Edit save clicked");
+  $.ajax({
+    // Update task by id
+    url: "updateTask?tid=" + tid,
+    type: "POST",
+    data: {
+      title: etitle.value,
+      completed: ecompleted.checked ? 1 : 0,
+      assignee: eassignee.value,
+      description: edescription.value,
+      priority: epriority.selectedIndex,
+      start_date: estartDate.value,
+      due_date: edueDate.value,
+    },
+    // success: function (resp) {
+    //   if (resp.success) {
+    //     alert("Task updated successfully");
+    //     location.reload();
+    //   } else {
+    //     alert("Task update failed");
+    //   }
+    // },
+  });
+});
 
 createBtn.addEventListener("click", function () {
   $.ajax({
@@ -123,33 +137,32 @@ createBtn.addEventListener("click", function () {
 // Info Modal
 
 function resetTableEdit() {
-    $("#tableSize").removeClass("col-md-6").addClass("col-md-12");
-    rowEditForm.hidden = true;
+  $("#tableSize").removeClass("col-md-6").addClass("col-md-12");
+  rowEditForm.hidden = true;
 }
+
+$("#tasksTable tbody").on("click", 'input[type="checkbox"]', function () {
+  row = $(this).parents("tr")[0];
+  rowData = table.row(row).data();
+  if (document.querySelector(`#completed${rowData[0]}`).checked == true) {
+    setTaskStatus(rowData[0], 1);
+    $(this).closest("tr").addClass("strikeout");
+  } else {
+    setTaskStatus(rowData[0], 0);
+    $(this).closest("tr").removeClass("strikeout");
+  }
+});
 
 $("#tasksTable tbody").on("click", "td", function () {
   if ($(this).index() == 0) return;
-  const taskDetails = document.getElementById("taskDetails");
   row = $(this).parents("tr")[0];
+  rowData = table.row(row).data();
   $(this)
     .closest('[class^="col-md"]')
     .removeClass("col-md-12")
     .addClass("col-md-6");
-
+  loadTaskById(rowData[0]);
   if (rowEditForm.hidden) rowEditForm.hidden = false;
-  else {
-    $(this)
-      .closest('[class^="col-md"]')
-      .removeClass("col-md-6")
-      .addClass("col-md-12");
-    rowEditForm.hidden = true;
-  }
-  // Find siblings of parent with similar class criteria
-  // - if all siblings are the same, you can use ".siblings()"
-  // Change class to "col-md-2"
-  // .siblings().hidden=false;
-  // .removeClass("col-md-3")
-  // .addClass("col-md-2");
 });
 
 $(document).ready(function () {
@@ -162,17 +175,35 @@ $(document).ready(function () {
   // Add task
   $("form[name=add-task]").submit(function (e) {
     e.preventDefault();
-    var data = $(this).serialize();
-    console.log(
-      data + "&startDate=" + startDate.value + "&endDate=" + endDate.value
-    );
     $.ajax({
       url: "AddTask",
       type: "POST",
-      data:
-        data + "&startDate=" + startDate.value + "&endDate=" + endDate.value,
+      data: {
+        title: title.value,
+        assignee: assignee.value,
+        description: description.value,
+        priority: priority.selectedIndex,
+        start_date: startDate.value,
+        due_date: dueDate.value,
+        project: project.value,
+      },
       success: function (resp) {
         console.log(resp);
+        tid++;
+        $("#add-task")[0].reset();
+        $("#formModal").modal("hide");
+        table.row
+          .add([
+            tid,
+            `<input type="checkbox" id="completed${tid}">`,
+            resp.title,
+            resp.cname,
+            resp.assignee,
+            resp.priority,
+            resp.start_date,
+          ])
+          .draw(false);
+        toastsFactory.createToast("Task added successfully", "success");
       },
       error: function (resp) {
         console.log("err: " + resp);

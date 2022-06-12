@@ -30,7 +30,20 @@ body {
 .pagination > li.active > span {
   background-color: var(--first-color) !important;
 }
-
+tr.strikeout td {
+  position: relative;
+}
+tr.strikeout td:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  border-bottom: 1px solid #000;
+}
+.no-strikeout {
+  text-decoration: none !important;
+}
 .form-text {
   color: #ff0000 !important;
 }

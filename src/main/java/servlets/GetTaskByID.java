@@ -24,20 +24,20 @@ import activities.DBUtil.Query;
 /**
  * Servlet implementation class AddUser
  */
-@WebServlet("/getTasks")
-public class GetTasks extends HttpServlet {
+@WebServlet("/getTaskByID")
+public class GetTaskByID extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		JSONObject jsonObject = new JSONObject();
-		JSONArray array = new JSONArray();
+		String tid = request.getParameter("tid");
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
-			PreparedStatement st = con.prepareStatement(Queries.getTasks);
+			PreparedStatement st = con.prepareStatement(Queries.getTaskByID);
+			st.setString(1, tid);
 			ResultSet r1 = st.executeQuery();
-			while (r1.next()) {
-				JSONObject obj = new JSONObject();
+			JSONObject obj = new JSONObject();
+			if (r1.next()) {
 				obj.put("t_id", r1.getInt("t_id"));
 				obj.put("title", r1.getString("title"));
 				obj.put("desc", r1.getString("description"));
@@ -55,11 +55,9 @@ public class GetTasks extends HttpServlet {
 				SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 				String time = df.format(t);
 				obj.put("createdat", time);
-				array.put(obj);
 			}
-			jsonObject.put("tasks", array);
 			response.setContentType("application/json");
-			response.getWriter().print(jsonObject);
+			response.getWriter().print(obj);
 			response.setStatus(200);
 		} catch (ClassNotFoundException | SQLException e) {
 			response.getWriter().print(e.getMessage());

@@ -15,12 +15,17 @@ public class Queries {
     public static String getProjectByName = "SELECT * FROM projects WHERE name=?";
     public static String getProjectByID = "SELECT name, description, owner_id from projects WHERE p_id=?";
     public static String getProjectMembers = "SELECT u_id, o_id FROM project_users p1 WHERE p1.p_id = ?";
-    
+
     // GET task
     public static String getTasks = "SELECT * FROM tasks";
+    public static String getTaskByID = "SELECT * FROM tasks where t_id=?";
+
+    // SET task
+    public static String setTaskStatus = "UPDATE tasks SET completed = ? WHERE t_id = ?;";
 
     // GET project_users
     public static String uidInProUsers = "SELECT sno, u_id from project_users where p_id=?;";
+    public static String getUserByPID = "SELECT u_id from project_users where p_id=?;";
 
     // INSERT projects
     public static String putIntoProject = "INSERT INTO projects (name, description, owner_id) VALUES (?, ?, ?)";
