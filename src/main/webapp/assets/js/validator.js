@@ -1,6 +1,9 @@
 const email = document.getElementById("email");
 const username = document.getElementById("name");
 const password = document.getElementById("password");
+const emailHelp = document.getElementById("emailHelp");
+const usernameHelp = document.getElementById("nameHelp");
+const passwordHelo = document.getElementById("passwordHelp");
 const cpassword = document.getElementById("cpassword");
 
 var emailRegex =

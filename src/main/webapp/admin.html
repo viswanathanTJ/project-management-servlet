@@ -3,7 +3,7 @@
 
 <head>
     <script src="assets/js/jquery/jquery.min.js"></script>
-    <!-- <script src="assets/js/checkuser.js"></script> -->
+    <!-- <script src="assets/js/checkuser.js"></script>  -->
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -54,38 +54,42 @@
                         <span class="nav_name">Tasks</span>
                     </a>
                 </div>
-            </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
-                    class="nav_name">SignOut</span> </a>
+            </div>
+            <a href="#" onclick="logout()" class="nav_link"> <i class='bx bx-log-out nav_icon'></i>
+                <span class="nav_name">SignOut</span>
+            </a>
         </nav>
     </div>
     <div class="container mt-1" id="users">
         <div class="float-left">
             <h3>Users</h3>
         </div>
-        <div class="float-right">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#formModal">
-                <i class="fa fa-add"></i>Add User
-            </button>
+        <div class="row">
+            <div class="mt-5 mb-3">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#formModal">
+                    <i class="fa fa-add"></i>Add User
+                </button>
+            </div>
+            <div class="col-md-12">
+                <table id="usersTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>uid</th>
+                            <th>SNo</th>
+                            <th>Username</th>
+                            <th>E-Mail</th>
+                            <th>Role</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <br /><br /><br />
-        <table id="usersTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>uid</th>
-                    <th>SNo</th>
-                    <th>Username</th>
-                    <th>E-Mail</th>
-                    <th>Role</th>
-                    <th>Joined</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-
-            <tbody id="tbody">
-            </tbody>
-        </table>
     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
         aria-hidden="true">
@@ -93,28 +97,36 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="formModalLabel">Add User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form name="add-user" id="add-user">
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="name">Username</label>
                             <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp"
                                 placeholder="Enter username" required />
+                            <div id="nameHelp" hidden class="form-text">* Enter atleast 3 characters.</div>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                aria-describedby="emailHelp" placeholder="Enter email" required />
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="email"
+                                placeholder="Enter email" required />
+                            <div id="emailHelp" hidden class="form-text">* Enter valid email.</div>
                         </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" class="form-control"
+                                aria-describedby="passwordHelpBlock"
+                                placeholder="Enter password with small, capital and special character" required>
+                            <div id="passwordHelp" hidden class="form-text">
+                                Your password must contain letters, numbers, special characters.
+                            </div>
+                            <!-- <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password"
                                 placeholder="Password" required />
+                            <div id="passwordHelp" hidden class="form-text">* Password should contains small, captial and special characters</div> -->
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="role">Role</label>
                             <br />
                             <select class="form-control" id="role" name="role" aria-label=".form-select-lg example">
@@ -142,23 +154,21 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="formModalLabel">Edit User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="edit-user" name="edit-user">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="name">Username</label>
                             <input type="text" class="form-control" id="ename" name="ename" aria-describedby="enameHelp"
                                 placeholder="Enter username" required />
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="email">Email address</label>
                             <input type="email" class="form-control" id="eemail" name="eemail"
                                 aria-describedby="eemailHelp" placeholder="Enter email" required />
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="role">Role</label>
                             <br />
                             <select class="form-control" id="erole" name="erole" aria-label=".form-select-lg example">
@@ -189,7 +199,6 @@
                         <i class="fas fa-times-circle"></i>
                     </div>
                     <h4 class="modal-title w-100">Are you sure?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <form id="delete-user" name="delete-user">
 

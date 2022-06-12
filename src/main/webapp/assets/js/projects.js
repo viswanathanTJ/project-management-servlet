@@ -65,6 +65,7 @@ function initializeDatabase() {
         ],
       },
     ],
+    rowReorder: true,
     autoWidth: false,
     fixedColumns: true,
   });

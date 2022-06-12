@@ -32,7 +32,7 @@ $(document).ready(function () {
       type: "POST",
       data: data,
       success: function (resp) {
-        console.log(resp);
+        setCookie("username", username.value, 1);
         $("#registerBtn").removeClass("loading");
         window.location.replace("employee");
       },
@@ -73,6 +73,7 @@ $(document).ready(function () {
       data: data,
       success: function (resp) {
         error.innerHTML = "Login Successful";
+        setCookie("username", username.value, 1);
         $("#loginBtn").removeClass("loading");
         console.log(resp);
         window.location.replace(resp);
@@ -91,15 +92,4 @@ $(document).ready(function () {
 
     e.preventDefault();
   });
-
-  function togglePassword(el) {
-    var checked = el.checked;
-    if (checked) {
-      document.getElementById("password").type = "text";
-      document.getElementById("toggleText").textContent = "Hide";
-    } else {
-      document.getElementById("password").type = "password";
-      document.getElementById("toggleText").textContent = "Show";
-    }
-  }
 });
