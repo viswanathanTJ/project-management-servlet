@@ -12,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.mysql.cj.Session;
 
 import activities.DBUtil.DatabaseConnection;
+import activities.DBUtil.Query;
 import entities.Task;
+import activities.Queries;
 import activities.SessionHandler;
 
 /**
@@ -31,16 +34,12 @@ public class AddTask extends HttpServlet {
 			String startDate = request.getParameter("start_date");
 			String endDate = request.getParameter("end_date");
 			int priority = Integer.parseInt(request.getParameter("priority"));
-			String assignee = request.getParameter("assignee");
+			String assigneeID = request.getParameter("assignee");
+			String assignee = Query.getUserNameByID(Integer.parseInt(assigneeID));
 			String pid = request.getParameter("project");
 			System.out
 					.println("Add Task: " + title + " " + desc + " " + startDate + " " + endDate + " " + priority + " "
-							+ assignee + " " + pid);
-			if (startDate.equals(endDate)) {
-				response.getWriter().print("Start and end date cannot be the same.");
-				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-				return;
-			}
+							+ assigneeID + " " + assignee + " " + pid);
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 			PreparedStatement st = con.prepareStatement("SELECT title from tasks");
@@ -53,8 +52,9 @@ public class AddTask extends HttpServlet {
 				}
 			}
 			SessionHandler session = new SessionHandler(request);
+			int creatorID = Integer.parseInt(session.getUID());
+			String cname = session.getName();
 
-			String creatorID = session.getUID();
 			st = con.prepareStatement(
 					"INSERT INTO tasks (title, description, start_date, end_date, priority, assignee_id, creator_id, p_id, completed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			st.setString(1, title);
@@ -62,12 +62,16 @@ public class AddTask extends HttpServlet {
 			st.setString(3, startDate);
 			st.setString(4, endDate);
 			st.setInt(5, priority);
-			st.setString(6, assignee);
-			st.setString(7, creatorID);
+			st.setString(6, assigneeID);
+			st.setInt(7, creatorID);
 			st.setString(8, pid);
 			st.setInt(9, 0);
 			st.executeUpdate();
-			Task task = new Task(title, desc, startDate, endDate, priority, assignee, creatorID, pid);
+			String project = Query.getProjectNameByID(pid);
+			Task task = new Task(title, desc, startDate, endDate, priority,
+					assigneeID, assignee, creatorID, cname, pid, project, 0);
+
+			System.out.println(new Gson().toJson(task));
 			response.getWriter().print(new Gson().toJson(task));
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);

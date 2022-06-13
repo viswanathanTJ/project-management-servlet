@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,30 +15,27 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
+import activities.Queries;
 
-/**
- * Servlet implementation class AddUser
- */
-@WebServlet("/getUsersByPID")
-public class GetUsersByPID extends HttpServlet {
+@WebServlet("/getUsersInProject")
+public class getUserInProject extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String pid = request.getParameter("pid");
+		JSONObject jsonObject = new JSONObject();
+		JSONArray array = new JSONArray();
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 			PreparedStatement st = con.prepareStatement(Queries.getUsersByPID);
 			st.setString(1, pid);
 			ResultSet r1 = st.executeQuery();
-			JSONObject jsonObject = new JSONObject();
-			JSONArray array = new JSONArray();
 			while (r1.next()) {
 				JSONObject obj = new JSONObject();
-				obj.put("uid", r1.getString("u_id"));
+				obj.put("uid", r1.getInt("u_id"));
 				obj.put("name", Query.getUserNameByID(r1.getInt("u_id")));
 				array.put(obj);
 			}
@@ -53,5 +48,4 @@ public class GetUsersByPID extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 }

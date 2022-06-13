@@ -48,6 +48,7 @@ public class GetTaskByID extends HttpServlet {
 				obj.put("completed", r1.getInt("completed"));
 				obj.put("assignee", Query.getUserNameByID(r1.getInt("assignee_id")));
 				obj.put("p_id", r1.getString("p_id"));
+				obj.put("project_name", Query.getProjectNameByID(r1.getString("p_id")));
 				obj.put("c_id", r1.getInt("creator_id"));
 				obj.put("cname", Query.getUserNameByID(r1.getInt("creator_id")));
 				obj.put("desc", r1.getString("description"));

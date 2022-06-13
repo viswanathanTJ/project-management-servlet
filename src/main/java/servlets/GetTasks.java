@@ -48,6 +48,7 @@ public class GetTasks extends HttpServlet {
 				obj.put("completed", r1.getInt("completed"));
 				obj.put("assignee", Query.getUserNameByID(r1.getInt("assignee_id")));
 				obj.put("p_id", r1.getString("p_id"));
+				obj.put("project", Query.getProjectNameByID(r1.getString("p_id")));
 				obj.put("c_id", r1.getInt("creator_id"));
 				obj.put("cname", Query.getUserNameByID(r1.getInt("creator_id")));
 				obj.put("desc", r1.getString("description"));
@@ -63,6 +64,7 @@ public class GetTasks extends HttpServlet {
 			response.setStatus(200);
 		} catch (ClassNotFoundException | SQLException e) {
 			response.getWriter().print(e.getMessage());
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

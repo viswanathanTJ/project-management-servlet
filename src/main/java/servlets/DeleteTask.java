@@ -14,19 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 
-@WebServlet("/deleteUser")
-public class DeleteUser extends HttpServlet {
+@WebServlet("/deleteTask")
+public class DeleteTask extends HttpServlet {
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
-		System.out.println("Delete Request: " + id);
+		System.out.println("Delete Task Request: " + id);
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 
 			PreparedStatement st;
-			st = con.prepareStatement(Queries.deleteUser);
+			st = con.prepareStatement(Queries.deleteTask);
 			st.setString(1, id);
 			st.executeUpdate();
 			response.getWriter().print("Deleted successfully");

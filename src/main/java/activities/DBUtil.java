@@ -50,13 +50,27 @@ public class DBUtil {
         }
 
         public static String getUserIDByName(String name) {
-            PreparedStatement st;
             try {
                 st = con.prepareStatement(Queries.getUserIDByName);
                 st.setString(1, name);
                 r1 = st.executeQuery();
                 if (r1.next())
                     return r1.getString("u_id");
+                else
+                    return "";
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "Error " + e.getMessage();
+            }
+        }
+
+        public static String getProjectNameByID(String id) {
+            try {
+                st = con.prepareStatement(Queries.getProjectByID);
+                st.setString(1, id);
+                r1 = st.executeQuery();
+                if (r1.next())
+                    return r1.getString("name");
                 else
                     return "";
             } catch (SQLException e) {

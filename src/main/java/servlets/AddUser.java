@@ -34,6 +34,7 @@ public class AddUser extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String role = request.getParameter("role");
+			System.out.println("Add User: " + username + " " + email + " " + password + " " + role);
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 

@@ -6,20 +6,27 @@ public class Task {
     protected String startDate;
     protected String endDate;
     protected int priority;
+    protected String assigneeID;
     protected String assignee;
-    protected String creatorID;
+    protected int creatorID;
+    protected String cname;
     protected String pid;
+    protected String project;
+    protected int completed;
 
-    public Task(String title, String desc, String startDate, String endDate, int priority, String assignee,
-            String creatorID, String pid) {
+    public Task(String title, String desc, String startDate, String endDate, int priority,
+            String assigneeID, String assignee, int creatorID, String cname, String pid, String project,
+            int completed) {
         this.title = title;
         this.desc = desc;
         this.startDate = startDate;
         this.endDate = endDate;
         this.priority = priority;
-        this.assignee = assignee;
+        this.assigneeID = assigneeID;
         this.creatorID = creatorID;
         this.pid = pid;
+        this.project = project;
+        this.completed = completed;
     }
 
     public String getTitle() {
@@ -70,12 +77,28 @@ public class Task {
         this.assignee = assignee;
     }
 
-    public String getCreatorID() {
+    public String getAssigneeID() {
+        return this.assigneeID;
+    }
+
+    public void setAssigneeID(String assigneeID) {
+        this.assigneeID = assigneeID;
+    }
+
+    public int getCreatorID() {
         return this.creatorID;
     }
 
-    public void setCreatorID(String creatorID) {
+    public void setCreatorID(int creatorID) {
         this.creatorID = creatorID;
+    }
+
+    public String getCname() {
+        return this.cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
     }
 
     public String getPid() {
@@ -84,5 +107,21 @@ public class Task {
 
     public void setPid(String pid) {
         this.pid = pid;
+    }
+
+    public String getProject() {
+        return this.project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    public int getCompleted() {
+        return this.completed;
+    }
+
+    public void setCompleted(int completed) {
+        this.completed = completed;
     }
 }

@@ -42,7 +42,10 @@ tr.strikeout td:before {
   border-bottom: 1px solid #000;
 }
 .no-strikeout {
-  text-decoration: none !important;
+  border: none !important;
+}
+.animated {
+  transition: 0.35s ease-in-out;
 }
 .form-text {
   color: #ff0000 !important;

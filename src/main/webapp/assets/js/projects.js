@@ -197,8 +197,6 @@ $("#projectsTable tbody").on("click", "td", function () {
 $(document).ready(function () {
   // Initialize DataTable
   initializeDatabase();
-  const swipeHandler = new SwipeHandler();
-  const toastsFactory = new ToastsFactory(swipeHandler);
   // Load DataTable
   loadData();
   loadOwner();

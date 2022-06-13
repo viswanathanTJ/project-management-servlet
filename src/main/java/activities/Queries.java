@@ -10,6 +10,9 @@ public class Queries {
     public static String getUserIDByName = "SELECT u_id FROM user WHERE name=?";
     public static String getUserIDName = "SELECT u_id, name FROM user";
 
+    // Delete users
+    public static String deleteUser = "DELETE FROM user WHERE u_id=?";
+
     // GET projects
     public static String getProjects = "SELECT * FROM projects";
     public static String getProjectByName = "SELECT * FROM projects WHERE name=?";
@@ -23,9 +26,15 @@ public class Queries {
     // SET task
     public static String setTaskStatus = "UPDATE tasks SET completed = ? WHERE t_id = ?;";
 
+    // UPDATE task
+    public static String updateTask = "UPDATE tasks SET title = ?, description = ?, start_date = ?, end_date = ?, priority = ?, assignee_id = ?, completed = ? WHERE t_id = ?;";
+
+    // DELETE tasks
+    public static String deleteTask = "DELETE FROM tasks WHERE t_id = ?;";
+
     // GET project_users
     public static String uidInProUsers = "SELECT sno, u_id from project_users where p_id=?;";
-    public static String getUserByPID = "SELECT u_id from project_users where p_id=?;";
+    public static String getUsersByPID = "SELECT u_id from project_users where p_id=?;";
 
     // INSERT projects
     public static String putIntoProject = "INSERT INTO projects (name, description, owner_id) VALUES (?, ?, ?)";
@@ -43,4 +52,8 @@ public class Queries {
 
     // DELETE project_users
     public static String deleteProUser = "DELETE FROM project_users WHERE sno = ?;";
+
+    // MISC
+    public static String updatePassword = "UPDATE user SET password = ? WHERE u_id = ?";
+
 }

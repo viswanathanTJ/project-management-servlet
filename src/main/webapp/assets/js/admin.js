@@ -81,9 +81,6 @@ $(document).ready(function () {
   // Load DataTable
   loadData();
 
-  const swipeHandler = new SwipeHandler();
-  const toastsFactory = new ToastsFactory(swipeHandler);
-
   // Form Handling
   $("form[name=add-user]").submit(function (e) {
     // Validation
@@ -106,7 +103,7 @@ $(document).ready(function () {
     $.ajax({
       url: "AddUser",
       type: "POST",
-      data: data,
+      data: data + "&password=" + password.value,
       success: function (resp) {
         $("#add-user")[0].reset();
         $("#formModal").modal("hide");
