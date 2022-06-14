@@ -196,6 +196,7 @@ $("#projectsTable tbody").on("click", "td", function () {
 
 $(document).ready(function () {
   // Initialize DataTable
+  
   initializeDatabase();
   // Load DataTable
   loadData();

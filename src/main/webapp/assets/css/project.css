@@ -1,0 +1,23 @@
+.cssCardContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cssCard {
+  border: 2px solid black;
+  width: 20%;
+  margin: 2% 0 2% 2%;
+  padding: 2%;
+  border-radius: 20px;
+  max-height: 550px;
+  min-height: 450px;
+}
+
+.cssCard-des {
+  font-size: 15px;
+}
+
+.cssCard-task {
+  margin: 2% 0 2% 0;
+  font-size: 15px;
+}
