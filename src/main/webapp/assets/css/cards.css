@@ -124,3 +124,49 @@ p {
   color: #910d0d;
   font-weight: 500;
 }
+
+
+/*----  Responsive  ----*/
+
+.popover{
+  min-width: 250px;
+  max-width: 100%;
+}
+
+#memberList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#memberList li {
+  border: 0px;
+  border-bottom: 2px solid #ddd;
+  margin-top: -1px; 
+  background-color: #fff;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#memberList li:hover:not(.header) {
+  background-color: #eee;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-search {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}

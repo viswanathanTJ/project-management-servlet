@@ -7,6 +7,23 @@ const listMembers = document.getElementById("listMembers");
 const eowner = document.getElementById("eowner");
 const ownerList = document.getElementById("ownerList");
 const eownerList = document.getElementById("eownerList");
+var inputTextValue;
+
+function myFunction(e) {
+  var filter, ul, li, i, txtValue;
+  filter = e.value.toUpperCase();
+  ul = document.getElementById("memberList");
+  li = ul.querySelectorAll("li");
+  li = document.getElementsByClassName("member");
+  for (i = 0; i < li.length; i++) {
+    txtValue = li[i].innerHTML;
+    if (txtValue.toUpperCase().indexOf(filter) > -1)
+      li[i].style.display = ""; 
+    else
+      li[i].style.display = "none";
+  }
+}
+
 var jsonObj = {};
 var sno = 0,
   pid,
@@ -25,26 +42,26 @@ function validator(element, count) {
   });
 }
 
-["keyup", "focus"].forEach((evt) =>
-  pname.addEventListener(evt, function () {
-    validator(pname, 3);
-  })
-);
-["keyup", "focus"].forEach((evt) =>
-  eusername.addEventListener(evt, function () {
-    validator(pname, 3);
-  })
-);
-["keyup", "focus"].forEach((evt) =>
-  desc.addEventListener(evt, function () {
-    validator(desc, 20);
-  })
-);
-["keyup", "focus"].forEach((evt) =>
-  edesc.addEventListener(evt, function () {
-    validator(edesc, 20);
-  })
-);
+// ["keyup", "focus"].forEach((evt) =>
+//   pname.addEventListener(evt, function () {
+//     validator(pname, 3);
+//   })
+// );
+// ["keyup", "focus"].forEach((evt) =>
+//   eusername.addEventListener(evt, function () {
+//     validator(pname, 3);
+//   })
+// );
+// ["keyup", "focus"].forEach((evt) =>
+//   desc.addEventListener(evt, function () {
+//     validator(desc, 20);
+//   })
+// );
+// ["keyup", "focus"].forEach((evt) =>
+//   edesc.addEventListener(evt, function () {
+//     validator(edesc, 20);
+//   })
+// );
 
 function initializeDatabase() {
   table = $("#projectsTable").DataTable({
@@ -196,7 +213,7 @@ $("#projectsTable tbody").on("click", "td", function () {
 
 $(document).ready(function () {
   // Initialize DataTable
-  
+
   initializeDatabase();
   // Load DataTable
   loadData();
@@ -374,4 +391,8 @@ $(document).ready(function () {
     });
     e.preventDefault();
   });
+});
+
+$("#cardId").on("click", function () {
+  $("#popover__content").addClass("show");
 });

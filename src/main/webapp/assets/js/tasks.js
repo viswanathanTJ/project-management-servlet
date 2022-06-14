@@ -180,7 +180,7 @@ createBtn.addEventListener("click", function () {
 // Info Modal
 
 function resetTableEdit() {
-  $("#tableSize").removeClass("col-md-6").addClass("col-md-12");
+  $("#tableSize").removeClass("col-md-7").addClass("col-md-12");
   rowEditForm.hidden = true;
   table.column(3).visible(true);
 }
@@ -202,7 +202,7 @@ $("#tasksTable tbody").on("click", "td", function () {
   row = $(this).parents("tr")[0];
   rowData = table.row(row).data();
   // tasksTable.removeClass("col-md-12").addClass("col-md-6");
-  $("#tableSize").removeClass("col-md-12").addClass("col-md-6");
+  $("#tableSize").removeClass("col-md-12").addClass("col-md-7");
   loadTaskById(rowData[0]);
   if (rowEditForm.hidden) {
     table.column(3).visible(false);
