@@ -7,6 +7,10 @@ const listMembers = document.getElementById("listMembers");
 const eowner = document.getElementById("eowner");
 const ownerList = document.getElementById("ownerList");
 const eownerList = document.getElementById("eownerList");
+const deleteBtn = document.getElementById("deleteBtn");
+const editModal = new bootstrap.Modal(document.getElementById("editModal"));
+const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+const editMembers = document.getElementById("editMembers");
 var inputTextValue;
 
 function myFunction(e) {
@@ -17,10 +21,21 @@ function myFunction(e) {
   li = document.getElementsByClassName("member");
   for (i = 0; i < li.length; i++) {
     txtValue = li[i].innerHTML;
-    if (txtValue.toUpperCase().indexOf(filter) > -1)
-      li[i].style.display = ""; 
-    else
-      li[i].style.display = "none";
+    if (txtValue.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
+    else li[i].style.display = "none";
+  }
+}
+
+function memberFilter(e) {
+  var filter, ul, li, i, txtValue;
+  filter = e.value.toUpperCase();
+  ul = document.getElementById("editMemberList");
+  li = ul.querySelectorAll("li");
+  li = document.getElementsByClassName("list-group-item");
+  for (i = 0; i < li.length; i++) {
+    txtValue = li[i].innerHTML;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
+    else li[i].style.display = "none";
   }
 }
 
@@ -30,6 +45,29 @@ var sno = 0,
   coname,
   prname,
   addId = 0;
+
+// Event Listener
+$(document).on("click", "#editBtn", function () {
+  editModal.show();
+  $(".popover").popover("hide");
+});
+$(document).on("click", "#deleteBtn", function () {
+  deleteModal.show();
+  $(".popover").popover("hide");
+});
+
+// function editMembers(e) {
+  // var filter, ul, li, i, txtValue;
+  // filter = e.value.toUpperCase();
+  // ul = document.getElementById("memberList");
+  // li = ul.querySelectorAll("li");
+  // li = document.getElementsByClassName("member");
+  // for (i = 0; i < li.length; i++) {
+  //   txtValue = li[i].innerHTML;
+  //   if (txtValue.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
+  //   else li[i].style.display = "none";
+  // }
+// }
 
 // VALIDATION
 function validator(element, count) {
@@ -96,8 +134,8 @@ function loadData() {
     success: function (resp) {
       projects = resp.projects;
       $.each(projects, function (index, item) {
-        sno = index + 1;
         addId = item.p_id;
+
         table.row
           .add([item.p_id, sno, item.name, item.desc, item.oname])
           .draw(false);
@@ -212,12 +250,27 @@ $("#projectsTable tbody").on("click", "td", function () {
 });
 
 $(document).ready(function () {
+  $("[data-toggle=popover]").popover({
+    html: true,
+    sanitize: false,
+    content: function () {
+      var content = $(this).attr("data-popover-content");
+      return $(content).children(".popover-body").html();
+    },
+    title: function () {
+      var title = $(this).attr("data-popover-content");
+      return $(title).children(".popover-heading").html();
+    },
+  });
+  $(document).on("click", ".popover .close", function () {
+    $(this).parents(".popover").popover("hide");
+  });
   // Initialize DataTable
 
   initializeDatabase();
   // Load DataTable
   loadData();
-  loadOwner();
+  // loadOwner();
 
   // Form Handling
   // Create Project

@@ -76,30 +76,37 @@
 
     <div hidden id="members">
         <div class="popover-heading">
-            <div class="float-start">Members on this project</div>
-            <div class="float-end">
-                <a href="#" class="close" data-dismiss="alert"><i class="fa fa-window-close" aria-hidden="true"></i></a>
-            </div><br>
+            Marksheet Manager
         </div>
         <div class="popover-body">
-            <div class="form-group has-search mb-4">
+            <div class="row mb-3">
+                <div class="col-6">
+                    <button class="btn btn-primary" id="editBtn" style="width:100%">Edit</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-danger" id="deleteBtn" style="width:100%">Delete</button>
+                </div>
+            </div>
+            <div class="form-group has-search mb-3">
                 <span class="fa fa-search form-control-search"></span>
-                <input type="text" class="form-control" onkeyup="myFunction(this)"  placeholder="Search">
+                <input type="text" class="form-control" onkeyup="myFunction(this)" placeholder="Search">
             </div>
 
-            <ul id="memberList">
-                <li class="member">Adele</li>
-                <li class="member">Agnes</li>
-                <li class="member">Billy</li>
-                <li class="member">Bob</li>
-                <li class="member">Calvin</li>
-                <li class="member">Christina</li>
-                <li class="member">Cindy</li>
-            </ul>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Members</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group" id="memberList">
+                        <li class="member">viswa</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Topic Cards -->
+
     <div id="cards_landscape_wrap-2">
         <div class="container">
             <div class="row">
@@ -144,12 +151,12 @@
                         <div class="card-flyer">
                             <div class="text-box">
                                 <div class="text-container" style="margin:5px">
+
                                     <div class="float-start">
                                         <h4><img width="20px" src="assets/icons/check.png" /> &nbsp;Marksheet Manager
                                         </h4>
                                     </div>
                                     <div class="float-end ml-12">
-
                                         <div class="dropdown">
                                             <button class="btn-card"><i
                                                     class="fa-solid fa-ellipsis-vertical"></i></button>
@@ -158,9 +165,8 @@
                                                 <button class="btn" style="width:100%">Delete</button>
                                             </div>
                                         </div>
-
-
                                     </div>
+
                                     <div class="clearfix"></div>
                                     <p class="text-muted text-start">15 open tasks</p>
                                     <p class="desc">Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -297,6 +303,92 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Project</h5>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form name="edit-project" id="edit-project">
+                        <div class="mb-3">
+                            <label for="ename">Name</label>
+                            <input type="text" class="form-control" id="ename" name="ename" aria-describedby="nameHelp"
+                                placeholder="Enter Project Name" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="edesc">Description</label>
+                            <textarea class="form-control" id="edesc" name="edesc" aria-describedby="edescHelp" rows="3"
+                                placeholder="Enter Description atleast 20 characters" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="eownerList">Owner Name</label>
+                            <select class="form-control" id="eownerList" name="eownerList"
+                                aria-label=".form-select-lg example">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="members" id="members">Members</label>
+                            <div class="form-group has-search mb-3 mt-1">
+                                <span class="fa fa-search form-control-search"></span>
+                                <input type="text" class="form-control" onkeyup="memberFilter(this)" placeholder="Search">
+                            </div>
+                            <ul class="list-group" id="editMemberList">
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" id="group1" type="checkbox" value="" aria-label="...">
+                                    <label for="group1">Main List</label>
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                    Second checkbox
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                    Third checkbox
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                    Fourth checkbox
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                    Fifth checkbox
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                    Fourth checkbox
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                    Fifth checkbox
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                    Fourth checkbox
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                    Fifth checkbox
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <input type="submit" id="submit" class="btn btn-primary" value="Submit" />
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -307,27 +399,7 @@
     <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
     <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>
     <script>
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl, { html: true, })
-        });
-        $(document).ready(function () {
-            $("[data-toggle=popover]").popover({
-                html: true,
-                sanitize: false,
-                content: function () {
-                    var content = $(this).attr("data-popover-content");
-                    return $(content).children(".popover-body").html();
-                },
-                title: function () {
-                    var title = $(this).attr("data-popover-content");
-                    return $(title).children(".popover-heading").html();
-                }
-            });
-            $(document).on("click", ".popover .close", function () {
-                $(this).parents(".popover").popover('hide');
-            });
-        });
+        new bootstrap.Modal(document.getElementById("editModal")).show();
     </script>
 </body>
 

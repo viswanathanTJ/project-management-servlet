@@ -317,3 +317,56 @@ div#projectsTable_filter {
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
+
+.close-icon div {
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0s, opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+    width: 20px;
+}
+.close-icon div:first-child {
+    transform: translate3d(0px, 10px, 0px) rotate3d(0, 0, 1, -45deg);
+}
+.close-icon div:first-child::after, .close-icon div:first-child::before {
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0s, opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+}
+.close-icon div:last-child {
+    transform: translate3d(0px, 8px, 0px) rotate3d(0, 0, 1, 45deg);
+}
+.close-icon div:last-child::after, .close-icon div:last-child::before {
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.2s, opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1) 0.18s;
+}
+.close-icon div::after, .close-icon div::before {
+    content: "";
+    display: block;
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+}
+.close-icon div::before {
+    background: none repeat scroll 0 0 red;
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+}
+.close-icon div::after {
+    background: none repeat scroll 0 0 #333;
+    opacity: 0;
+    transform: translate3d(100%, 0px, 0px);
+}
+.close-icon:hover div::before {
+    opacity: 0;
+    transform: translate3d(-100%, 0px, 0px);
+}
+.close-icon:hover div::after {
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+}
+
+/* Useless style */
+.close-icon {
+  margin: 20px auto;
+  width: 50px;
+  height:50px;
+}
