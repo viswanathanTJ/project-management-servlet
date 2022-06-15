@@ -75,16 +75,14 @@
     <br />
 
     <div hidden id="members">
-        <div class="popover-heading">
-            Marksheet Manager
-        </div>
+        <div class="popover-heading" id="heading"></div>
         <div class="popover-body">
             <div class="row mb-3">
                 <div class="col-6">
-                    <button class="btn btn-primary" id="editBtn" style="width:100%">Edit</button>
+                    <button class="btn btn-primary" id="editBtn" pid="" style="width:100%">Edit</button>
                 </div>
                 <div class="col-6">
-                    <button class="btn btn-danger" id="deleteBtn" style="width:100%">Delete</button>
+                    <button class="btn btn-danger" id="deleteBtn" pid="" style="width:100%">Delete</button>
                 </div>
             </div>
             <div class="form-group has-search mb-3">
@@ -92,15 +90,12 @@
                 <input type="text" class="form-control" onkeyup="myFunction(this)" placeholder="Search">
             </div>
 
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="popMembers">
                 <div class="panel-heading">
                     <h3 class="panel-title">Members</h3>
                 </div>
                 <div class="panel-body">
-                    <ul class="list-group" id="memberList">
-                        <li class="member">Adele</li>
-                        <li class="member">Bob</li>
-                    </ul>
+                    <ul class="list-group" id="memberList"></ul>
                 </div>
             </div>
         </div>
@@ -108,47 +103,11 @@
 
 
     <!-- Projects Cards -->
-    <div id="cards">
+    <div>
         <div id="cards_landscape_wrap-2">
             <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                        <a data-popover-content="#members" data-toggle="popover" data-trigger="focus">
-                            <div class="card-flyer">
-                                <div class="text-box">
-                                    <div class="text-container" style="margin:5px">
-                                        <input type="text" hidden id="project_id">
-                                        <h4><img width="20px" src="assets/icons/check.png" /> &nbsp;Marksheet
-                                            Manager
-                                        </h4>
-                                        <p class="text-muted text-start">15 open tasks</p>
-                                        <p class="desc">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                            industry.
-                                            Lorem
-                                            Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                                        <table class="mt-6">
-                                            <tr>
-                                                <td>Created</td>
-                                                <td>05/11/2222</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding-right:40px">Owner</td>
-                                                <td>Admin</td>
-                                            </tr>
-                                            <!-- <tr>
-                                                <td>Priority:</td>
-                                                <td class="priority-l"><img src="assets/icons/low.png" />&nbsp;Low</td>
-                                            </tr> -->
-                                            <tr>
-                                                <td>Team</td>
-                                                <td>5 Employee</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                <div class="row" id="cards">
+                    
                 </div>
             </div>
         </div>
@@ -158,7 +117,8 @@
 
 
     <!-- Edit Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -187,7 +147,8 @@
                             <label for="members" id="members">Members</label>
                             <div class="form-group has-search mb-3 mt-1">
                                 <span class="fa fa-search form-control-search"></span>
-                                <input type="text" class="form-control" onkeyup="memberFilter(this)" placeholder="Search">
+                                <input type="text" class="form-control" onkeyup="memberFilter(this)"
+                                    placeholder="Search">
                             </div>
                             <ul class="list-group" id="editMemberList">
                                 <li class="list-group-item">
@@ -272,6 +233,7 @@
         crossorigin="anonymous"></script>
     <script src="assets/js/toast.js"></script>
     <script src="assets/js/api_utility.js"></script>
+    <script src="assets/js/project_utility.js"></script>
     <script src="assets/js/projects.js"></script>
     <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
     <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>

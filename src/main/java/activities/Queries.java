@@ -22,6 +22,7 @@ public class Queries {
     // GET task
     public static String getTasks = "SELECT * FROM tasks";
     public static String getTaskByID = "SELECT * FROM tasks where t_id=?";
+    public static String getTaskCount = "SELECT COUNT(t_id) AS tasks FROM tasks WHERE p_id=?;";
 
     // SET task
     public static String setTaskStatus = "UPDATE tasks SET completed = ? WHERE t_id = ?;";
@@ -35,6 +36,7 @@ public class Queries {
     // GET project_users
     public static String uidInProUsers = "SELECT sno, u_id from project_users where p_id=?;";
     public static String getUsersByPID = "SELECT u_id from project_users where p_id=?;";
+    public static String getUserCountOnProject = "SELECT COUNT('u_id') AS team FROM project_users WHERE p_id=?;";
 
     // INSERT projects
     public static String putIntoProject = "INSERT INTO projects (name, description, owner_id) VALUES (?, ?, ?)";

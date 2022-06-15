@@ -35,14 +35,27 @@ public class GetProjects extends HttpServlet {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 			PreparedStatement st = con.prepareStatement(Queries.getProjects);
+			PreparedStatement st2;
 			ResultSet r1 = st.executeQuery();
+			ResultSet r2;
 			while (r1.next()) {
 				JSONObject obj = new JSONObject();
 				obj.put("p_id", r1.getInt("p_id"));
+				st2 = con.prepareStatement(Queries.getUserCountOnProject);
+				st2.setInt(1, r1.getInt("p_id"));
+				r2 = st2.executeQuery();
+				if (r2.next())
+					obj.put("team", r2.getInt("team"));
+				st2 = con.prepareStatement(Queries.getTaskCount);
+				st2.setInt(1, r1.getInt("p_id"));
+				r2 = st2.executeQuery();
+				if (r2.next())
+					obj.put("tasks", r2.getInt("tasks"));
 				obj.put("owner_id", r1.getInt("owner_id"));
 				obj.put("oname", Query.getUserNameByID(r1.getInt("owner_id")));
 				obj.put("name", r1.getString("name"));
 				obj.put("desc", r1.getString("description"));
+				obj.put("priority", r1.getInt("priority"));
 				Timestamp t = r1.getTimestamp("createdat");
 				SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 				String time = df.format(t);

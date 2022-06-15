@@ -1,5 +1,3 @@
-const pname = document.getElementById("name");
-const desc = document.getElementById("desc");
 const eusername = document.getElementById("ename");
 const edesc = document.getElementById("edesc");
 const pTitle = document.getElementById("pTitle");
@@ -11,6 +9,11 @@ const deleteBtn = document.getElementById("deleteBtn");
 const editModal = new bootstrap.Modal(document.getElementById("editModal"));
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 const editMembers = document.getElementById("editMembers");
+const memberList = document.getElementById("memberList");
+const heading = document.getElementById("heading");
+const popMembers = document.getElementById("popMembers");
+
+const cards = document.getElementById("cards");
 var inputTextValue;
 
 function myFunction(e) {
@@ -49,25 +52,13 @@ var sno = 0,
 // Event Listener
 $(document).on("click", "#editBtn", function () {
   editModal.show();
+  console.log($("#editBtn").attr("pid"));
   $(".popover").popover("hide");
 });
 $(document).on("click", "#deleteBtn", function () {
   deleteModal.show();
   $(".popover").popover("hide");
 });
-
-// function editMembers(e) {
-  // var filter, ul, li, i, txtValue;
-  // filter = e.value.toUpperCase();
-  // ul = document.getElementById("memberList");
-  // li = ul.querySelectorAll("li");
-  // li = document.getElementsByClassName("member");
-  // for (i = 0; i < li.length; i++) {
-  //   txtValue = li[i].innerHTML;
-  //   if (txtValue.toUpperCase().indexOf(filter) > -1) li[i].style.display = "";
-  //   else li[i].style.display = "none";
-  // }
-// }
 
 // VALIDATION
 function validator(element, count) {
@@ -80,51 +71,17 @@ function validator(element, count) {
   });
 }
 
-// ["keyup", "focus"].forEach((evt) =>
-//   pname.addEventListener(evt, function () {
-//     validator(pname, 3);
-//   })
-// );
-// ["keyup", "focus"].forEach((evt) =>
-//   eusername.addEventListener(evt, function () {
-//     validator(pname, 3);
-//   })
-// );
-// ["keyup", "focus"].forEach((evt) =>
-//   desc.addEventListener(evt, function () {
-//     validator(desc, 20);
-//   })
-// );
-// ["keyup", "focus"].forEach((evt) =>
-//   edesc.addEventListener(evt, function () {
-//     validator(edesc, 20);
-//   })
-// );
+["keyup", "focus"].forEach((evt) =>
+  eusername.addEventListener(evt, function () {
+    validator(pname, 3);
+  })
+);
 
-function initializeDatabase() {
-  table = $("#projectsTable").DataTable({
-    columnDefs: [
-      { targets: 0, visible: false },
-      { targets: 1, width: "50" },
-      { targets: 2, width: "200" },
-      { targets: 3, width: "400", className: "text-overflow: ellipsis;" },
-      { targets: 4, width: "80" },
-      {
-        className: "text-center",
-        targets: -1,
-        width: "200",
-        defaultContent: [
-          `<button class="btn btn-success btn-sm" title="Add members" id="btnAdd">Members</button>
-          <button class="btn btn-primary btn-sm" title="Edit project" id="btnEdit">Edit</button>
-            <button class="btn btn-danger btn-sm" title="Delete project" id="btnDelete">Delete</button>`,
-        ],
-      },
-    ],
-    rowReorder: true,
-    autoWidth: false,
-    fixedColumns: true,
-  });
-}
+["keyup", "focus"].forEach((evt) =>
+  edesc.addEventListener(evt, function () {
+    validator(edesc, 20);
+  })
+);
 
 function loadData() {
   var projects;
@@ -135,10 +92,7 @@ function loadData() {
       projects = resp.projects;
       $.each(projects, function (index, item) {
         addId = item.p_id;
-
-        table.row
-          .add([item.p_id, sno, item.name, item.desc, item.oname])
-          .draw(false);
+        addCard(item);
       });
     },
   });
@@ -249,7 +203,28 @@ $("#projectsTable tbody").on("click", "td", function () {
   });
 });
 
+loadData();
+
+// DOCUMENT READY FUNCTIONS
+$(document).keyup(function (event) {
+  if (event.which === 27) $(".popover").popover("hide");
+});
 $(document).ready(function () {
+  // To open only one pop
+  $("[data-toggle=popover]").hover(function (e) {
+    var content = $(this).attr("data-popover-content");
+    var pid = $(this).attr("pid");
+    $("#editBtn").attr("pid", pid);
+    $("#deleteBtn").attr("pid", pid);
+    var ctitle = $(this).attr("p-title");
+    loadPop(content, pid, ctitle);
+  });
+
+  $("[data-toggle=popover]").on("click", function (e) {
+    $("[data-toggle=popover]").not(this).popover("hide");
+  });
+
+  // Open pop
   $("[data-toggle=popover]").popover({
     html: true,
     sanitize: false,
@@ -265,11 +240,8 @@ $(document).ready(function () {
   $(document).on("click", ".popover .close", function () {
     $(this).parents(".popover").popover("hide");
   });
-  // Initialize DataTable
 
-  initializeDatabase();
   // Load DataTable
-  loadData();
   // loadOwner();
 
   // Form Handling
