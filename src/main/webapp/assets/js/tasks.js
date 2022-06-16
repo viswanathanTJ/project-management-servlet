@@ -300,3 +300,7 @@ $(document).ready(function () {
     e.preventDefault();
   });
 });
+
+window.addEventListener("load", function alertFunc() {
+  $(".loader").fadeOut("slow");
+});

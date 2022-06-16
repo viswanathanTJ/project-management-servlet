@@ -24,6 +24,7 @@
 </head>
 
 <body id="body-pd">
+  <div class="loader"></div>
   <header class="header" id="header">
     <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
     <div>
@@ -277,6 +278,11 @@
   <script src="assets/js/tasks.js"></script>
   <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
   <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>
+  <script>
+    $(window).load(function () {
+        $(".loader").fadeOut("slow");
+      });
+  </script>
 </body>
 
 </html>

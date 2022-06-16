@@ -126,10 +126,9 @@ p {
   font-weight: 500;
 }
 
-
 /*----  Responsive  ----*/
 
-.popover{
+.popover {
   min-width: 250px;
   max-width: 100%;
 }
@@ -140,16 +139,17 @@ p {
   margin: 0;
 }
 
-#memberList li, customli {
+#memberList li,
+customli {
   border: 0px;
   border-bottom: 2px solid #ddd;
-  margin-top: -1px; 
+  margin-top: -1px;
   background-color: #fff;
   padding: 12px;
   text-decoration: none;
   font-size: 18px;
   color: black;
-  display: block
+  display: block;
 }
 
 #memberList li:hover:not(.header) {
@@ -157,17 +157,17 @@ p {
 }
 
 .has-search .form-control {
-    padding-left: 2.375rem;
+  padding-left: 2.375rem;
 }
 
 .has-search .form-control-search {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 2.375rem;
-    height: 2.375rem;
-    line-height: 2.375rem;
-    text-align: center;
-    pointer-events: none;
-    color: #aaa;
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
 }

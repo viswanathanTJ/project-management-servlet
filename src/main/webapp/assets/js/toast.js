@@ -178,5 +178,7 @@ class ToastsFactory {
   }
 }
 
+
+
 const swipeHandler = new SwipeHandler();
 const toastsFactory = new ToastsFactory(swipeHandler);

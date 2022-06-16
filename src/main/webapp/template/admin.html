@@ -10,8 +10,8 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/toast.css" />
-    <link rel="stylesheet" href="assets/css/modal.css" />
-    <link rel="stylesheet" href="assets/css/cards.css" />
+    <!-- <link rel="stylesheet" href="assets/css/modal.css" /> -->
+    <link rel="stylesheet" href="assets/css/admin.css" />
     <link rel="icon" type="image/png" href="assets/icons/icon.png" sizes="96x96">
     <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -24,6 +24,7 @@
 </head>
 
 <body id="body-pd">
+    <div class="loader"></div>
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
         <div>
@@ -71,15 +72,134 @@
     <div class="container" style="margin-top: 70px">
         <h3>Dashboard</h3>
     </div>
-    <div class="clearfix"></div>
-    <br />
 
 
+    <!-- ======================= Cards ================== -->
+    <div class="cardBox">
+        <div class="card">
+            <div>
+                <div class="numbers">4</div>
+                <div class="cardName">Projects</div>
+            </div>
+
+            <div class="iconBx">
+                <i class='bx bx-briefcase'></i>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers">12</div>
+                <div class="cardName">Users</div>
+            </div>
+
+            <div class="iconBx">
+                <i class='bx bx-user'></i>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers">5</div>
+                <div class="cardName">Tasks</div>
+            </div>
+
+            <div class="iconBx">
+                <i class='bx bx-task'></i>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers">4</div>
+                <div class="cardName">Open Tasks</div>
+            </div>
+
+            <div class="iconBx">
+                <i class="fas fa-tasks"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================ Recent Tasks ================= -->
+    <div class="details">
+        <div class="recentTasks">
+            <div class="cardHeader">
+                <h2>Recent Tasks</h2>
+                <a href="admin_tasks" class="btn">View All</a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <td>Title</td>
+                        <td>Project</td>
+                        <td>Creator</td>
+                        <td>Assignee</td>
+                        <td>Priority</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Develop 404 page</td>
+                        <td>Marksheet Manager</td>
+                        <td>admin</td>
+                        <td>viswa</td>
+                        <td><span class="status low">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td>Develop 404 page</td>
+                        <td>Marksheet Manager</td>
+                        <td>admin</td>
+                        <td>viswa</td>
+                        <td><span class="status medium">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td>Develop 404 page</td>
+                        <td>Marksheet Manager</td>
+                        <td>admin</td>
+                        <td>viswa</td>
+                        <td><span class="status high">High</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ================= New Employee ================ -->
+        <div class="recentEmployee">
+            <div class="cardHeader">
+                <h2>Recent Customers</h2>
+            </div>
+
+            <table>
+                <tr>
+                    <td width="60px">
+                        <div class="imgBx">
+                            <div class="profile">
+                                A
+                            </div>
+                            <!-- <img src="assets/imgs/customer02.jpg" alt=""> -->
+                        </div>
+                    </td>
+                    <td>
+                        <h4>Amit <br> <span>Employee</span></h4>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 
     <script src="assets/js/bootstrap/bootstrap.min.js"></script>
     <script src="assets/js/toast.js"></script>
+    <script src="assets/js/admin.js"></script>
     <script src="assets/js/api_utility.js"></script>
+    <script>
+        window.addEventListener("load", function alertFunc() {
+            $(".loader").fadeOut("slow");
+        });
+    </script>
 </body>
 
 </html>

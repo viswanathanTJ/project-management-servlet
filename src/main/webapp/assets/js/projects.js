@@ -236,38 +236,47 @@ $(document).keyup(function (event) {
   if (event.which === 27) $(".popover").popover("hide");
 });
 
-$(window).on("load", function () {
-  // To open only one pop
-  $("[data-toggle=popover]").hover(function (e) {
-    var content = $(this).attr("data-popover-content");
-    pid = $(this).attr("pid");
-    $("#editBtn").attr("pid", pid);
-    $("#deleteBtn").attr("pid", pid);
-    var ctitle = $(this).attr("p-title");
-    loadPop(content, pid, ctitle);
-  });
-
-  $("[data-toggle=popover]").on("click", function (e) {
-    $("[data-toggle=popover]").not(this).popover("hide");
-  });
-
-  // Open pop
-  $("[data-toggle=popover]").popover({
-    html: true,
-    sanitize: false,
-    content: function () {
+window.addEventListener("load", function alertFunc() {
+  setTimeout(() => {
+    $("[data-toggle=popover]").hover(function (e) {
       var content = $(this).attr("data-popover-content");
-      return $(content).children(".popover-body").html();
-    },
-    title: function () {
-      var title = $(this).attr("data-popover-content");
-      return $(title).children(".popover-heading").html();
-    },
-  });
-  $(document).on("click", ".popover .close", function () {
-    $(this).parents(".popover").popover("hide");
-  });
+      pid = $(this).attr("pid");
+      $("#editBtn").attr("pid", pid);
+      $("#deleteBtn").attr("pid", pid);
+      var ctitle = $(this).attr("p-title");
+      loadPop(content, pid, ctitle);
+    });
+
+    $("[data-toggle=popover]").on("click", function (e) {
+      $("[data-toggle=popover]").not(this).popover("hide");
+      var content = $(this).attr("data-popover-content");
+      pid = $(this).attr("pid");
+      $("#editBtn").attr("pid", pid);
+      $("#deleteBtn").attr("pid", pid);
+      var ctitle = $(this).attr("p-title");
+      loadPop(content, pid, ctitle);
+    });
+
+    // Open pop
+    $("[data-toggle=popover]").popover({
+      html: true,
+      sanitize: false,
+      content: function () {
+        var content = $(this).attr("data-popover-content");
+        return $(content).children(".popover-body").html();
+      },
+      title: function () {
+        var title = $(this).attr("data-popover-content");
+        return $(title).children(".popover-heading").html();
+      },
+    });
+    $(document).on("click", ".popover .close", function () {
+      $(this).parents(".popover").popover("hide");
+    });
+    $(".loader").fadeOut("slow");
+  }, 1000);
 });
+
 $(document).ready(function () {
   // Load DataTable
   loadOwner();

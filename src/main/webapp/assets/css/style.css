@@ -23,6 +23,26 @@ body {
   transition: 0.5s;
 }
 
+.no-js #loader {
+  display: none;
+}
+.js #loader {
+  display: block;
+  position: absolute;
+  left: 100px;
+  top: 0;
+}
+.loader {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url(http://smallenvelop.com/demo/simple-pre-loader/images/loader-64x/Preloader_2.gif)
+    center no-repeat #fff;
+}
+
 .btn-primary {
   background-color: var(--first-color) !important;
 }
@@ -111,6 +131,11 @@ a {
   color: #fff;
   text-transform: uppercase;
 }
+.profile_img > img {
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+}
 .nav {
   height: 100%;
   display: flex;
@@ -198,11 +223,6 @@ a {
   }
 }
 
-.profile_img > img {
-  width: 50px;
-  height: 50px;
-  vertical-align: middle;
-}
 .nav-item {
   color: #fff;
 }
@@ -287,7 +307,6 @@ div#projectsTable_filter {
 }
 /* DROPDOWN */
 
-
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
   position: relative;
@@ -300,7 +319,7 @@ div#projectsTable_filter {
   position: absolute;
   background-color: #fff;
   min-width: 100px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -313,60 +332,71 @@ div#projectsTable_filter {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content button:hover {background-color: #f1f1f1; color: var(--first-color)}
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+  color: var(--first-color);
+}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
 .close-icon div {
-    display: block;
-    height: 2px;
-    position: relative;
-    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0s, opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1) 0s;
-    width: 20px;
+  display: block;
+  height: 2px;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0s,
+    opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+  width: 20px;
 }
 .close-icon div:first-child {
-    transform: translate3d(0px, 10px, 0px) rotate3d(0, 0, 1, -45deg);
+  transform: translate3d(0px, 10px, 0px) rotate3d(0, 0, 1, -45deg);
 }
-.close-icon div:first-child::after, .close-icon div:first-child::before {
-    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0s, opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+.close-icon div:first-child::after,
+.close-icon div:first-child::before {
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0s,
+    opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1) 0s;
 }
 .close-icon div:last-child {
-    transform: translate3d(0px, 8px, 0px) rotate3d(0, 0, 1, 45deg);
+  transform: translate3d(0px, 8px, 0px) rotate3d(0, 0, 1, 45deg);
 }
-.close-icon div:last-child::after, .close-icon div:last-child::before {
-    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.2s, opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1) 0.18s;
+.close-icon div:last-child::after,
+.close-icon div:last-child::before {
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.2s,
+    opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1) 0.18s;
 }
-.close-icon div::after, .close-icon div::before {
-    content: "";
-    display: block;
-    height: 100%;
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
+.close-icon div::after,
+.close-icon div::before {
+  content: "";
+  display: block;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
 }
 .close-icon div::before {
-    background: none repeat scroll 0 0 red;
-    opacity: 1;
-    transform: translate3d(0px, 0px, 0px);
+  background: none repeat scroll 0 0 red;
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px);
 }
 .close-icon div::after {
-    background: none repeat scroll 0 0 #333;
-    opacity: 0;
-    transform: translate3d(100%, 0px, 0px);
+  background: none repeat scroll 0 0 #333;
+  opacity: 0;
+  transform: translate3d(100%, 0px, 0px);
 }
 .close-icon:hover div::before {
-    opacity: 0;
-    transform: translate3d(-100%, 0px, 0px);
+  opacity: 0;
+  transform: translate3d(-100%, 0px, 0px);
 }
 .close-icon:hover div::after {
-    opacity: 1;
-    transform: translate3d(0px, 0px, 0px);
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px);
 }
 
 /* Useless style */
 .close-icon {
   margin: 20px auto;
   width: 50px;
-  height:50px;
+  height: 50px;
 }
