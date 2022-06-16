@@ -3,7 +3,7 @@
 
 <head>
     <script src="assets/js/jquery/jquery.min.js"></script>
-    <!-- <script src="assets/js/checkuser.js"></script> -->
+    <script src="assets/js/checkuser.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="assets/css/toast.css" />
     <link rel="stylesheet" href="assets/css/modal.css" />
     <link rel="stylesheet" href="assets/css/cards.css" />
+    <link rel="stylesheet" href="assets/css/loader.css" />
     <link rel="icon" type="image/png" href="assets/icons/icon.png" sizes="96x96">
     <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -24,7 +25,18 @@
 </head>
 
 <body id="body-pd">
-    <div class="loader"></div>
+    <div class="loader-container" id="loader">
+        <div class="loader-viewer">
+            <div class="set1">
+                <div class="ball"></div>
+                <div class="ball"></div>
+            </div>
+            <div class="set2">
+                <div class="ball"></div>
+                <div class="ball"></div>
+            </div>
+        </div>
+    </div>
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
         <div>
@@ -53,7 +65,8 @@
                         <i class='bx bx-user nav_icon'></i>
                         <span class="nav_name">Users</span> </a>
                     <a href="admin_projects" class="nav_link active">
-                        <i class='fa-solid fa-diagram-project nav_icon'></i>
+                        <i class='bx bx-briefcase nav_icon'></i>
+                        <!-- <i class='fa-solid fa-diagram-project nav_icon'></i> -->
                         <span class="nav_name">Projects</span>
                     </a>
                     <a href="admin_tasks" class="nav_link">
@@ -116,7 +129,58 @@
 
     <!-- Modals -->
 
+    <!-- Add project Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add Project</h5>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form name="add-project" id="add-project">
+                        <div class="mb-3">
+                            <label for="ename">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp"
+                                placeholder="Enter Project Name" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="edesc">Description</label>
+                            <textarea class="form-control" id="desc" name="desc" aria-describedby="edescHelp" rows="3"
+                                placeholder="Enter Description atleast 20 characters" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="priority">Priority</label>
+                            <select class="form-control" id="priority" name="priority"
+                                aria-label=".form-select-lg example">
+                                <option value="0">Low</option>
+                                <option value="1" selected>Medium</option>
+                                <option value="2">High</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="members" id="members">Members</label>
+                            <div class="form-group has-search mb-3 mt-1">
+                                <span class="fa fa-search form-control-search"></span>
+                                <input type="text" class="form-control" onkeyup="memberFilter(this, 'addMemberList')"
+                                    placeholder="Search">
+                            </div>
+                            <ul class="list-group" id="addMemberList">
 
+                            </ul>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <input type="submit" id="submit" class="btn btn-primary" value="Submit" />
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal end -->
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
         aria-hidden="true">
@@ -148,7 +212,7 @@
                             <label for="members" id="members">Members</label>
                             <div class="form-group has-search mb-3 mt-1">
                                 <span class="fa fa-search form-control-search"></span>
-                                <input type="text" class="form-control" onkeyup="memberFilter(this)"
+                                <input type="text" class="form-control" onkeyup="memberFilter(this, 'editMemberList')"
                                     placeholder="Search">
                             </div>
                             <ul class="list-group" id="editMemberList">
@@ -177,7 +241,7 @@
                     </div>
                     <h4 class="modal-title w-100">Are you sure?</h4>
                 </div>
-                <form id="delete-task" name="delete-task">
+                <form id="delete-project" name="delete-project">
 
                     <div class="modal-body">
                         <p>Do you really want to delete these records? This process cannot be undone.</p>
@@ -192,6 +256,9 @@
         </div>
     </div>
 
+    <div class="floating-container">
+        <div class="floating-button" id="addProject">+</div>
+    </div>
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

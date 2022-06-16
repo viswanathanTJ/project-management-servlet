@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400|Raleway:400,500");
+
 :root {
   --header-height: 3rem;
   --nav-width: 68px;
@@ -18,29 +20,11 @@ body {
   position: relative;
   margin: var(--header-height) 0 0 0;
   padding: 0 1rem;
-  font-family: var(--body-font);
+  background-color: #f7f6fb !important;
+  /* font-family: var(--body-font); */
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-size: var(--normal-font-size);
   transition: 0.5s;
-}
-
-.no-js #loader {
-  display: none;
-}
-.js #loader {
-  display: block;
-  position: absolute;
-  left: 100px;
-  top: 0;
-}
-.loader {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  background: url(http://smallenvelop.com/demo/simple-pre-loader/images/loader-64x/Preloader_2.gif)
-    center no-repeat #fff;
 }
 
 .btn-primary {
@@ -394,9 +378,17 @@ div#projectsTable_filter {
   transform: translate3d(0px, 0px, 0px);
 }
 
-/* Useless style */
-.close-icon {
-  margin: 20px auto;
-  width: 50px;
-  height: 50px;
+/* Admin */
+.flex-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* Tasks  */
+.edit-container {
+  position: relative;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
 }

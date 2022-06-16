@@ -3,14 +3,14 @@
 
 <head>
     <script src="assets/js/jquery/jquery.min.js"></script>
-    <!-- <script src="assets/js/checkuser.js"></script> -->
+    <script src="assets/js/checkuser.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/toast.css" />
-    <!-- <link rel="stylesheet" href="assets/css/modal.css" /> -->
+    <link rel="stylesheet" href="assets/css/loader.css" />
     <link rel="stylesheet" href="assets/css/admin.css" />
     <link rel="icon" type="image/png" href="assets/icons/icon.png" sizes="96x96">
     <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
@@ -19,19 +19,27 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <!-- <script src="assets/js/jquery.jquery/jquery.dataTables.min.js"></script>
-    <script src="assets/js/dataTables.bootstrap/bootstrap.min.js"></script> -->
 </head>
 
 <body id="body-pd">
-    <div class="loader"></div>
+    <div class="loader-container" id="loader">
+        <div class="loader-viewer">
+            <div class="set1">
+                <div class="ball"></div>
+                <div class="ball"></div>
+            </div>
+            <div class="set2">
+                <div class="ball"></div>
+                <div class="ball"></div>
+            </div>
+        </div>
+    </div>
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
         <div>
             <h3>Project Manager</h3>
         </div>
         <div class="profile_img" id="profile_img">
-            <!-- <img src='assets/icons/profile.png' /> -->
             A
         </div>
     </header>
@@ -53,7 +61,8 @@
                         <i class='bx bx-user nav_icon'></i>
                         <span class="nav_name">Users</span> </a>
                     <a href="admin_projects" class="nav_link">
-                        <i class='fa-solid fa-diagram-project nav_icon'></i>
+                        <i class='bx bx-briefcase nav_icon'></i>
+                        <!-- <i class='fa-solid fa-diagram-project nav_icon'></i> -->
                         <span class="nav_name">Projects</span>
                     </a>
                     <a href="admin_tasks" class="nav_link">
@@ -76,49 +85,58 @@
 
     <!-- ======================= Cards ================== -->
     <div class="cardBox">
-        <div class="card">
-            <div>
-                <div class="numbers">4</div>
-                <div class="cardName">Projects</div>
-            </div>
+        <a href="admin_projects">
+            <div class="card">
+                <div>
+                    <div class="numbers" id="projects">4</div>
+                    <div class="cardName">Projects</div>
+                </div>
 
-            <div class="iconBx">
-                <i class='bx bx-briefcase'></i>
+                <div class="iconBx">
+                    <i class='bx bx-briefcase'></i>
+                </div>
             </div>
-        </div>
+        </a>
 
-        <div class="card">
-            <div>
-                <div class="numbers">12</div>
-                <div class="cardName">Users</div>
-            </div>
+        <a href="admin_users">
+            <div class="card">
+                <div>
+                    <div class="numbers" id="users">12</div>
+                    <div class="cardName">Users</div>
+                </div>
 
-            <div class="iconBx">
-                <i class='bx bx-user'></i>
+                <div class="iconBx">
+                    <i class='bx bx-user'></i>
+                </div>
             </div>
-        </div>
+        </a>
 
-        <div class="card">
-            <div>
-                <div class="numbers">5</div>
-                <div class="cardName">Tasks</div>
-            </div>
+        <a href="admin_tasks">
 
-            <div class="iconBx">
-                <i class='bx bx-task'></i>
-            </div>
-        </div>
+            <div class="card">
+                <div>
+                    <div class="numbers" id="tasks">5</div>
+                    <div class="cardName">Tasks</div>
+                </div>
 
-        <div class="card">
-            <div>
-                <div class="numbers">4</div>
-                <div class="cardName">Open Tasks</div>
+                <div class="iconBx">
+                    <i class='bx bx-task'></i>
+                </div>
             </div>
+        </a>
 
-            <div class="iconBx">
-                <i class="fas fa-tasks"></i>
+        <a href="admin_tasks">
+            <div class="card">
+                <div>
+                    <div class="numbers" id="opentasks">4</div>
+                    <div class="cardName">Open Tasks</div>
+                </div>
+
+                <div class="iconBx">
+                    <i class="fas fa-tasks"></i>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <!-- ================ Recent Tasks ================= -->
@@ -140,52 +158,20 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <td>Develop 404 page</td>
-                        <td>Marksheet Manager</td>
-                        <td>admin</td>
-                        <td>viswa</td>
-                        <td><span class="status low">Low</span></td>
-                    </tr>
-                    <tr>
-                        <td>Develop 404 page</td>
-                        <td>Marksheet Manager</td>
-                        <td>admin</td>
-                        <td>viswa</td>
-                        <td><span class="status medium">Medium</span></td>
-                    </tr>
-                    <tr>
-                        <td>Develop 404 page</td>
-                        <td>Marksheet Manager</td>
-                        <td>admin</td>
-                        <td>viswa</td>
-                        <td><span class="status high">High</span></td>
-                    </tr>
+                <tbody id="recentTasks">
+
                 </tbody>
             </table>
         </div>
 
-        <!-- ================= New Employee ================ -->
+        <!-- ================= Recent Employee ================ -->
         <div class="recentEmployee">
             <div class="cardHeader">
-                <h2>Recent Customers</h2>
+                <h2>Recent Users</h2>
             </div>
 
-            <table>
-                <tr>
-                    <td width="60px">
-                        <div class="imgBx">
-                            <div class="profile">
-                                A
-                            </div>
-                            <!-- <img src="assets/imgs/customer02.jpg" alt=""> -->
-                        </div>
-                    </td>
-                    <td>
-                        <h4>Amit <br> <span>Employee</span></h4>
-                    </td>
-                </tr>
+            <table id="recentUsers">
+
             </table>
         </div>
     </div>

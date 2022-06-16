@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/toast.css" />
   <link rel="stylesheet" href="assets/css/modal.css" />
+  <link rel="stylesheet" href="assets/css/loader.css" />
   <link rel="icon" type="image/png" href="assets/icons/icon.png" sizes="96x96">
   <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -24,7 +25,18 @@
 </head>
 
 <body id="body-pd">
-  <div class="loader"></div>
+  <div class="loader-container" id="loader">
+    <div class="loader-viewer">
+      <div class="set1">
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+      <div class="set2">
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+    </div>
+  </div>
   <header class="header" id="header">
     <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
     <div>
@@ -53,7 +65,7 @@
             <i class='bx bx-user nav_icon'></i>
             <span class="nav_name">Users</span> </a>
           <a href="admin_projects" class="nav_link">
-            <i class='fa-solid fa-diagram-project nav_icon'></i>
+            <i class='bx bx-briefcase nav_icon'></i>
             <span class="nav_name">Projects</span>
           </a>
           <a href="admin_tasks" class="nav_link active">
@@ -74,15 +86,15 @@
   </div>
   <div class="clearfix"></div>
   <br />
-  <div class="row">
+  <div class="row flex-container">
     <div class="mt-0 mb-3">
       <button class="btn btn-primary" id="createBtn" data-toggle="modal" data-target="#formModal">
         <i class="fa fa-add"></i> Create Task
       </button>
     </div>
-    <div class="col-md-12 animated" id="tableSize">
-      <table id="tasksTable" class="table table-bordered" style="border: right 0 !important;" cellspacing="0"
-        width="100%">
+    <div class="col-md-12 animated edit-container" id="tableSize">
+      <table id="tasksTable" class="table  table-striped table-bordered" style="border: right 0 !important;"
+        cellspacing="0" width="100%">
         <thead>
           <th>t_id</th>
           <th></th>
@@ -99,7 +111,7 @@
 
       </table>
     </div>
-    <div class="col-md-5 animated" hidden id="rowEditForm" style="border: 1px solid #dee2e6">
+    <div class="col-md-4 animated edit-container" hidden id="rowEditForm">
       <p class="mt-1" style="font-weight: bold; font-size:20px">Edit task </p>
       <form>
         <div class="form-floating mb-3">
@@ -280,8 +292,8 @@
   <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>
   <script>
     $(window).load(function () {
-        $(".loader").fadeOut("slow");
-      });
+      $(".loader").fadeOut("slow");
+    });
   </script>
 </body>
 

@@ -3,7 +3,6 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,13 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import com.mysql.cj.Session;
-
-import activities.Queries;
-import activities.SessionHandler;
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
-import entities.Task;
+import activities.Queries;
+import activities.SessionHandler;
 
 @WebServlet("/updateTask")
 public class UpdateTask extends HttpServlet {

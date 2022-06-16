@@ -12,13 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.mysql.cj.Session;
 
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
-import entities.Task;
-import activities.Queries;
 import activities.SessionHandler;
+import entities.Task;
 
 /**
  * Servlet implementation class AddUser

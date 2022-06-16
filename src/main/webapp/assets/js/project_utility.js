@@ -6,7 +6,7 @@ function addCard(details) {
   if (pri === 0) pri = low;
   else if (pri === 1) pri = med;
   else if (pri === 2) pri = high;
-  cards.innerHTML += `<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+  cards.innerHTML += `<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" id="del${details.p_id}">
                         <a pid="${details.p_id}" p-title="${details.name}" data-popover-content="#members" data-toggle="popover" data-trigger="focus">
                             <div class="card-flyer">
                                 <div class="text-box">
@@ -58,6 +58,16 @@ function loadPop(content, pid, title) {
         if (item.isMember === "checked")
           memberList.innerHTML += `<li class="member">${item.name}</li>`;
       });
+    },
+  });
+}
+
+function addCardByProject(pid) {
+  $.ajax({
+    url: "getProject?pid=" + pid,
+    type: "GET",
+    success: function (resp) {
+      addCard(resp);
     },
   });
 }

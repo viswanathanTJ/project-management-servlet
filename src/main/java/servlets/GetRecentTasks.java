@@ -16,33 +16,31 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
 import activities.Queries;
 
-/**
- * Servlet implementation class AddUser
- */
-@WebServlet("/getUsersByPID")
-public class GetUsersByPID extends HttpServlet {
+@WebServlet("/getRecentTasks")
+public class GetRecentTasks extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String pid = request.getParameter("pid");
 		try {
+			System.out.println("GetRecentTasks");
 			Connection con;
 			con = DatabaseConnection.getDatabase();
-			PreparedStatement st = con.prepareStatement(Queries.getUsersByPID);
-			st.setString(1, pid);
+			PreparedStatement st = con.prepareStatement(Queries.getRecentTasks);
 			ResultSet r1 = st.executeQuery();
 			JSONObject jsonObject = new JSONObject();
 			JSONArray array = new JSONArray();
 			while (r1.next()) {
 				JSONObject obj = new JSONObject();
-				obj.put("uid", r1.getString("u_id"));
-				obj.put("name", Query.getUserNameByID(r1.getInt("u_id")));
+				obj.put("title", r1.getString("title"));
+				obj.put("priority", r1.getString("priority"));
+				obj.put("owner", r1.getString("owner"));
+				obj.put("assignee", r1.getString("assignee"));
+				obj.put("project", r1.getString("project"));
 				array.put(obj);
 			}
-			jsonObject.put("users", array);
+			jsonObject.put("tasks", array);
 			response.setContentType("application/json");
 			response.getWriter().print(jsonObject);
 			response.setStatus(200);

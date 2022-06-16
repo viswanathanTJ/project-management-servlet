@@ -23,34 +23,38 @@ import activities.Queries;
 /**
  * Servlet implementation class AddUser
  */
-@WebServlet("/getTaskByID")
-public class GetTaskByID extends HttpServlet {
+@WebServlet("/getProject")
+public class GetProject extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String tid = request.getParameter("tid");
+		int pid = Integer.parseInt(request.getParameter("pid"));
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
-			PreparedStatement st = con.prepareStatement(Queries.getTaskByID);
-			st.setString(1, tid);
+			PreparedStatement st = con.prepareStatement(Queries.getProjectByID);
+			st.setInt(1, pid);
+			PreparedStatement st2;
 			ResultSet r1 = st.executeQuery();
+			ResultSet r2;
 			JSONObject obj = new JSONObject();
 			if (r1.next()) {
-				obj.put("t_id", r1.getInt("t_id"));
-				obj.put("title", r1.getString("title"));
+				obj.put("p_id", pid);
+				st2 = con.prepareStatement(Queries.getUserCountOnProject);
+				st2.setInt(1, pid);
+				r2 = st2.executeQuery();
+				if (r2.next())
+					obj.put("team", r2.getInt("team"));
+				st2 = con.prepareStatement(Queries.getTaskCount);
+				st2.setInt(1, pid);
+				r2 = st2.executeQuery();
+				if (r2.next())
+					obj.put("tasks", r2.getInt("tasks"));
+				obj.put("owner_id", r1.getInt("owner_id"));
+				obj.put("oname", Query.getUserNameByID(r1.getInt("owner_id")));
+				obj.put("name", r1.getString("name"));
 				obj.put("desc", r1.getString("description"));
-				obj.put("start_date", r1.getString("start_date").substring(0, 10));
-				obj.put("due_date", r1.getString("end_date").substring(0, 10));
-				obj.put("priority", r1.getString("priority"));
-				obj.put("assignee_id", r1.getInt("assignee_id"));
-				obj.put("completed", r1.getInt("completed"));
-				obj.put("assignee", Query.getUserNameByID(r1.getInt("assignee_id")));
-				obj.put("p_id", r1.getString("p_id"));
-				obj.put("project_name", Query.getProjectNameByID(r1.getString("p_id")));
-				obj.put("c_id", r1.getInt("creator_id"));
-				obj.put("cname", Query.getUserNameByID(r1.getInt("creator_id")));
-				obj.put("desc", r1.getString("description"));
+				obj.put("priority", r1.getInt("priority"));
 				Timestamp t = r1.getTimestamp("createdat");
 				SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 				String time = df.format(t);

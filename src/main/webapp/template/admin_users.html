@@ -3,16 +3,28 @@
 
 <head>
     <script src="assets/js/jquery/jquery.min.js"></script>
-    <!-- <script src="assets/js/checkuser.js"></script> -->
+    <script src="assets/js/checkuser.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/loader.css" />
 </head>
 
 <body id="body-pd">
-    <div class="loader"></div>
+    <div class="loader-container" id="loader">
+        <div class="loader-viewer">
+            <div class="set1">
+                <div class="ball"></div>
+                <div class="ball"></div>
+            </div>
+            <div class="set2">
+                <div class="ball"></div>
+                <div class="ball"></div>
+            </div>
+        </div>
+    </div>
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
         <div>
@@ -43,7 +55,7 @@
                         <span class="nav_name">Users</span> </a>
                     <a href="admin_projects" class="nav_link">
                         <!-- <i class='fa-solid fa-diagram-project nav_icon'></i> -->
-                        <i class='bx bx-briefcase'></i>
+                        <i class='bx bx-briefcase nav_icon'></i>
                         <span class="nav_name">Projects</span>
                     </a>
                     <a href="admin_tasks" class="nav_link">

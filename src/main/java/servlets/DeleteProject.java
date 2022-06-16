@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 
 @WebServlet("/deleteProject")
@@ -25,7 +26,10 @@ public class DeleteProject extends HttpServlet {
 			con = DatabaseConnection.getDatabase();
 
 			PreparedStatement st;
-			st = con.prepareStatement("delete from projects where p_id=?");
+			st = con.prepareStatement(Queries.deleteProject);
+			st.setString(1, id);
+			st.executeUpdate();
+			st = con.prepareStatement(Queries.deleteProjectUsers);
 			st.setString(1, id);
 			st.executeUpdate();
 			response.getWriter().print("Deleted successfully");

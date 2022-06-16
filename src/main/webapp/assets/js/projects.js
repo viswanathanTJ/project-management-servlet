@@ -10,6 +10,7 @@ const editModal = new bootstrap.Modal(document.getElementById("editModal"));
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 const editMembers = document.getElementById("editMembers");
 const memberList = document.getElementById("memberList");
+const addMemberList = document.getElementById("addMemberList");
 const heading = document.getElementById("heading");
 const popMembers = document.getElementById("popMembers");
 
@@ -31,10 +32,10 @@ function myFunction(e) {
   }
 }
 
-function memberFilter(e) {
+function memberFilter(e, list) {
   var filter, ul, li, i, txtValue;
   filter = e.value.toUpperCase();
-  ul = document.getElementById("editMemberList");
+  ul = document.getElementById(list);
   li = ul.querySelectorAll("li");
   li = document.getElementsByClassName("list-group-item");
   for (i = 0; i < li.length; i++) {
@@ -48,8 +49,7 @@ var jsonObj = {};
 var sno = 0,
   pid,
   coname,
-  prname,
-  addId = 0;
+  prname;
 
 // Event Listener
 $(document).on("click", "#editBtn", function () {
@@ -97,7 +97,6 @@ function loadData() {
     success: function (resp) {
       projects = resp.projects;
       $.each(projects, function (index, item) {
-        addId = item.p_id;
         addCard(item);
       });
     },
@@ -138,15 +137,39 @@ function loadMembers(pid) {
         if (item.isMember != "" || item.isMember != null)
           jsonObj[item.uid] = item.name;
         listMembers.innerHTML += `
+        <label>
           <li class="list-group-item">
-            <input class="form-check-input" id="${item.uid}" name="${item.uid}" type="checkbox" ${item.isMember} value="${item.uid}">
-            <label for="${item.uid}">&nbsp;&nbsp;${item.name}</label>
-          </li>`;
+              <input class="form-check-input" id="${item.uid}" name="${item.uid}" type="checkbox" ${item.isMember} value="${item.uid}">
+              &nbsp;&nbsp;${item.name}
+          </li>
+        </label>`;
       });
     },
   });
 }
 
+function loadAddMemberList() {
+  addMemberList.innerHTML = "";
+  $.ajax({
+    url: "getUsers",
+    type: "GET",
+    success: function (resp) {
+      let users = resp.users;
+      $.each(users, function (index, item) {
+        addMemberList.innerHTML += `
+      <li class="list-group-item">
+          <input class="form-check-input" id="${item.uid}" name="${item.uid}" type="checkbox" value="${item.uid}">
+          <label for="${item.uid}">&nbsp;&nbsp;${item.name}</label>
+      </li>
+      `;
+      });
+    },
+  });
+}
+
+function deleteProject() {
+  alert(pid);
+}
 // Add Button
 $("#projectsTable").on("click", "#btnAdd", function (e) {
   $("#formAddModal").modal("show");
@@ -230,50 +253,52 @@ $("#projectsTable tbody").on("click", "td", function () {
 });
 
 loadData();
-
+loadAddMemberList();
 // DOCUMENT READY FUNCTIONS
 $(document).keyup(function (event) {
   if (event.which === 27) $(".popover").popover("hide");
 });
 
+function initializePopOver() {
+  $("[data-toggle=popover]").hover(function (e) {
+    var content = $(this).attr("data-popover-content");
+    pid = $(this).attr("pid");
+    $("#editBtn").attr("pid", pid);
+    $("#deleteBtn").attr("pid", pid);
+    var ctitle = $(this).attr("p-title");
+    loadPop(content, pid, ctitle);
+  });
+
+  $("[data-toggle=popover]").on("click", function (e) {
+    $("[data-toggle=popover]").not(this).popover("hide");
+    var content = $(this).attr("data-popover-content");
+    pid = $(this).attr("pid");
+    $("#editBtn").attr("pid", pid);
+    $("#deleteBtn").attr("pid", pid);
+    var ctitle = $(this).attr("p-title");
+    loadPop(content, pid, ctitle);
+  });
+  $("[data-toggle=popover]").popover({
+    html: true,
+    sanitize: false,
+    content: function () {
+      var content = $(this).attr("data-popover-content");
+      return $(content).children(".popover-body").html();
+    },
+    title: function () {
+      var title = $(this).attr("data-popover-content");
+      return $(title).children(".popover-heading").html();
+    },
+  });
+  $(document).on("click", ".popover .close", function () {
+    $(this).parents(".popover").popover("hide");
+  });
+}
+
 window.addEventListener("load", function alertFunc() {
   setTimeout(() => {
-    $("[data-toggle=popover]").hover(function (e) {
-      var content = $(this).attr("data-popover-content");
-      pid = $(this).attr("pid");
-      $("#editBtn").attr("pid", pid);
-      $("#deleteBtn").attr("pid", pid);
-      var ctitle = $(this).attr("p-title");
-      loadPop(content, pid, ctitle);
-    });
-
-    $("[data-toggle=popover]").on("click", function (e) {
-      $("[data-toggle=popover]").not(this).popover("hide");
-      var content = $(this).attr("data-popover-content");
-      pid = $(this).attr("pid");
-      $("#editBtn").attr("pid", pid);
-      $("#deleteBtn").attr("pid", pid);
-      var ctitle = $(this).attr("p-title");
-      loadPop(content, pid, ctitle);
-    });
-
-    // Open pop
-    $("[data-toggle=popover]").popover({
-      html: true,
-      sanitize: false,
-      content: function () {
-        var content = $(this).attr("data-popover-content");
-        return $(content).children(".popover-body").html();
-      },
-      title: function () {
-        var title = $(this).attr("data-popover-content");
-        return $(title).children(".popover-heading").html();
-      },
-    });
-    $(document).on("click", ".popover .close", function () {
-      $(this).parents(".popover").popover("hide");
-    });
-    $(".loader").fadeOut("slow");
+    initializePopOver();
+    $("#loader").fadeOut("slow");
   }, 1000);
 });
 
@@ -281,20 +306,25 @@ $(document).ready(function () {
   // Load DataTable
   loadOwner();
 
+  $("#addProject").on("click", function () {
+    $(".popover").popover("hide");
+    $("#addModal").modal("show");
+  });
+
   // Form Handling
   // Create Project
-  $("form[name=create-project]").submit(function (e) {
+  $("form[name=add-project]").submit(function (e) {
     // Validation
-    if (pname.value.length < 3 || desc.value.length < 20) {
-      toastsFactory.createToast({
-        type: "error",
-        icon: "info-circle",
-        message:
-          "Please enter project name and description with atleast 20 characters",
-        duration: 1000,
-      });
-      return false;
-    }
+    // if (pname.value.length < 3 || desc.value.length < 20) {
+    //   toastsFactory.createToast({
+    //     type: "error",
+    //     icon: "info-circle",
+    //     message:
+    //       "Please enter project name and description with atleast 20 characters",
+    //     duration: 1000,
+    //   });
+    //   return false;
+    // }
 
     var $form = $(this);
     var data = $form.serialize();
@@ -303,21 +333,20 @@ $(document).ready(function () {
       type: "POST",
       data: data,
       success: function (resp) {
-        [pname, desc].forEach((ele) => ele.style.removeProperty("border"));
-        $("#create-project")[0].reset();
-        $("#formModal").modal("hide");
-        var item = JSON.parse(resp);
-        sno = sno + 1;
-        addId += 1;
-        table.row
-          .add([addId, sno, item.name, item.desc, item.oname])
-          .draw(false);
+        // [pname, desc].forEach((ele) => ele.style.removeProperty("border"));
+        $("#add-project")[0].reset();
+        $("#addModal").modal("hide");
+        console.log(resp);
+        addCardByProject(resp);
         toastsFactory.createToast({
           type: "system",
           icon: "check-circle",
           message: "Added successfully",
           duration: 1000,
         });
+        setTimeout(() => {
+          initializePopOver();
+        }, 1000);
       },
       error: function (resp) {
         toastsFactory.createToast({
@@ -375,10 +404,10 @@ $(document).ready(function () {
     $.ajax({
       type: "POST",
       url: "deleteProject",
-      data: "id=" + uid,
+      data: "id=" + pid,
       success: function (data, status, xhr) {
-        table.row(row).remove().draw();
         $("#deleteModal").modal("hide");
+        $(`#del${pid}`).remove();
         toastsFactory.createToast({
           type: "system",
           icon: "check-circle",

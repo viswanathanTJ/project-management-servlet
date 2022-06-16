@@ -221,5 +221,5 @@ $(document).ready(function () {
 });
 
 window.addEventListener("load", function alertFunc() {
-  $(".loader").fadeOut("slow");
+  $("#loader").fadeOut("slow");
 });

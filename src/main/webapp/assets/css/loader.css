@@ -1,0 +1,98 @@
+.loader-container {
+  background: #fff;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+.loader-viewer {
+  height: 100%;
+  animation: rotate 1.5s ease-in-out infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.set1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 75px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.set2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 75px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ball {
+  width: 50px;
+  height: 50px;
+  background: dodgerblue;
+  border-radius: 50%;
+}
+
+.set1 .ball:nth-child(2) {
+  background: orangered;
+  animation: scale 1.5s ease-in-out infinite forwards;
+}
+
+.set1 .ball:nth-child(1) {
+  background: green;
+  animation: scale 1.5s ease-in-out infinite forwards;
+}
+
+.set2 .ball:nth-child(1) {
+  background: dodgerblue;
+  animation: scale2 1.5s ease-in-out infinite forwards;
+}
+
+.set2 .ball:nth-child(2) {
+  background: yellow;
+  animation: scale2 1.5s ease-in-out infinite forwards;
+}
+
+@keyframes scale2 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
