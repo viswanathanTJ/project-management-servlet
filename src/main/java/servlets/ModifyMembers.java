@@ -33,13 +33,16 @@ public class ModifyMembers extends HttpServlet {
 		try {
 			HashSet<Integer> set = new HashSet<Integer>();
 			String pid = request.getParameter("pid");
-			String oname = request.getParameter("oname");
+			String name = request.getParameter("ename");
+			String desc = request.getParameter("edesc");
+			String oname = request.getParameter("eownerList");
 			System.out.println("Add Members:");
 			JSONObject resp = new JSONObject();
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 			String oid = Query.getUserIDByName(oname);
-			System.out.println("pid: " + pid + " oid: " + oid + " oname: " + oname);
+			System.out
+					.println("pid: " + pid + " oid: " + oid + " oname: " + oname + " name: " + name + " desc: " + desc);
 			if (oid == null || oid == "") {
 				resp.put("error", "No such user");
 				out.write(resp.toString());
@@ -50,10 +53,19 @@ public class ModifyMembers extends HttpServlet {
 
 			PreparedStatement st;
 			ResultSet r1;
+			st = con.prepareStatement(Queries.updateProject);
+			st.setString(1, name);
+			st.setString(2, desc);
+			st.setString(3, oid);
+			st.setString(4, pid);
+			st.executeUpdate();
+			System.out.println("Project updated");
 			int affected = 0;
 			while (parameterNames.hasMoreElements()) {
 				String paramName = parameterNames.nextElement();
-				if (paramName.equals("pid") || paramName.equals("oname"))
+				if (paramName.equals("pid") || paramName.equals("eownerList") ||
+						paramName.equals("ename") ||
+						paramName.equals("edesc"))
 					continue;
 				System.out.println("paramName: " + paramName);
 				String uid = request.getParameter(paramName);

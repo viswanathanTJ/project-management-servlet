@@ -25,11 +25,12 @@
 
 <body id="body-pd">
   <header class="header" id="header">
+    <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
     <div>
-      <h3>Tasks</h3>
+      <h3>Project Manager</h3>
     </div>
-    <div class="profile_img">
-      <!-- <img src='assets/icons/profile.png' style='width: 50px;height: 50px;vertical-align: middle' /> -->
+    <div class="profile_img" id="profile_img">
+      <!-- <img src='assets/icons/profile.png' /> -->
       A
     </div>
   </header>
@@ -37,16 +38,17 @@
     <nav class="nav">
       <div>
         <a href="#" class="nav_logo">
-          <i class='bx bx-menu nav_logo-icon' id="header-toggle"></i>
+          <!-- <i class='bx bx-menu nav_logo-icon' id="header-toggle1"></i> -->
+          <img style="margin-left:-5px" width="30px" src="assets/icons/icon.png" alt="project_management">
           <span class="nav_logo-name">
-            <img width="37px" src="assets/icons/icon.png" alt="project_management">
+            Projects
           </span>
         </a>
-        <div class="nav_list"> <a href="#" class="nav_link">
+        <div class="nav_list"> <a href="admin" class="nav_link">
             <i class='bx bx-grid-alt nav_icon'></i>
             <span class="nav_name">Dashboard</span>
           </a>
-          <a href="admin" class="nav_link">
+          <a href="admin_users" class="nav_link">
             <i class='bx bx-user nav_icon'></i>
             <span class="nav_name">Users</span> </a>
           <a href="admin_projects" class="nav_link">
@@ -273,8 +275,4 @@
   <script src="assets/js/bootstrap/bootstrap.min.js"></script>
   <script src="assets/js/api_utility.js"></script>
   <script src="assets/js/tasks.js"></script>
-  <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
-  <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>
-</body>
-
-</html>
+  <script src="assets/js/jquery/jquery.dataTable

@@ -1,7 +1,7 @@
 const eusername = document.getElementById("ename");
 const edesc = document.getElementById("edesc");
 const pTitle = document.getElementById("pTitle");
-const listMembers = document.getElementById("listMembers");
+const listMembers = document.getElementById("editMemberList");
 const eowner = document.getElementById("eowner");
 const ownerList = document.getElementById("ownerList");
 const eownerList = document.getElementById("eownerList");
@@ -14,7 +14,9 @@ const heading = document.getElementById("heading");
 const popMembers = document.getElementById("popMembers");
 
 const cards = document.getElementById("cards");
-var inputTextValue;
+
+let tname, tdesc, towner;
+var inputTextValue, pid;
 
 function myFunction(e) {
   var filter, ul, li, i, txtValue;
@@ -52,7 +54,11 @@ var sno = 0,
 // Event Listener
 $(document).on("click", "#editBtn", function () {
   editModal.show();
-  console.log($("#editBtn").attr("pid"));
+  var pid = $("#editBtn").attr("pid");
+  eusername.value = document.getElementById("pname" + pid).innerText.trim();
+  edesc.value = document.getElementById("pdesc" + pid).innerHTML;
+  eownerList.value = document.getElementById("powner" + pid).innerText;
+  loadMembers(pid);
   $(".popover").popover("hide");
 });
 $(document).on("click", "#deleteBtn", function () {
@@ -61,27 +67,27 @@ $(document).on("click", "#deleteBtn", function () {
 });
 
 // VALIDATION
-function validator(element, count) {
-  element.addEventListener("keyup", function () {
-    if (element.value.length > count) {
-      element.style.borderColor = "green";
-    } else {
-      element.style.borderColor = "red";
-    }
-  });
-}
+// function validator(element, count) {
+//   element.addEventListener("keyup", function () {
+//     if (element.value.length > count) {
+//       element.style.borderColor = "green";
+//     } else {
+//       element.style.borderColor = "red";
+//     }
+//   });
+// }
 
-["keyup", "focus"].forEach((evt) =>
-  eusername.addEventListener(evt, function () {
-    validator(pname, 3);
-  })
-);
+// ["keyup", "focus"].forEach((evt) =>
+//   eusername.addEventListener(evt, function () {
+//     validator(pname, 3);
+//   })
+// );
 
-["keyup", "focus"].forEach((evt) =>
-  edesc.addEventListener(evt, function () {
-    validator(edesc, 20);
-  })
-);
+// ["keyup", "focus"].forEach((evt) =>
+//   edesc.addEventListener(evt, function () {
+//     validator(edesc, 20);
+//   })
+// );
 
 function loadData() {
   var projects;
@@ -110,12 +116,32 @@ function loadOwner() {
         if (item.role == "admin" || item.role == "manager") {
           if (index === 0) {
             eownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
-            ownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
+            // ownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
           } else {
             eownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
-            ownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+            // ownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
           }
         }
+      });
+    },
+  });
+}
+
+function loadMembers(pid) {
+  listMembers.innerHTML = "";
+  $.ajax({
+    url: "getProjectMembers?pid=" + pid,
+    type: "GET",
+    success: function (resp) {
+      let members = JSON.parse(resp).members;
+      $.each(members, function (index, item) {
+        if (item.isMember != "" || item.isMember != null)
+          jsonObj[item.uid] = item.name;
+        listMembers.innerHTML += `
+          <li class="list-group-item">
+            <input class="form-check-input" id="${item.uid}" name="${item.uid}" type="checkbox" ${item.isMember} value="${item.uid}">
+            <label for="${item.uid}">&nbsp;&nbsp;${item.name}</label>
+          </li>`;
       });
     },
   });
@@ -209,11 +235,12 @@ loadData();
 $(document).keyup(function (event) {
   if (event.which === 27) $(".popover").popover("hide");
 });
-$(document).ready(function () {
+
+$(window).on("load", function () {
   // To open only one pop
   $("[data-toggle=popover]").hover(function (e) {
     var content = $(this).attr("data-popover-content");
-    var pid = $(this).attr("pid");
+    pid = $(this).attr("pid");
     $("#editBtn").attr("pid", pid);
     $("#deleteBtn").attr("pid", pid);
     var ctitle = $(this).attr("p-title");
@@ -240,9 +267,10 @@ $(document).ready(function () {
   $(document).on("click", ".popover .close", function () {
     $(this).parents(".popover").popover("hide");
   });
-
+});
+$(document).ready(function () {
   // Load DataTable
-  // loadOwner();
+  loadOwner();
 
   // Form Handling
   // Create Project
@@ -297,87 +325,31 @@ $(document).ready(function () {
   });
 
   // Add Members
-  $("form[name=add-members]").submit(function (e) {
-    var $form = $(this);
-    var data = $form.serialize();
-    console.log(data + "&pid=" + pid + "&oname=" + coname);
-    $.ajax({
-      url: "ModifyMembers",
-      type: "POST",
-      data: data + "&pid=" + pid + "&oname=" + coname,
-      success: function (resp) {
-        $("#add-members")[0].reset();
-        $("#formAddModal").modal("hide");
-        if (resp.inserted == 0 && resp.removed == 0)
-          toastsFactory.createToast({
-            type: "system",
-            icon: "check-circle",
-            message: "Kindly add/remove members to submit",
-            duration: 1000,
-          });
-        if (resp.inserted > 0)
-          toastsFactory.createToast({
-            type: "system",
-            icon: "check-circle",
-            message: "Added " + resp.inserted + " members to " + prname,
-            duration: 1000,
-          });
-        if (resp.removed > 0)
-          toastsFactory.createToast({
-            type: "system",
-            icon: "check-circle",
-            message: "Removed " + resp.removed + " members from " + prname,
-            duration: 1000,
-          });
-      },
-      error: function (resp) {
-        toastsFactory.createToast({
-          type: "error",
-          icon: "info-circle",
-          message: resp.responseText,
-          duration: 1000,
-        });
-      },
-    });
-    e.preventDefault();
-  });
-
-  // Update Project
   $("form[name=edit-project]").submit(function (e) {
     var $form = $(this);
     var data = $form.serialize();
-    if (
-      eusername.value == rowData[2] &&
-      edesc.value == rowData[3] &&
-      eowner.value == rowData[4]
-    ) {
-      toastsFactory.createToast({
-        type: "system",
-        icon: "info-circle",
-        message: "Kindly make some changes",
-        duration: 1000,
-      });
-      return false;
-    }
+    console.log(data + "&pid=" + pid);
     $.ajax({
+      url: "ModifyMembers",
       type: "POST",
-      url: "updateProject",
-      data: data + "&id=" + uid,
-      success: function (data, status, xhr) {
-        table
-          .row(row)
-          .data([uid, rowData[1], eusername.value, edesc.value, eowner.value])
-          .draw(false);
-        $("#formEditModal").modal("hide");
+      data: data + "&pid=" + pid,
+      success: function (resp) {
+        $("#editModal").modal("hide");
+        console.log("success");
         toastsFactory.createToast({
           type: "system",
           icon: "check-circle",
           message: "Updated successfully",
           duration: 1000,
         });
+        document.getElementById("pname" + pid).innerText =
+          " " + eusername.value;
+        document.getElementById("pdesc" + pid).innerHTML = edesc.value;
+        document.getElementById("powner" + pid).innerText = eownerList.value;
         $("#edit-project")[0].reset();
       },
-      error: function (resp, status, error) {
+      error: function (resp) {
+        console.log("error");
         toastsFactory.createToast({
           type: "error",
           icon: "info-circle",
@@ -420,4 +392,43 @@ $(document).ready(function () {
 
 $("#cardId").on("click", function () {
   $("#popover__content").addClass("show");
+});
+
+// Sidebar toggle
+document.addEventListener("DOMContentLoaded", function (event) {
+  const showNavbar = (toggleId, navId, bodyId, headerId) => {
+    const toggle = document.getElementById(toggleId),
+      nav = document.getElementById(navId),
+      bodypd = document.getElementById(bodyId),
+      headerpd = document.getElementById(headerId);
+
+    // Validate that all variables exist
+    if (toggle && nav && bodypd && headerpd) {
+      toggle.addEventListener("click", () => {
+        // show navbar
+        nav.classList.toggle("show");
+        // change icon
+        toggle.classList.toggle("bx-x");
+        // add padding to body
+        bodypd.classList.toggle("body-pd");
+        // add padding to header
+        headerpd.classList.toggle("body-pd");
+      });
+    }
+  };
+
+  showNavbar("header-toggle", "nav-bar", "body-pd", "header");
+
+  /*===== LINK ACTIVE =====*/
+  const linkColor = document.querySelectorAll(".nav_link");
+
+  function colorLink() {
+    if (linkColor) {
+      linkColor.forEach((l) => l.classList.remove("active"));
+      this.classList.add("active");
+    }
+  }
+  linkColor.forEach((l) => l.addEventListener("click", colorLink));
+
+  // Your code to run since DOM is loaded and ready
 });

@@ -11,10 +11,9 @@ function addCard(details) {
                             <div class="card-flyer">
                                 <div class="text-box">
                                     <div class="text-container" style="margin:5px">
-                                        <h4><img width="20px" src="assets/icons/check.png" /> &nbsp;${details.name}
-                                        </h4>
+                                        <h4 id="pname${details.p_id}"><img width="20px" src="assets/icons/check.png" /> &nbsp;${details.name}</h4>
                                         <p class="text-muted text-start">${details.tasks} open tasks</p>
-                                        <p class="desc">${details.desc}</p>
+                                        <p class="desc" id="pdesc${details.p_id}">${details.desc}</p>
                                         <br>
                                         <table>
                                             <tr>
@@ -23,7 +22,7 @@ function addCard(details) {
                                             </tr>
                                             <tr>
                                                 <td style="padding-right:40px">Owner</td>
-                                                <td>${details.oname}</td>
+                                                <td id="powner${details.p_id}">${details.oname}</td>
                                             </tr>
                                             <tr>
                                                 <td>Priority:</td>

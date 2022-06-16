@@ -28,7 +28,7 @@ public class GetProjectMembers extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String pid = request.getParameter("pid");
-		System.out.println("GetProjectMembers " + pid);
+		// System.out.println("GetProjectMembers " + pid);
 		JSONObject jsonObject = new JSONObject();
 		JSONArray array = new JSONArray();
 		HashSet<Integer> set = new HashSet<Integer>();

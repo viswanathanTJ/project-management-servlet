@@ -40,6 +40,7 @@ public class Queries {
 
     // INSERT projects
     public static String putIntoProject = "INSERT INTO projects (name, description, owner_id) VALUES (?, ?, ?)";
+    public static String updateProject = "UPDATE projects SET name=?, description=?, owner_id=? WHERE p_id=?;";
     public static String addMembers = """
                     INSERT INTO project_users (p_id, u_id, o_id)
                     SELECT * FROM (SELECT ? AS p_id, ? AS u_id, ? AS o_id) AS tmp
