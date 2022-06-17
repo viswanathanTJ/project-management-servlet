@@ -1,6 +1,7 @@
 package entities;
 
 public class Task {
+    protected String creator;
     protected String title;
     protected String desc;
     protected String startDate;
@@ -14,19 +15,29 @@ public class Task {
     protected String project;
     protected int completed;
 
-    public Task(String title, String desc, String startDate, String endDate, int priority,
+    public Task(String creator, String title, String desc, String startDate, String endDate, int priority,
             String assigneeID, String assignee, int creatorID, String cname, String pid, String project,
             int completed) {
+        this.creator = creator;
         this.title = title;
         this.desc = desc;
         this.startDate = startDate;
         this.endDate = endDate;
         this.priority = priority;
         this.assigneeID = assigneeID;
+        this.assignee = assignee;
         this.creatorID = creatorID;
         this.pid = pid;
         this.project = project;
         this.completed = completed;
+    }
+
+    public String getCreator() {
+        return this.creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public String getTitle() {

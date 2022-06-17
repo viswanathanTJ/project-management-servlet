@@ -30,6 +30,7 @@ function initializeDatabase() {
       { targets: 1, width: "10px", orderable: false, className: "dt-center" },
       { targets: 2, width: "600", className: "text-overflow: ellipsis;" },
       { targets: 3, width: "250", className: "text-overflow: ellipsis;" },
+      { targets: 6, className: "text-center" },
     ],
     columns: [
       { width: ".3%" },
@@ -48,11 +49,10 @@ function initializeDatabase() {
 
 function fillRow(item) {
   tmp = item.priority;
-  console.log(item);
-  if (tmp == 0) tmp = "Low";
-  else if (tmp == 1) tmp = "Medium";
-  else if (tmp == 2) tmp = "High";
-  else if (tmp == 3) tmp = "Urgent";
+  if (tmp == 0) tmp = `<span class="priority low">low</span>`;
+  else if (tmp == 1) tmp = `<span class="priority medium">medium</span>`;
+  else if (tmp == 2) tmp = `<span class="priority high">high</span>`;
+  else if (tmp == 3) tmp = `<span class="priority urgent">urgent</span>`;
   rowData = table.row(row).data();
   var checkStatus = `<input type="checkbox" id="completed${rowData[0]}" ${
     item.completed === 1 ? "checked" : ""
@@ -86,10 +86,10 @@ function loadData() {
       var tmp;
       $.each(tasks, function (index, item) {
         tmp = item.priority;
-        if (tmp == 0) tmp = "Low";
-        else if (tmp == 1) tmp = "Medium";
-        else if (tmp == 2) tmp = "High";
-        else if (tmp == 3) tmp = "Urgent";
+        if (tmp == 0) tmp = `<span class="priority low">low</span>`;
+        else if (tmp == 1) tmp = `<span class="priority medium">medium</span>`;
+        else if (tmp == 2) tmp = `<span class="priority high">high</span>`;
+        else if (tmp == 3) tmp = `<span class="priority urgent">urgent</span>`;
         var checkStatus = `<input type="checkbox" id="completed${item.t_id}" ${
           item.completed === 1 ? "checked" : ""
         }>`;
@@ -184,6 +184,9 @@ function resetTableEdit() {
   rowEditForm.hidden = true;
   table.column(3).visible(true);
 }
+$(document).keyup(function (event) {
+  if (event.which === 27) resetTableEdit();
+});
 
 $("#tasksTable tbody").on("click", 'input[type="checkbox"]', function () {
   row = $(this).parents("tr")[0];
@@ -244,6 +247,11 @@ $(document).ready(function () {
       },
       success: function (resp) {
         console.log(resp);
+        var tmp = resp.priority;
+        if (tmp == 0) tmp = `<span class="priority low">low</span>`;
+        else if (tmp == 1) tmp = `<span class="priority medium">medium</span>`;
+        else if (tmp == 2) tmp = `<span class="priority high">high</span>`;
+        else if (tmp == 3) tmp = `<span class="priority urgent">urgent</span>`;
         tid++;
         $("#add-task")[0].reset();
         $("#formModal").modal("hide");
@@ -253,10 +261,10 @@ $(document).ready(function () {
             `<input type="checkbox" id="completed${tid}">`,
             resp.title,
             resp.project,
-            resp.cname,
+            resp.creator,
             resp.assignee,
-            resp.priority,
-            resp.start_date,
+            tmp,
+            resp.startDate,
           ])
           .draw(false);
         toastsFactory.createToast({

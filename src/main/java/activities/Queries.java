@@ -39,11 +39,11 @@ public class Queries {
     public static String getTaskByID = "SELECT * FROM tasks where t_id=?";
     public static String getTaskCount = "SELECT COUNT(t_id) AS tasks FROM tasks WHERE p_id=? AND completed = 0;";
     public static String getRecentTasks = """
-            SELECT t.title, (SELECT value FROM priority WHERE t.priority=number) AS priority,
+            SELECT t.title, (SELECT value FROM priority WHERE t.priority+1=number) AS priority,
             (SELECT name FROM user WHERE u_id = t.creator_id) AS owner,
             (SELECT name FROM user WHERE u_id = t.assignee_id) AS assignee,
             (SELECT name FROM projects WHERE p_id = t.p_id) AS project FROM tasks t
-                ORDER BY t_id DESC LIMIT 5;
+                ORDER BY t_id DESC LIMIT 7;
             """;
 
     // SET task

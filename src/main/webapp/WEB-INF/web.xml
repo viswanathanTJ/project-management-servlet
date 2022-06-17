@@ -61,12 +61,57 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>manager_users</servlet-name>
+    <jsp-file>/template/manager_users.html</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>manager_users</servlet-name>
+    <url-pattern>/manager_users</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>manager_projects</servlet-name>
+    <jsp-file>/template/manager_projects.html</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>manager_projects</servlet-name>
+    <url-pattern>/manager_projects</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>manager_tasks</servlet-name>
+    <jsp-file>/template/manager_tasks.html</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>manager_tasks</servlet-name>
+    <url-pattern>/manager_tasks</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>employee</servlet-name>
     <jsp-file>/template/employee.html</jsp-file>
   </servlet>
   <servlet-mapping>
     <servlet-name>employee</servlet-name>
     <url-pattern>/employee</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>employee_projects</servlet-name>
+    <jsp-file>/template/employee_projects.html</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>employee_projects</servlet-name>
+    <url-pattern>/employee_projects</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>employee_tasks</servlet-name>
+    <jsp-file>/template/employee_tasks.html</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>employee_tasks</servlet-name>
+    <url-pattern>/employee_tasks</url-pattern>
   </servlet-mapping>
 
 </web-app>

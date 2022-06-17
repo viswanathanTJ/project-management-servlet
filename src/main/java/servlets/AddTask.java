@@ -35,6 +35,9 @@ public class AddTask extends HttpServlet {
 			String assigneeID = request.getParameter("assignee");
 			String assignee = Query.getUserNameByID(Integer.parseInt(assigneeID));
 			String pid = request.getParameter("project");
+			SessionHandler session = new SessionHandler(request);
+
+			String creator = session.getName();
 			System.out
 					.println("Add Task: " + title + " " + desc + " " + startDate + " " + endDate + " " + priority + " "
 							+ assigneeID + " " + assignee + " " + pid);
@@ -49,7 +52,6 @@ public class AddTask extends HttpServlet {
 					return;
 				}
 			}
-			SessionHandler session = new SessionHandler(request);
 			int creatorID = Integer.parseInt(session.getUID());
 			String cname = session.getName();
 
@@ -66,7 +68,7 @@ public class AddTask extends HttpServlet {
 			st.setInt(9, 0);
 			st.executeUpdate();
 			String project = Query.getProjectNameByID(pid);
-			Task task = new Task(title, desc, startDate, endDate, priority,
+			Task task = new Task(creator, title, desc, startDate, endDate, priority,
 					assigneeID, assignee, creatorID, cname, pid, project, 0);
 
 			System.out.println(new Gson().toJson(task));
