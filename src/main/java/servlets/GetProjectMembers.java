@@ -28,10 +28,11 @@ public class GetProjectMembers extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String pid = request.getParameter("pid");
-		// System.out.println("GetProjectMembers " + pid);
+		System.out.println("GetProjectMembers " + pid);
 		JSONObject jsonObject = new JSONObject();
 		JSONArray array = new JSONArray();
 		HashSet<Integer> set = new HashSet<Integer>();
+		boolean hasMembers = false;
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
@@ -52,13 +53,15 @@ public class GetProjectMembers extends HttpServlet {
 				JSONObject obj = new JSONObject();
 				obj.put("uid", uid);
 				obj.put("name", r1.getString("name"));
-				if (set.contains(uid))
+				if (set.contains(uid)) {
 					obj.put("isMember", "checked");
-				else
+					hasMembers = true;
+				} else
 					obj.put("isMember", "");
 				array.put(obj);
 			}
 			jsonObject.put("members", array);
+			jsonObject.put("hasMembers", hasMembers);
 			response.getWriter().print(jsonObject);
 			response.setStatus(200);
 		} catch (ClassNotFoundException | SQLException e) {

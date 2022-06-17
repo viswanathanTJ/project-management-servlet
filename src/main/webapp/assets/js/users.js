@@ -208,9 +208,10 @@ $(document).ready(function () {
         });
       },
       error: function (resp, status, error) {
+        $("#deleteModal").modal("hide");
         toastsFactory.createToast({
           type: "error",
-          icon: "info-circle",
+          icon: "exclamation-triangle",
           message: resp.responseText,
           duration: 1000,
         });

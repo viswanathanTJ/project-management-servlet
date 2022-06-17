@@ -32,6 +32,9 @@ public class DeleteProject extends HttpServlet {
 			st = con.prepareStatement(Queries.deleteProjectUsers);
 			st.setString(1, id);
 			st.executeUpdate();
+			st = con.prepareStatement(Queries.delOwnerOnProject);
+			st.setString(1, id);
+			st.executeUpdate();
 			response.getWriter().print("Deleted successfully");
 			response.setStatus(HttpServletResponse.SC_OK);
 		} catch (ClassNotFoundException | SQLException e) {

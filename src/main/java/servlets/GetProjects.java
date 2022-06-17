@@ -34,25 +34,18 @@ public class GetProjects extends HttpServlet {
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
-			PreparedStatement st = con.prepareStatement(Queries.getProjects);
-			PreparedStatement st2;
+			PreparedStatement st = con.prepareStatement(Queries.getProjectsDetails);
 			ResultSet r1 = st.executeQuery();
-			ResultSet r2;
 			while (r1.next()) {
 				JSONObject obj = new JSONObject();
 				obj.put("p_id", r1.getInt("p_id"));
-				st2 = con.prepareStatement(Queries.getUserCountOnProject);
-				st2.setInt(1, r1.getInt("p_id"));
-				r2 = st2.executeQuery();
-				if (r2.next())
-					obj.put("team", r2.getInt("team"));
-				st2 = con.prepareStatement(Queries.getTaskCount);
-				st2.setInt(1, r1.getInt("p_id"));
-				r2 = st2.executeQuery();
-				if (r2.next())
-					obj.put("tasks", r2.getInt("tasks"));
-				obj.put("owner_id", r1.getInt("owner_id"));
-				obj.put("oname", Query.getUserNameByID(r1.getInt("owner_id")));
+				obj.put("team", r1.getInt("team"));
+				obj.put("tasks", r1.getInt("tasks"));
+				int oid = r1.getInt("owner_id");
+				if (oid == 0)
+					obj.put("oname", "unassigned");
+				else
+					obj.put("oname", Query.getUserNameByID(oid));
 				obj.put("name", r1.getString("name"));
 				obj.put("desc", r1.getString("description"));
 				obj.put("priority", r1.getInt("priority"));

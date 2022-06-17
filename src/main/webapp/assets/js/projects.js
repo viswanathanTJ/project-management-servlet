@@ -373,7 +373,7 @@ $(document).ready(function () {
       data: data + "&pid=" + pid,
       success: function (resp) {
         $("#editModal").modal("hide");
-        console.log("success");
+        console.log(resp);
         toastsFactory.createToast({
           type: "system",
           icon: "check-circle",
@@ -384,6 +384,8 @@ $(document).ready(function () {
           " " + eusername.value;
         document.getElementById("pdesc" + pid).innerHTML = edesc.value;
         document.getElementById("powner" + pid).innerText = eownerList.value;
+        document.getElementById("team" + pid).innerText =
+          resp.count + " Employee";
         $("#edit-project")[0].reset();
       },
       error: function (resp) {
@@ -440,16 +442,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
       bodypd = document.getElementById(bodyId),
       headerpd = document.getElementById(headerId);
 
-    // Validate that all variables exist
     if (toggle && nav && bodypd && headerpd) {
       toggle.addEventListener("click", () => {
-        // show navbar
         nav.classList.toggle("show");
-        // change icon
         toggle.classList.toggle("bx-x");
-        // add padding to body
         bodypd.classList.toggle("body-pd");
-        // add padding to header
         headerpd.classList.toggle("body-pd");
       });
     }

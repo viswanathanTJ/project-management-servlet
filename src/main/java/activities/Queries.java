@@ -19,9 +19,17 @@ public class Queries {
 
     // GET projects
     public static String getProjects = "SELECT * FROM projects";
+    public static String getProjectsDetails = """
+            SELECT *, (SELECT COUNT(*) FROM project_users WHERE p_id=p.p_id) AS team,
+                (SELECT COUNT(*) AS tasks FROM tasks WHERE p_id=p.p_id AND completed = 0) AS tasks
+                FROM projects p;
+            """;
     public static String getProjectByName = "SELECT * FROM projects WHERE name=?";
     public static String getProjectByID = "SELECT * from projects WHERE p_id=?";
     public static String getProjectMembers = "SELECT u_id, o_id FROM project_users p1 WHERE p1.p_id = ?";
+
+    // UPDATE projects
+    public static String delOwnerOnProject = "UPDATE projects SET owner_id=0 WHERE p_id=?;";
 
     // DELETE projects
     public static String deleteProject = "DELETE FROM projects WHERE p_id=?;";
@@ -30,13 +38,22 @@ public class Queries {
     public static String getTasks = "SELECT * FROM tasks";
     public static String getTaskByID = "SELECT * FROM tasks where t_id=?";
     public static String getTaskCount = "SELECT COUNT(t_id) AS tasks FROM tasks WHERE p_id=? AND completed = 0;";
-    public static String getRecentTasks = "SELECT t.title, (SELECT value FROM priority WHERE t.priority=number) AS priority, (SELECT name FROM user WHERE u_id = t.creator_id) AS owner, (SELECT name FROM user WHERE u_id = t.assignee_id) AS assignee, (SELECT name FROM projects WHERE p_id = t.p_id) AS project FROM tasks t ORDER BY t_id DESC LIMIT 5;";
+    public static String getRecentTasks = """
+            SELECT t.title, (SELECT value FROM priority WHERE t.priority=number) AS priority,
+            (SELECT name FROM user WHERE u_id = t.creator_id) AS owner,
+            (SELECT name FROM user WHERE u_id = t.assignee_id) AS assignee,
+            (SELECT name FROM projects WHERE p_id = t.p_id) AS project FROM tasks t
+                ORDER BY t_id DESC LIMIT 5;
+            """;
 
     // SET task
     public static String setTaskStatus = "UPDATE tasks SET completed = ? WHERE t_id = ?;";
 
     // UPDATE task
-    public static String updateTask = "UPDATE tasks SET title = ?, description = ?, start_date = ?, end_date = ?, priority = ?, assignee_id = ?, completed = ? WHERE t_id = ?;";
+    public static String updateTask = """
+            UPDATE tasks SET title = ?, description = ?, start_date = ?, end_date = ?, priority = ?,
+            assignee_id = ?, completed = ? WHERE t_id = ?;
+            """;
 
     // DELETE tasks
     public static String deleteTask = "DELETE FROM tasks WHERE t_id = ?;";

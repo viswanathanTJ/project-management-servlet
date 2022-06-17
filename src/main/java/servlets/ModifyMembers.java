@@ -61,6 +61,7 @@ public class ModifyMembers extends HttpServlet {
 			st.executeUpdate();
 			System.out.println("Project updated");
 			int affected = 0;
+			int count = 0;
 			while (parameterNames.hasMoreElements()) {
 				String paramName = parameterNames.nextElement();
 				if (paramName.equals("pid") || paramName.equals("eownerList") ||
@@ -77,11 +78,11 @@ public class ModifyMembers extends HttpServlet {
 				st.setString(3, oid);
 				st.setString(4, pid);
 				st.setString(5, uid);
-				int res = st.executeUpdate();
-				if (res != 0)
-					affected++;
+				st.executeUpdate();
+				affected++;
+				count++;
 			}
-			resp.put("inserted", affected);
+			resp.put("count", count);
 			// out.write(affected + " rows inserted" + "\n");
 			System.out.println(affected + " rows affected");
 			st = con.prepareStatement(Queries.uidInProUsers);
@@ -98,7 +99,7 @@ public class ModifyMembers extends HttpServlet {
 			}
 			// out.write(affected + " rows removed");
 			resp.put("removed", affected);
-			out.write(resp.toString());
+			out.print(resp);
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
 			System.out.println(affected + " rows removed");

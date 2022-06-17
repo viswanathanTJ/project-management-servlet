@@ -21,6 +21,11 @@ public class DeleteUser extends HttpServlet {
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
 		System.out.println("Delete Request: " + id);
+		if (id.equals("1")) {
+			response.getWriter().print("Unable to delete admin");
+			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			return;
+		}
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
