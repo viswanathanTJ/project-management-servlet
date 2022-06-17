@@ -3,6 +3,7 @@ package activities;
 public class Queries {
     // GET all counts
     public static final String getAllCounts = "SELECT (SELECT COUNT(*) FROM user) AS users, (SELECT COUNT(*) FROM tasks) AS tasks, (SELECT COUNT(*) FROM projects) AS projects, (SELECT COUNT(*) FROM tasks WHERE completed = 0) AS open FROM dual;";
+    public static final String getUserCounts = "SELECT (SELECT COUNT(*) FROM tasks WHERE assignee_id=?) AS tasks, (SELECT COUNT(*) FROM project_users WHERE u_id=?) AS projects, (SELECT COUNT(*) FROM tasks WHERE completed = 0 AND assignee_id=?) AS open FROM dual;";
 
     // GET users
     public static String getUsers = "SELECT * FROM user";
@@ -44,6 +45,13 @@ public class Queries {
             (SELECT name FROM user WHERE u_id = t.assignee_id) AS assignee,
             (SELECT name FROM projects WHERE p_id = t.p_id) AS project FROM tasks t
                 ORDER BY t_id DESC LIMIT 7;
+            """;
+    public static String getRecentTasksForUser = """
+            SELECT t.title, (SELECT value FROM priority WHERE t.priority+1=number) AS priority,
+            (SELECT name FROM user WHERE u_id = t.creator_id) AS owner,
+            (SELECT name FROM user WHERE u_id = t.assignee_id) AS assignee,
+            (SELECT name FROM projects WHERE p_id = t.p_id) AS project, createdat FROM tasks t
+                WHERE t.assignee_id = ? ORDER BY t_id DESC LIMIT 7;
             """;
 
     // SET task

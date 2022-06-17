@@ -6,6 +6,8 @@
   <!-- <script src="assets/js/checkuser.js"></script> -->
   <link rel="stylesheet" href="assets/css/toast.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/loader.css" />
+  <link rel="stylesheet" href="assets/css/dashboard.css" />
 
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -61,7 +63,7 @@
             <i class='bx bx-briefcase nav_icon'></i>
             <span class="nav_name">Projects</span>
           </a>
-          <a href="employee_tasks" class="nav_link active">
+          <a href="employee_tasks" class="nav_link">
             <i class='bx bx-task nav_icon'></i>
             <span class="nav_name">Tasks</span>
           </a>
@@ -79,9 +81,99 @@
   </div>
   <div class="clearfix"></div>
   <br />
-  <div class="row"></div>
+  <div class="row">
+    <div class="col-lg-2"></div>
+
+    <!-- ======================= Cards ================== -->
+    <div class="cardBox col-lg-10">
+      <a href="admin_projects">
+        <div class="card">
+          <div>
+            <div class="numbers" id="projects">4</div>
+            <div class="cardName">Projects</div>
+          </div>
+
+          <div class="iconBx">
+            <i class='bx bx-briefcase'></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- <a href="admin_users">
+      <div class="card">
+        <div>
+          <div class="numbers" id="users">12</div>
+          <div class="cardName">Users</div>
+        </div>
+
+        <div class="iconBx">
+          <i class='bx bx-user'></i>
+        </div>
+      </div>
+    </a> -->
+
+      <a href="admin_tasks">
+
+        <div class="card">
+          <div>
+            <div class="numbers" id="tasks">5</div>
+            <div class="cardName">Tasks</div>
+          </div>
+
+          <div class="iconBx">
+            <i class='bx bx-task'></i>
+          </div>
+        </div>
+      </a>
+
+      <a href="admin_tasks">
+        <div class="card">
+          <div>
+            <div class="numbers" id="opentasks">4</div>
+            <div class="cardName">Open Tasks</div>
+          </div>
+
+          <div class="iconBx">
+            <i class="fas fa-tasks"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <!-- ================ Recent Tasks ================= -->
+      <div class="details" style="display: block;">
+        <div class="recentTasks">
+          <div class="cardHeader">
+            <h2>Recent Tasks</h2>
+            <a href="employee_tasks" class="btn">View All</a>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <td>Title</td>
+                <td>Project</td>
+                <td>Creator</td>
+                <td>Assignee</td>
+                <td>Priority</td>
+                <td>Start Date</td>
+              </tr>
+            </thead>
+
+            <tbody id="recentTasks">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 </body>
 <script src="assets/js/toast.js"></script>
+<script src="assets/js/employee.js"></script>
 <script src="assets/js/jquery/jquery.min.js"></script>
 <script src="assets/js/bootstrap/bootstrap.min.js"></script>
 
