@@ -2,11 +2,15 @@ const lusername = document.getElementById("lname");
 const lpassword = document.getElementById("lpassword");
 
 lusername.addEventListener("keyup", function () {
-  validator(lusername, nameRegex);
+  validator(lusername, nameRegex, "Username must contain atleast 3 characters");
 });
 
 lpassword.addEventListener("keyup", function () {
-  validator(lpassword, passwordRegex);
+  validator(
+    lpassword,
+    passwordRegex,
+    "Password must contain one uppercase, one lowercase, one number and one special character."
+  );
 });
 
 $(document).ready(function () {
@@ -73,9 +77,8 @@ $(document).ready(function () {
       data: data,
       success: function (resp) {
         error.innerHTML = "Login Successful";
-        setCookie("username", username.value, 1);
+        setCookie("username", lusername.value, 1);
         $("#loginBtn").removeClass("loading");
-        console.log(resp);
         window.location.replace(resp);
         $("#loginBtn").removeClass("loading");
       },

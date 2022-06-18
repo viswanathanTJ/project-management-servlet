@@ -12,15 +12,13 @@ if (crole != "login")
     },
   });
 
-function logout() {
-  if (confirm("Are you sure to logout?")) {
-    $.ajax({
-      url: "logout",
-      type: "GET",
-    });
-    window.location.replace("login");
+$(document).ready(function () {
+  var profile_img = document.getElementById("profile_img");
+  if (profile_img instanceof Element) {
+    var username = getCookie("username");
+    profile_img.innerHTML = username.charAt(0).toUpperCase();
   }
-}
+});
 
 function setCookie(cname, cvalue, exdays) {
   const d = new Date();
@@ -53,5 +51,16 @@ function deleteAllCookies() {
     var eqPos = cookie.indexOf("=");
     var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+}
+
+function logout() {
+  if (confirm("Are you sure to logout?")) {
+    $.ajax({
+      url: "logout",
+      type: "GET",
+    });
+    deleteAllCookies();
+    window.location.replace("login");
   }
 }

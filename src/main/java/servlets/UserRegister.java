@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,7 +55,7 @@ public class UserRegister extends HttpServlet {
 
 			String role = "employee";
 
-			st = con.prepareStatement("insert into user (name, email, password, role) values(?, ?, ?, ?)");
+			st = con.prepareStatement(Queries.addUser, Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, request.getParameter("name"));
 			st.setString(2, request.getParameter("email"));
 			String hashPassword = Authentication.hashPassword(username, password);

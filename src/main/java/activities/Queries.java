@@ -5,7 +5,7 @@ public class Queries {
     public static final String getAllCounts = "SELECT (SELECT COUNT(*) FROM user) AS users, (SELECT COUNT(*) FROM tasks) AS tasks, (SELECT COUNT(*) FROM projects) AS projects, (SELECT COUNT(*) FROM tasks WHERE completed = 0) AS open FROM dual;";
     public static final String getUserCounts = "SELECT (SELECT COUNT(*) FROM tasks WHERE assignee_id=?) AS tasks, (SELECT COUNT(*) FROM project_users WHERE u_id=?) AS projects, (SELECT COUNT(*) FROM tasks WHERE completed = 0 AND assignee_id=?) AS open FROM dual;";
 
-    // GET users
+    // GET user
     public static String getUsers = "SELECT * FROM user";
     public static String getUserNameByID = "SELECT name FROM user WHERE u_id=?";
     public static String getUserByName = "SELECT * FROM user WHERE name=?";
@@ -15,7 +15,10 @@ public class Queries {
     public static String getUserIDName = "SELECT u_id, name FROM user";
     public static String getRecentUsers = "SELECT name, role FROM user ORDER BY u_id DESC LIMIT 5;";
 
-    // Delete users
+    // INSERT user
+    public static String addUser = "INSERT INTO USER (name, email, password, role) VALUES (?, ?, ?, ?)";
+
+    // Delete user
     public static String deleteUser = "DELETE FROM user WHERE u_id=?";
 
     // GET projects
