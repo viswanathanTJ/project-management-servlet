@@ -31,6 +31,12 @@ public class Employee extends HttpServlet {
 			case "getProjects":
 				emp.getProjects(request, response);
 				break;
+			case "getTasks":
+				emp.getTasks(request, response);
+				break;
+			case "getUserID":
+				emp.getUserID(request, response);
+				break;
 			default:
 				response.setStatus(404);
 				break;

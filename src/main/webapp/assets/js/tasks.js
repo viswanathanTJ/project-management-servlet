@@ -47,73 +47,6 @@ function initializeDatabase() {
   });
 }
 
-function fillRow(item) {
-  tmp = item.priority;
-  if (tmp == 0) tmp = `<span class="priority low">low</span>`;
-  else if (tmp == 1) tmp = `<span class="priority medium">medium</span>`;
-  else if (tmp == 2) tmp = `<span class="priority high">high</span>`;
-  else if (tmp == 3) tmp = `<span class="priority urgent">urgent</span>`;
-  rowData = table.row(row).data();
-  var checkStatus = `<input type="checkbox" id="completed${rowData[0]}" ${
-    item.completed === 1 ? "checked" : ""
-  }>`;
-  tid = item.t_id;
-  tr = table
-    .row(row)
-    .data([
-      rowData[0],
-      checkStatus,
-      item.title,
-      rowData[3],
-      item.cname,
-      item.assignee,
-      tmp,
-      item.start_date,
-    ])
-    .draw(false)
-    .node();
-  if (item.completed === 1) $(tr).addClass("strikeout");
-  if (item.completed === 0) $(tr).removeClass("strikeout");
-}
-
-function loadData() {
-  var tr;
-  $.ajax({
-    url: "getTasks",
-    type: "GET",
-    success: function (resp) {
-      var tasks = resp.tasks;
-      var tmp;
-      $.each(tasks, function (index, item) {
-        tmp = item.priority;
-        if (tmp == 0) tmp = `<span class="priority low">low</span>`;
-        else if (tmp == 1) tmp = `<span class="priority medium">medium</span>`;
-        else if (tmp == 2) tmp = `<span class="priority high">high</span>`;
-        else if (tmp == 3) tmp = `<span class="priority urgent">urgent</span>`;
-        var checkStatus = `<input type="checkbox" id="completed${item.t_id}" ${
-          item.completed === 1 ? "checked" : ""
-        }>`;
-        tid = item.t_id;
-        tr = table.row
-          .add([
-            item.t_id,
-            checkStatus,
-            item.title,
-            item.project,
-            item.cname,
-            item.assignee,
-            tmp,
-            item.start_date,
-          ])
-          .draw()
-          .node();
-        if (item.completed === 1) $(tr).addClass("strikeout");
-        else $(tr).removeClass("strikeout");
-      });
-    },
-  });
-}
-
 // Update function
 deleteBtn.addEventListener("click", function () {
   $("#deleteModal").modal("show");
@@ -177,49 +110,9 @@ createBtn.addEventListener("click", function () {
   });
 });
 
-// Info Modal
-
-function resetTableEdit() {
-  $("#tableSize").removeClass("col-md-7").addClass("col-md-12");
-  rowEditForm.hidden = true;
-  table.column(3).visible(true);
-}
-$(document).keyup(function (event) {
-  if (event.which === 27) resetTableEdit();
-});
-
-$("#tasksTable tbody").on("click", 'input[type="checkbox"]', function () {
-  row = $(this).parents("tr")[0];
-  rowData = table.row(row).data();
-  if (document.querySelector(`#completed${rowData[0]}`).checked == true) {
-    setTaskStatus(rowData[0], 1);
-    $(this).closest("tr").addClass("strikeout");
-  } else {
-    setTaskStatus(rowData[0], 0);
-    $(this).closest("tr").removeClass("strikeout");
-  }
-});
-
-$("#tasksTable tbody").on("click", "td", function () {
-  if ($(this).index() == 0) return;
-  row = $(this).parents("tr")[0];
-  rowData = table.row(row).data();
-  // tasksTable.removeClass("col-md-12").addClass("col-md-6");
-  $("#tableSize").removeClass("col-md-12").addClass("col-md-7");
-  loadTaskById(rowData[0]);
-  if (rowEditForm.hidden) {
-    table.column(3).visible(false);
-    rowEditForm.hidden = false;
-    rowEditForm.style.opacity = 0;
-    setTimeout(() => {
-      rowEditForm.style.opacity = 1;
-    }, 400);
-  }
-});
-
 $(document).ready(function () {
   initializeDatabase();
-  loadData();
+  loadData("getTasks");
 
   // Add task
   $("form[name=add-task]").submit(function (e) {
@@ -281,7 +174,6 @@ $(document).ready(function () {
   });
 
   // Delete task
-  // Delete User
   $("form[name=delete-task]").submit(function (e) {
     $.ajax({
       type: "GET",

@@ -72,24 +72,30 @@ public class EmployeeActions extends ResponseHandler {
     public void getProjects(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SessionHandler session = new SessionHandler(request);
         String uid = session.getUID();
-        try {
-            Connection con;
-            con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getUserCounts);
-            st.setString(1, uid);
-            st.setString(2, uid);
-            st.setString(3, uid);
-            ResultSet r1 = st.executeQuery();
-            JSONObject obj = new JSONObject();
-            if (r1.next()) {
-                obj.put("projects", r1.getInt("projects"));
-                obj.put("tasks", r1.getInt("tasks"));
-                obj.put("open", r1.getInt("open"));
-            }
-            successResponse(response, obj);
-        } catch (ClassNotFoundException | SQLException e) {
-            errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, e.getMessage());
-            e.printStackTrace();
+        response.setContentType("application/json");
+        response.getWriter().print(GetProjectsObj.getProjects(Queries.getProjectByIDDetails, uid));
+        response.setStatus(200);
+    }
+
+    public void getTasks(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        SessionHandler session = new SessionHandler(request);
+        String uid = session.getUID();
+        System.out.println("User ID is " + uid);
+        JSONObject json = GetTasksObj.getTasks(Queries.getTasksForUser, uid);
+        System.out.println(json);
+        if (json != null) {
+            response.setContentType("application/json");
+            response.getWriter().print(json);
+            response.setStatus(200);
+        } else {
+            response.getWriter().print("Error at backend");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
+    }
+
+    public void getUserID(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        SessionHandler session = new SessionHandler(request);
+        String uid = session.getUID();
+        response.getWriter().print(uid);
     }
 }

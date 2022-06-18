@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
-import models.Task;
+import models.Task_Add;
 import activities.SessionHandler;
 
 @WebServlet("/AddTask")
@@ -65,7 +65,7 @@ public class AddTask extends HttpServlet {
 			st.setInt(9, 0);
 			st.executeUpdate();
 			String project = Query.getProjectNameByID(pid);
-			Task task = new Task(creator, title, desc, startDate, endDate, priority,
+			Task_Add task = new Task_Add(creator, title, desc, startDate, endDate, priority,
 					assigneeID, assignee, creatorID, cname, pid, project, 0);
 
 			System.out.println(new Gson().toJson(task));

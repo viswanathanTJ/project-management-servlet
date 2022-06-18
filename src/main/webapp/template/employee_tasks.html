@@ -3,8 +3,9 @@
 
 <head>
   <script src="assets/js/jquery/jquery.min.js"></script>
-  <!-- <script src="assets/js/checkuser.js"></script> -->
+  <script src="assets/js/checkuser.js"></script>
   <link rel="stylesheet" href="assets/css/toast.css" />
+  <link rel="stylesheet" href="assets/css/floatButton.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
 
   <meta charset="UTF-8" />
@@ -16,6 +17,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 </head>
 
@@ -74,14 +76,181 @@
   </div>
 
   <div class="container mt-2">
-    <h3>Dashboard</h3>
+    <h3>Tasks</h3>
   </div>
   <div class="clearfix"></div>
   <br />
-  <div class="row"></div>
-</body>
-<script src="assets/js/toast.js"></script>
-<script src="assets/js/jquery/jquery.min.js"></script>
-<script src="assets/js/bootstrap/bootstrap.min.js"></script>
+  <div class="row" style="margin-right:0px">
+    <div class="mt-3 col-md-12 animated edit-container" id="tableSize">
+      <table id="tasksTable" class="table  table-striped table-bordered" style="border: right 0 !important;"
+        cellspacing="0" width="100%">
+        <thead>
+          <th>t_id</th>
+          <th></th>
+          <th>Task Title</th>
+          <th>Project</th>
+          <th>Creator</th>
+          <th>Assigned</th>
+          <th>Priority</th>
+          <th>Start Date</th>
+        </thead>
+
+        <tbody>
+        </tbody>
+
+      </table>
+    </div>
+    <div class="mt-3 col-md-4 animated edit-container" hidden id="rowEditForm" style="margin-left: 4%;">
+      <p class="mt-1" style="font-weight: bold; font-size:20px">Edit task </p>
+      <form>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="etitle" placeholder="name@example.com">
+          <label for="floatingInput">Title</label>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" value="1" id="ecompleted" checked>
+          <label class="form-check-label" for="ecompleted">
+            Mark as complete
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="form-floating">
+              <select class="form-select" id="eassignee" aria-label="Select assignee" disabled>
+
+              </select>
+              <label for="floatingSelectGrid">Assigned Name</label>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-floating">
+              <select class="form-select" id="epriority" aria-label="Select priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+              <label for="epriority">Priority</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="form-floating input-group date">
+              <input class="form-control" type="date" id="estartDate" disabled>
+              <label for="estartDate">Start date</label>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-floating input-group date">
+              <input class="form-control" type="date" id="dueDate" disabled>
+              <label for="dueDate">Due date</label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-floating mb-3">
+          <textarea class="form-control" placeholder="Description of task" id="edescription"
+            style="height: 100px"></textarea>
+          <label for="description">Description</label>
+        </div>
+
+        <div class="mt-3 mb-3">
+          <button type="button" id="eBtn" class="btn btn-success">Save</button>
+          <button type="button" onclick="resetTableEdit()" class="btn btn-primary">Close</button>
+        </div>
+    </div>
+    </form>
+  </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formModalLabel">Create Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="formModal" aria-label="Close"></button>
+        </div>
+        <form name="add-task" id="add-task">
+          <div class="modal-body">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="title" placeholder="Enter task title">
+              <label for="title">Title</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea class="form-control" placeholder="Description of task" id="description"
+                style="height: 100px"></textarea>
+              <label for="description">Description</label>
+            </div>
+            <div class="row" style="justify-content:space-around; display:flex">
+              <div class="mb-3 col-md-6">
+                <label for="startDate">Start</label>
+                <input id="startDate" class="form-control" min="2022-06-10" max="2024-12-31" type="date" required />
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="endDate">End</label>
+                <input id="endDate" class="form-control" min="2022-06-10" max="2024-12-31" type="date" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="project">Project</label>
+              <br />
+              <select class="form-control" id="project" name="project" aria-label=".form-select-lg example">
+                <!-- Filled by JS -->
+              </select>
+            </div>
+            <div class="row" style="justify-content:space-around; display:flex">
+              <div class="mb-3 col-md-6">
+                <label for="priority">Assignee</label>
+                <br />
+                <select class="form-control form-two" id="assignee" name="assignee" aria-label=".form-select-lg example"
+                  disabled>
+                  <!-- Filled by JS -->
+                </select>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="priority">Priority</label>
+                <br />
+                <select class="form-control form-two" id="priority" name="priority"
+                  aria-label=".form-select-lg example">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <input type="submit" id="submit" class="btn btn-primary" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal end -->
+
+  <div class="floating-container">
+    <div class="floating-button" id="createBtn" data-toggle="modal" data-target="#formModal">
+      +
+    </div>
+  </div>
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/jquery/jquery.min.js"></script>
+  <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+  <script src="assets/js/jquery/jquery.dataTables.min.js"></script>
+  <script src="assets/js/jquery/dataTables.bootstrap5.min.js"></script>
+  <script src="assets/js/api_utility.js"></script>
+  <script src="assets/js/etasks.js"></script>
 
 </html>
