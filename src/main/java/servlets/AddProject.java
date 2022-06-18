@@ -19,9 +19,6 @@ import activities.DBUtil.DatabaseConnection;
 import activities.Queries;
 import activities.SessionHandler;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/AddProject")
 public class AddProject extends HttpServlet {
 

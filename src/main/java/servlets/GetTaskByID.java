@@ -20,9 +20,6 @@ import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
 import activities.Queries;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/getTaskByID")
 public class GetTaskByID extends HttpServlet {
 

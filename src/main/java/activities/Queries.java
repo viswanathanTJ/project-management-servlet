@@ -30,6 +30,11 @@ public class Queries {
             """;
     public static String getProjectByName = "SELECT * FROM projects WHERE name=?";
     public static String getProjectByID = "SELECT * from projects WHERE p_id=?";
+    public static String getProjectByIDDetails = """
+            SELECT *, (SELECT COUNT(*) FROM project_users WHERE p_id=p.p_id) AS team,
+                (SELECT COUNT(*) AS tasks FROM tasks WHERE p_id=p.p_id AND completed = 0) AS tasks
+                FROM projects p WHERE p.p_id=?;
+            """;;
     public static String getProjectMembers = "SELECT u_id, o_id FROM project_users p1 WHERE p1.p_id = ?";
 
     // UPDATE projects
@@ -73,6 +78,7 @@ public class Queries {
     public static String uidInProUsers = "SELECT sno, u_id from project_users where p_id=?;";
     public static String getUsersByPID = "SELECT u_id from project_users where p_id=?;";
     public static String getUserCountOnProject = "SELECT COUNT('u_id') AS team FROM project_users WHERE p_id=?;";
+    public static String getProjectsForUser = "SELECT * from project_users WHERE u_id=?;";
 
     // DELETE project_users
     public static String deleteProjectUsers = "DELETE FROM project_users WHERE p_id = ?;";

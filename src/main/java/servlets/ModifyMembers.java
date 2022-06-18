@@ -21,9 +21,6 @@ import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
 import activities.Queries;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/ModifyMembers")
 public class ModifyMembers extends HttpServlet {
 

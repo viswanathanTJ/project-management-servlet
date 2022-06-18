@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,45 +19,43 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
+import activities.Queries;
+import models.Project;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/getProjects")
 public class GetProjects extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		JSONObject jsonObject = new JSONObject();
-		JSONArray array = new JSONArray();
 		try {
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 			PreparedStatement st = con.prepareStatement(Queries.getProjectsDetails);
 			ResultSet r1 = st.executeQuery();
+			List<Project> projects = new ArrayList<Project>();
 			while (r1.next()) {
-				JSONObject obj = new JSONObject();
-				obj.put("p_id", r1.getInt("p_id"));
-				obj.put("team", r1.getInt("team"));
-				obj.put("tasks", r1.getInt("tasks"));
+				Project project = new Project();
+				project.setP_id(r1.getString("p_id"));
+				project.setTeam(r1.getString("team"));
+				project.setTasks(r1.getString("tasks"));
 				int oid = r1.getInt("owner_id");
 				if (oid == 0)
-					obj.put("oname", "unassigned");
+					project.setOname("unassigned");
 				else
-					obj.put("oname", Query.getUserNameByID(oid));
-				obj.put("name", r1.getString("name"));
-				obj.put("desc", r1.getString("description"));
-				obj.put("priority", r1.getInt("priority"));
+					project.setOname(Query.getUserNameByID(oid));
+				project.setName(r1.getString("name"));
+				project.setDesc(r1.getString("description"));
+				project.setPriority(r1.getString("priority"));
 				Timestamp t = r1.getTimestamp("createdat");
 				SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 				String time = df.format(t);
-				obj.put("createdat", time);
-				array.put(obj);
+				project.setCreatedat(time);
+				projects.add(project);
 			}
-			jsonObject.put("projects", array);
+			jsonObject.put("projects", projects);
 			response.setContentType("application/json");
 			response.getWriter().print(jsonObject);
 			response.setStatus(200);

@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import activities.DBUtil.DatabaseConnection;
 import activities.Queries;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/setTaskStatus")
 public class SetTaskStatus extends HttpServlet {
 

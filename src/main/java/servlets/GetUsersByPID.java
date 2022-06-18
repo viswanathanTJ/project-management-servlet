@@ -19,9 +19,6 @@ import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
 import activities.Queries;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/getUsersByPID")
 public class GetUsersByPID extends HttpServlet {
 

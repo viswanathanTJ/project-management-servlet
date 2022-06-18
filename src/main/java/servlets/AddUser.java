@@ -16,14 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import activities.Authentication;
+import activities.Hasher;
 import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
-import entities.User;
+import models.User;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/AddUser")
 public class AddUser extends HttpServlet {
 
@@ -57,7 +54,7 @@ public class AddUser extends HttpServlet {
 			st = con.prepareStatement("insert into user (name, email, password, role) values(?, ?, ?, ?)");
 			st.setString(1, username);
 			st.setString(2, email);
-			String hashPassword = Authentication.hashPassword(username, password);
+			String hashPassword = Hasher.hashPassword(username, password);
 			st.setString(3, hashPassword);
 			st.setString(4, role);
 			st.executeUpdate();

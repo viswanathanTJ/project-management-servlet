@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.Authentication;
+import activities.Hasher;
 import activities.Queries;
+import activities.ResponseHandler;
 import activities.SessionHandler;
 import activities.DBUtil.DatabaseConnection;
 
@@ -21,11 +22,6 @@ import activities.DBUtil.DatabaseConnection;
  */
 @WebServlet("/Login")
 public class UserLogin extends HttpServlet {
-	private void errorResponse(HttpServletResponse res, String message) throws IOException {
-		res.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-		res.getWriter().print(message);
-		return;
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -46,9 +42,9 @@ public class UserLogin extends HttpServlet {
 				String dbPassword = r1.getString("password");
 				dbrole = r1.getString("role");
 				String email = r1.getString("email");
-				String hashPassword = Authentication.hashPassword(username, password);
+				String hashPassword = Hasher.hashPassword(username, password);
 				if (dbPassword.equals(hashPassword) == false) {
-					errorResponse(response, "Invalid password.");
+					ResponseHandler.errorResponse(response, HttpServletResponse.SC_FORBIDDEN, "Invalid password.");
 					return;
 				} else {
 					System.out.println("Login successful");
@@ -61,22 +57,14 @@ public class UserLogin extends HttpServlet {
 					response.getWriter().print(dbrole);
 				}
 			} else {
-				response.getWriter().print("Invalid Username.");
-				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+				ResponseHandler.errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, "Invalid username.");
 				return;
 			}
 			st.close();
 			con.close();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			response.getWriter().print("Connection error123.");
-			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-		} catch (SQLException e) {
-			response.getWriter().print("SQL Exception error.");
-			response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-		} catch (Exception e) {
+		} catch (ClassNotFoundException | SQLException e) {
+			ResponseHandler.errorResponse(response, HttpServletResponse.SC_BAD_GATEWAY, e.getMessage());
 			e.printStackTrace();
 		}
 	}
-
 }

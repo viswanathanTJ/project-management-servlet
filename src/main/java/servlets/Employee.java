@@ -28,6 +28,9 @@ public class Employee extends HttpServlet {
 			case "getRecentInfo":
 				emp.getRecentInfo(request, response);
 				break;
+			case "getProjects":
+				emp.getProjects(request, response);
+				break;
 			default:
 				response.setStatus(404);
 				break;

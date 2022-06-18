@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import activities.Authentication;
+import activities.Hasher;
+import activities.Cryptor;
 import activities.Queries;
+import activities.ResponseHandler;
 import activities.SessionHandler;
 import activities.DBUtil.DatabaseConnection;
 
@@ -58,7 +60,7 @@ public class UserRegister extends HttpServlet {
 			st = con.prepareStatement(Queries.addUser, Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, request.getParameter("name"));
 			st.setString(2, request.getParameter("email"));
-			String hashPassword = Authentication.hashPassword(username, password);
+			String hashPassword = Hasher.hashPassword(username, password);
 			st.setString(3, hashPassword);
 			st.setString(4, role);
 			int row = st.executeUpdate();
@@ -80,8 +82,8 @@ public class UserRegister extends HttpServlet {
 			session.setRole(role);
 			session.setInterval(60 * 10);
 			JSONObject user = new JSONObject();
-			user.put("name", ResponseHandler.encrypt(username));
-			user.put("role", ResponseHandler.encrypt(role));
+			user.put("name", Cryptor.encrypt(username));
+			user.put("role", Cryptor.encrypt(role));
 			ResponseHandler.successResponse(response, user.toString());
 			st.close();
 			con.close();

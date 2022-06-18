@@ -1,29 +1,14 @@
-package servlets;
+package activities;
 
-import java.io.IOException;
 import java.security.Key;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServletResponse;
 
-public class ResponseHandler {
+public class Cryptor {
 
     private static String key = "nZr4u7x!A%D*G-Ka";
-
-    public static void successResponse(HttpServletResponse response, String msg) throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().print(msg);
-        response.getWriter().flush();
-    }
-
-    public static void errorResponse(HttpServletResponse response, int scode, String message) throws IOException {
-        response.setStatus(scode);
-        response.getWriter().print(message);
-        return;
-    }
 
     public static String encrypt(String in) {
         try {

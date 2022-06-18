@@ -21,9 +21,6 @@ import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/getTasks")
 public class GetTasks extends HttpServlet {
 

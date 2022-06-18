@@ -11,14 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.Authentication;
+import activities.Hasher;
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
 import activities.Queries;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/resetPassword")
 public class ResetPassword extends HttpServlet {
 
@@ -28,7 +25,7 @@ public class ResetPassword extends HttpServlet {
             int uid = Integer.parseInt(request.getParameter("uid"));
             String name = Query.getUserNameByID(uid);
             String password = request.getParameter("password");
-            String hashPassword = Authentication.hashPassword(name, password);
+            String hashPassword = Hasher.hashPassword(name, password);
             Connection con;
             con = DatabaseConnection.getDatabase();
             PreparedStatement st = con.prepareStatement(Queries.updatePassword);

@@ -18,9 +18,6 @@ import org.json.JSONObject;
 import activities.DBUtil.DatabaseConnection;
 import activities.Queries;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/getRecentUsers")
 public class GetRecentUsers extends HttpServlet {
 

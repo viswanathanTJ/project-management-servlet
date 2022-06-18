@@ -7,6 +7,7 @@ $.ajax({
   url: "Employee/getRecentInfo",
   type: "GET",
   success: function (data) {
+    console.log(data);
     projects.innerHTML = data.projects;
     tasks.innerHTML = data.tasks;
     opentasks.innerHTML = data.open;

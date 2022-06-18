@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import activities.Cryptor;
 import activities.SessionHandler;
 
 @WebServlet("/check")
@@ -25,6 +26,6 @@ public class CheckUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String role = request.getParameter("role");
-		response.getWriter().print(ResponseHandler.decrypt(role));
+		response.getWriter().print(Cryptor.decrypt(role));
 	}
 }

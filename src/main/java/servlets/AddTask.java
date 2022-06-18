@@ -15,12 +15,9 @@ import com.google.gson.Gson;
 
 import activities.DBUtil.DatabaseConnection;
 import activities.DBUtil.Query;
+import models.Task;
 import activities.SessionHandler;
-import entities.Task;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/AddTask")
 public class AddTask extends HttpServlet {
 

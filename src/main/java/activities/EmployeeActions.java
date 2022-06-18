@@ -14,9 +14,9 @@ import org.json.JSONObject;
 
 import activities.DBUtil.DatabaseConnection;
 
-public class EmployeeActions {
+public class EmployeeActions extends ResponseHandler {
 
-    public void getRecentTasks(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getRecentTasks(HttpServletRequest request, HttpServletResponse response) {
         SessionHandler session = new SessionHandler(request);
         String uid = session.getUID();
         try {
@@ -38,17 +38,14 @@ public class EmployeeActions {
                 array.put(obj);
             }
             jsonObject.put("tasks", array);
-            response.setContentType("application/json");
-            response.getWriter().print(jsonObject);
-            System.out.println(jsonObject);
-            response.setStatus(200);
+            successResponse(response, jsonObject);
         } catch (ClassNotFoundException | SQLException e) {
+            errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, e.getMessage());
             e.printStackTrace();
-            response.getWriter().print(e.getMessage());
         }
     }
 
-    public void getRecentInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getRecentInfo(HttpServletRequest request, HttpServletResponse response) {
         SessionHandler session = new SessionHandler(request);
         String uid = session.getUID();
         try {
@@ -65,11 +62,33 @@ public class EmployeeActions {
                 obj.put("tasks", r1.getInt("tasks"));
                 obj.put("open", r1.getInt("open"));
             }
-            response.setContentType("application/json");
-            response.getWriter().print(obj);
-            response.setStatus(200);
+            successResponse(response, obj);
         } catch (ClassNotFoundException | SQLException e) {
-            response.getWriter().print(e.getMessage());
+            errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void getProjects(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        SessionHandler session = new SessionHandler(request);
+        String uid = session.getUID();
+        try {
+            Connection con;
+            con = DatabaseConnection.getDatabase();
+            PreparedStatement st = con.prepareStatement(Queries.getUserCounts);
+            st.setString(1, uid);
+            st.setString(2, uid);
+            st.setString(3, uid);
+            ResultSet r1 = st.executeQuery();
+            JSONObject obj = new JSONObject();
+            if (r1.next()) {
+                obj.put("projects", r1.getInt("projects"));
+                obj.put("tasks", r1.getInt("tasks"));
+                obj.put("open", r1.getInt("open"));
+            }
+            successResponse(response, obj);
+        } catch (ClassNotFoundException | SQLException e) {
+            errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, e.getMessage());
             e.printStackTrace();
         }
     }

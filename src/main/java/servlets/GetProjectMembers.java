@@ -19,9 +19,6 @@ import org.json.JSONObject;
 import activities.Queries;
 import activities.DBUtil.DatabaseConnection;
 
-/**
- * Servlet implementation class AddUser
- */
 @WebServlet("/getProjectMembers")
 public class GetProjectMembers extends HttpServlet {
 
