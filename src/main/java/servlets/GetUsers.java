@@ -37,7 +37,6 @@ public class GetUsers extends HttpServlet {
 			while (r1.next()) {
 				JSONObject obj = new JSONObject();
 				obj.put("uid", r1.getInt("u_id"));
-				// obj.put("sno", sno++);
 				obj.put("name", r1.getString("name"));
 				obj.put("email", r1.getString("email"));
 				obj.put("role", r1.getString("role"));
@@ -48,7 +47,6 @@ public class GetUsers extends HttpServlet {
 				array.put(obj);
 			}
 			jsonObject.put("users", array);
-			// response set json
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(jsonObject.toString());

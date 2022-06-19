@@ -86,7 +86,7 @@ public class AddProject extends HttpServlet {
 				affected = st.executeUpdate();
 			}
 			System.out.println("Added: " + affected + " employees to project " + pid);
-			st.close();
+
 			con.close();
 			response.getWriter().print(pid);
 			response.setStatus(HttpServletResponse.SC_OK);

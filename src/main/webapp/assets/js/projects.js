@@ -92,7 +92,7 @@ $(document).on("click", "#deleteBtn", function () {
 function loadData() {
   var projects;
   $.ajax({
-    url: "getProjects",
+    url: "Admin/getProjects",
     type: "GET",
     success: function (resp) {
       projects = resp.projects;
@@ -107,7 +107,7 @@ function loadData() {
 function loadOwner() {
   let users;
   $.ajax({
-    url: "getUsers",
+    url: "Admin/getUsers",
     type: "GET",
     success: function (resp) {
       users = resp.users;
@@ -115,10 +115,8 @@ function loadOwner() {
         if (item.role == "admin" || item.role == "manager") {
           if (index === 0) {
             eownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
-            // ownerList.innerHTML = `<option value="${item.name}" selected>${item.name}</option>`;
           } else {
             eownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
-            // ownerList.innerHTML += `<option value="${item.name}">${item.name}</option>`;
           }
         }
       });
@@ -157,10 +155,12 @@ function loadAddMemberList() {
       let users = resp.users;
       $.each(users, function (index, item) {
         addMemberList.innerHTML += `
-      <li class="list-group-item">
+        <label>
+        <li class="list-group-item">
           <input class="form-check-input" id="${item.uid}" name="${item.uid}" type="checkbox" value="${item.uid}">
-          <label for="${item.uid}">&nbsp;&nbsp;${item.name}</label>
-      </li>
+          &nbsp;&nbsp;${item.name}
+        </li>
+        </label>
       `;
       });
     },

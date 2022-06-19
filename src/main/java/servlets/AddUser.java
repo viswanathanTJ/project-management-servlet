@@ -65,7 +65,7 @@ public class AddUser extends HttpServlet {
 			User user = new User(username, email, role, currentTime);
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().print(new Gson().toJson(user));
-			st.close();
+
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

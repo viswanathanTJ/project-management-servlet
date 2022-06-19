@@ -74,7 +74,7 @@ public class AddTask extends HttpServlet {
 			response.getWriter().print(new Gson().toJson(task));
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
-			st.close();
+
 			con.close();
 		} catch (Exception e) {
 			// } catch (SQLException e) {

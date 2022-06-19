@@ -16,7 +16,7 @@ import service.ResponseHandler;
 import service.SessionHandler;
 
 public class Authentication extends ResponseHandler {
-    private static final Authentication authentication = new Authentication();
+    private static final Authentication instance = new Authentication();
 
     private Connection con;
     private PreparedStatement st;
@@ -28,7 +28,7 @@ public class Authentication extends ResponseHandler {
     }
 
     public static Authentication getInstance() {
-        return authentication;
+        return instance;
     }
 
     public void UserRegister(HttpServletRequest request, HttpServletResponse response) {
@@ -82,6 +82,7 @@ public class Authentication extends ResponseHandler {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
+
             new SessionHandler(request, uid, username, email, role, interval);
             // Send response
             successResponse(response, username);
@@ -111,6 +112,7 @@ public class Authentication extends ResponseHandler {
                     errorResponse(response, HttpServletResponse.SC_FORBIDDEN, "Invalid password.");
                     return;
                 } else {
+
                     System.out.println("Login successful");
                     // Store user details in session
                     new SessionHandler(request, r1.getLong("u_id"), username, email, dbrole, interval);
@@ -134,7 +136,6 @@ public class Authentication extends ResponseHandler {
     public void UserCheck(HttpServletRequest request, HttpServletResponse response) {
         SessionHandler session = new SessionHandler(request);
         String role = session.getRole();
-        System.out.println("User Check: " + role);
         if (role == null || role == "")
             errorResponse(response, HttpServletResponse.SC_FORBIDDEN, "login");
         else

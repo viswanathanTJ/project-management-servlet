@@ -33,7 +33,7 @@ function initializeDatabase() {
 function loadData() {
   let users;
   $.ajax({
-    url: "getUsers",
+    url: "Admin/getUsers",
     type: "GET",
     success: function (resp) {
       users = resp.users;
