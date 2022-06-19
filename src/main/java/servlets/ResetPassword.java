@@ -24,7 +24,7 @@ public class ResetPassword extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int uid = Integer.parseInt(request.getParameter("uid"));
+            String uid = request.getParameter("uid");
             String name = Query.getUserNameByID(uid);
             String password = request.getParameter("password");
             String hashPassword = Hasher.hashPassword(name, password);
@@ -32,7 +32,7 @@ public class ResetPassword extends HttpServlet {
             con = DatabaseConnection.getDatabase();
             PreparedStatement st = con.prepareStatement(Queries.updatePassword);
             st.setString(1, hashPassword);
-            st.setInt(2, uid);
+            st.setString(2, uid);
             st.executeUpdate();
             response.getWriter().print("Password updated successfully.");
         } catch (SQLException e) {

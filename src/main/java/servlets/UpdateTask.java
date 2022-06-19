@@ -32,7 +32,7 @@ public class UpdateTask extends HttpServlet {
 			String endDate = request.getParameter("due_date");
 			int priority = Integer.parseInt(request.getParameter("priority"));
 			int completed = Integer.parseInt(request.getParameter("completed"));
-			int assignee = Integer.parseInt(request.getParameter("assignee"));
+			String assignee = request.getParameter("assignee");
 			String tid = request.getParameter("t_id");
 			System.out.println(
 					"Update Task: " + title + " " + desc + " " + startDate + " " + endDate + " " + priority + " "
@@ -50,7 +50,7 @@ public class UpdateTask extends HttpServlet {
 			st.setString(3, startDate);
 			st.setString(4, endDate);
 			st.setInt(5, priority);
-			st.setInt(6, assignee);
+			st.setString(6, assignee);
 			st.setInt(7, completed);
 			st.setString(8, tid);
 			st.executeUpdate();

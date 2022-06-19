@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,10 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import models.Task_Add;
-import service.SessionHandler;
+import models.Task;
+import queries.Queries;
 import service.DBUtil.DatabaseConnection;
 import service.DBUtil.Query;
+import service.SessionHandler;
 
 @WebServlet("/AddTask")
 public class AddTask extends HttpServlet {
@@ -30,16 +33,14 @@ public class AddTask extends HttpServlet {
 			String desc = request.getParameter("description");
 			String startDate = request.getParameter("start_date");
 			String endDate = request.getParameter("end_date");
-			int priority = Integer.parseInt(request.getParameter("priority"));
+			String priority = request.getParameter("priority");
 			String assigneeID = request.getParameter("assignee");
-			String assignee = Query.getUserNameByID(Integer.parseInt(assigneeID));
+			String assignee = Query.getUserNameByID(assigneeID);
 			String pid = request.getParameter("project");
 			SessionHandler session = new SessionHandler(request);
-
-			String creator = session.getName();
 			System.out
 					.println("Add Task: " + title + " " + desc + " " + startDate + " " + endDate + " " + priority + " "
-							+ assigneeID + " " + assignee + " " + pid);
+							+ assignee + " " + pid);
 			Connection con;
 			con = DatabaseConnection.getDatabase();
 			PreparedStatement st = con.prepareStatement("SELECT title from tasks");
@@ -51,24 +52,34 @@ public class AddTask extends HttpServlet {
 					return;
 				}
 			}
-			int creatorID = Integer.parseInt(session.getUID());
+			String creatorID = session.getUID();
 			String cname = session.getName();
 
-			st = con.prepareStatement(
-					"INSERT INTO tasks (title, description, start_date, end_date, priority, assignee_id, creator_id, p_id, completed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			st = con.prepareStatement(Queries.addTask, Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, title);
 			st.setString(2, desc);
 			st.setString(3, startDate);
 			st.setString(4, endDate);
-			st.setInt(5, priority);
+			st.setString(5, priority);
 			st.setString(6, assigneeID);
-			st.setInt(7, creatorID);
+			st.setString(7, creatorID);
 			st.setString(8, pid);
 			st.setInt(9, 0);
-			st.executeUpdate();
+
+			// Run Query
+			int row = st.executeUpdate();
+			if (row == 0)
+				throw new SQLException("Creating user failed, no rows affected.");
+			String tid;
+			try (ResultSet generatedKeys = st.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					tid = generatedKeys.getString(1);
+					System.out.println("Task created with ID = " + generatedKeys.getString(1));
+				} else
+					throw new SQLException("Creating task failed, no ID obtained.");
+			}
 			String project = Query.getProjectNameByID(pid);
-			Task_Add task = new Task_Add(creator, title, desc, startDate, endDate, priority,
-					assigneeID, assignee, creatorID, cname, pid, project, 0);
+			Task task = new Task(assignee, cname, "0", priority, project, startDate, tid, title);
 
 			System.out.println(new Gson().toJson(task));
 			response.getWriter().print(new Gson().toJson(task));
@@ -77,7 +88,6 @@ public class AddTask extends HttpServlet {
 
 			con.close();
 		} catch (Exception e) {
-			// } catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

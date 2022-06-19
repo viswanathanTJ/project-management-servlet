@@ -2,7 +2,6 @@ var createBtn = document.getElementById("createBtn");
 var rowEditForm = document.getElementById("rowEditForm");
 var tableResize = document.getElementById("tableSize");
 var table, row, rowData;
-var tid = 0;
 // Create form variables
 const completed = document.getElementById("completed");
 const tasksTable = document.getElementById("tasksTable");
@@ -145,19 +144,18 @@ $(document).ready(function () {
         else if (tmp == 1) tmp = `<span class="priority medium">medium</span>`;
         else if (tmp == 2) tmp = `<span class="priority high">high</span>`;
         else if (tmp == 3) tmp = `<span class="priority urgent">urgent</span>`;
-        tid++;
         $("#add-task")[0].reset();
         $("#formModal").modal("hide");
         table.row
           .add([
-            tid,
-            `<input type="checkbox" id="completed${tid}">`,
+            resp.t_id,
+            `<input type="checkbox" id="completed${resp.t_id}">`,
             resp.title,
             resp.project,
-            resp.creator,
+            resp.cname,
             resp.assignee,
             tmp,
-            resp.startDate,
+            resp.start_date,
           ])
           .draw(false);
         toastsFactory.createToast({

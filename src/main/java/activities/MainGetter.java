@@ -64,8 +64,8 @@ public class MainGetter extends ResponseHandler {
                 project.setP_id(r1.getString("p_id"));
                 project.setTeam(r1.getString("team"));
                 project.setTasks(r1.getString("tasks"));
-                int oid = r1.getInt("owner_id");
-                if (oid == 0)
+                String oid = r1.getString("owner_id");
+                if (oid == null || oid == "")
                     project.setOname("unassigned");
                 else
                     project.setOname(Query.getUserNameByID(oid));
@@ -107,11 +107,11 @@ public class MainGetter extends ResponseHandler {
                 obj.put("priority", r1.getString("priority"));
                 obj.put("assignee_id", r1.getInt("assignee_id"));
                 obj.put("completed", r1.getInt("completed"));
-                obj.put("assignee", Query.getUserNameByID(r1.getInt("assignee_id")));
+                obj.put("assignee", Query.getUserNameByID(r1.getString("assignee_id")));
                 obj.put("p_id", r1.getString("p_id"));
                 obj.put("project_name", Query.getProjectNameByID(r1.getString("p_id")));
                 obj.put("c_id", r1.getInt("creator_id"));
-                obj.put("cname", Query.getUserNameByID(r1.getInt("creator_id")));
+                obj.put("cname", Query.getUserNameByID(r1.getString("creator_id")));
                 obj.put("desc", r1.getString("description"));
                 Timestamp t = r1.getTimestamp("createdat");
                 SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
@@ -126,7 +126,7 @@ public class MainGetter extends ResponseHandler {
     }
 
     public void getTasks(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject json = GetTasksObj.getTasks(Queries.getTasks, null);
+        JSONObject json = GetTasksObj.getTasks(Queries.getTasksForTable, null);
         if (json != null)
             successResponse(response, json);
         else
@@ -146,7 +146,7 @@ public class MainGetter extends ResponseHandler {
             while (r1.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("uid", r1.getInt("u_id"));
-                obj.put("name", Query.getUserNameByID(r1.getInt("u_id")));
+                obj.put("name", Query.getUserNameByID(r1.getString("u_id")));
                 array.put(obj);
             }
             jsonObject.put("users", array);
@@ -170,7 +170,7 @@ public class MainGetter extends ResponseHandler {
             while (r1.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("uid", r1.getString("u_id"));
-                obj.put("name", Query.getUserNameByID(r1.getInt("u_id")));
+                obj.put("name", Query.getUserNameByID(r1.getString("u_id")));
                 array.put(obj);
             }
             jsonObject.put("users", array);

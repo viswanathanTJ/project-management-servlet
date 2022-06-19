@@ -34,10 +34,10 @@ public class DBUtil {
         static PreparedStatement st;
         static ResultSet r1;
 
-        public static String getUserNameByID(int id) {
+        public static String getUserNameByID(String id) {
             try {
                 st = con.prepareStatement(Queries.getUserNameByID);
-                st.setInt(1, id);
+                st.setString(1, id);
                 r1 = st.executeQuery();
                 if (r1.next())
                     return r1.getString("name");

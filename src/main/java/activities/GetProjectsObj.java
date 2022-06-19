@@ -32,8 +32,8 @@ public class GetProjectsObj {
                 project.setP_id(r1.getString("p_id"));
                 project.setTeam(r1.getString("team"));
                 project.setTasks(r1.getString("tasks"));
-                int oid = r1.getInt("owner_id");
-                if (oid == 0)
+                String oid = r1.getString("owner_id");
+                if (oid == null || oid == "")
                     project.setOname("unassigned");
                 else
                     project.setOname(Query.getUserNameByID(oid));

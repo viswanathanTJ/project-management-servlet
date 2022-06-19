@@ -72,9 +72,8 @@ function fillRow(item) {
   else if (tmp == 3) tmp = `<span class="priority urgent">urgent</span>`;
   rowData = table.row(row).data();
   var checkStatus = `<input type="checkbox" id="completed${rowData[0]}" ${
-    item.completed === 1 ? "checked" : ""
+    item.completed == 1 ? "checked" : ""
   }>`;
-  tid = item.t_id;
   tr = table
     .row(row)
     .data([
@@ -89,8 +88,8 @@ function fillRow(item) {
     ])
     .draw(false)
     .node();
-  if (item.completed === 1) $(tr).addClass("strikeout");
-  if (item.completed === 0) $(tr).removeClass("strikeout");
+  if (item.completed == 1) $(tr).addClass("strikeout");
+  if (item.completed == 0) $(tr).removeClass("strikeout");
 }
 
 function initializeDatabase() {
@@ -132,9 +131,8 @@ function loadData(url) {
         else if (tmp == 2) tmp = `<span class="priority high">high</span>`;
         else if (tmp == 3) tmp = `<span class="priority urgent">urgent</span>`;
         var checkStatus = `<input type="checkbox" id="completed${item.t_id}" ${
-          item.completed === 1 ? "checked" : ""
+          item.completed == 1 ? "checked" : ""
         }>`;
-        tid = item.t_id;
         tr = table.row
           .add([
             item.t_id,
@@ -148,7 +146,7 @@ function loadData(url) {
           ])
           .draw()
           .node();
-        if (item.completed === 1) $(tr).addClass("strikeout");
+        if (item.completed == 1) $(tr).addClass("strikeout");
         else $(tr).removeClass("strikeout");
       });
     },
