@@ -13,13 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
 import models.Task_Add;
-import activities.SessionHandler;
+import service.SessionHandler;
+import service.DBUtil.DatabaseConnection;
+import service.DBUtil.Query;
 
 @WebServlet("/AddTask")
 public class AddTask extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -75,7 +77,7 @@ public class AddTask extends HttpServlet {
 			st.close();
 			con.close();
 		} catch (Exception e) {
-			// } catch (ClassNotFoundException | SQLException e) {
+			// } catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

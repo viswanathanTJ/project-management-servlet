@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.Queries;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/setTaskStatus")
 public class SetTaskStatus extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -29,7 +31,7 @@ public class SetTaskStatus extends HttpServlet {
 			st.setString(2, tid);
 			st.executeUpdate();
 			response.setStatus(200);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
 		}

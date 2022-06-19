@@ -17,11 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import activities.Queries;
-import activities.DBUtil.DatabaseConnection;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/getUsers")
 public class GetUsers extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -50,7 +52,7 @@ public class GetUsers extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(jsonObject.toString());
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
 		}

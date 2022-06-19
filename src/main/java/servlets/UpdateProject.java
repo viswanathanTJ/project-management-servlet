@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.Queries;
-import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
+import service.DBUtil.Query;
 
 @WebServlet("/updateProject")
 public class UpdateProject extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -15,11 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.Queries;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/getRecentTasks")
 public class GetRecentTasks extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -44,7 +46,7 @@ public class GetRecentTasks extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().print(jsonObject);
 			response.setStatus(200);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
 		}

@@ -1,4 +1,4 @@
-package activities;
+package service;
 
 import java.security.Key;
 import java.util.Base64;

@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.Hasher;
-import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
-import activities.Queries;
+import queries.Queries;
+import service.Hasher;
+import service.DBUtil.DatabaseConnection;
+import service.DBUtil.Query;
 
 @WebServlet("/resetPassword")
 public class ResetPassword extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,7 +35,7 @@ public class ResetPassword extends HttpServlet {
             st.setInt(2, uid);
             st.executeUpdate();
             response.getWriter().print("Password updated successfully.");
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             response.getWriter().print(e.getMessage());
             e.printStackTrace();
         }

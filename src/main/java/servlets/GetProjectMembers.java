@@ -16,11 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import activities.Queries;
-import activities.DBUtil.DatabaseConnection;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/getProjectMembers")
 public class GetProjectMembers extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -61,7 +63,7 @@ public class GetProjectMembers extends HttpServlet {
 			jsonObject.put("hasMembers", hasMembers);
 			response.getWriter().print(jsonObject);
 			response.setStatus(200);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			response.getWriter().print("Error: " + e.getMessage());
 			e.printStackTrace();
 		}

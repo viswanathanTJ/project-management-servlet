@@ -16,13 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
 import models.Project;
-import activities.Queries;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
+import service.DBUtil.Query;
 
 @WebServlet("/getProject")
 public class GetProject extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -54,7 +56,7 @@ public class GetProject extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().print(new Gson().toJson(project));
 			response.setStatus(200);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
 		}

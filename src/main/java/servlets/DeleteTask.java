@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.Queries;
-import activities.DBUtil.DatabaseConnection;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/deleteTask")
 public class DeleteTask extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -31,7 +33,7 @@ public class DeleteTask extends HttpServlet {
 			st.executeUpdate();
 			response.getWriter().print("Deleted successfully");
 			response.setStatus(HttpServletResponse.SC_OK);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
 		}

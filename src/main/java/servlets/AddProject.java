@@ -15,12 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.Queries;
-import activities.SessionHandler;
+import queries.Queries;
+import service.SessionHandler;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/AddProject")
 public class AddProject extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -88,7 +90,7 @@ public class AddProject extends HttpServlet {
 			con.close();
 			response.getWriter().print(pid);
 			response.setStatus(HttpServletResponse.SC_OK);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.getWriter().print(e.getMessage());

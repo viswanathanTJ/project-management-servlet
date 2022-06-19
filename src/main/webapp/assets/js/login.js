@@ -32,7 +32,7 @@ $(document).ready(function () {
       return false;
     }
     $.ajax({
-      url: "register",
+      url: "Auth/register",
       type: "POST",
       data: data,
       success: function (resp) {
@@ -72,10 +72,11 @@ $(document).ready(function () {
       return false;
     }
     $.ajax({
-      url: "Login",
+      url: "Auth/login",
       type: "POST",
       data: data,
       success: function (resp) {
+        alert(resp);
         error.innerHTML = "Login Successful";
         setCookie("username", lusername.value, 1);
         $("#loginBtn").removeClass("loading");
@@ -84,7 +85,6 @@ $(document).ready(function () {
       },
       error: function (resp) {
         if (resp.responseText == "Invalid Password.") {
-          alert("changed");
           lpassword.style.borderColor = "red";
           lpassword.value("");
         }

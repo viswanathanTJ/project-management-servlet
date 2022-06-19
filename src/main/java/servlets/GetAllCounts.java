@@ -14,11 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.Queries;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/getAllCounts")
 public class GetAllCounts extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -37,7 +39,7 @@ public class GetAllCounts extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().print(obj);
 			response.setStatus(200);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
 		}

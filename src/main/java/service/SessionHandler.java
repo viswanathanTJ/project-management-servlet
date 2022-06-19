@@ -1,14 +1,25 @@
-package activities;
+package service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class SessionHandler {
     public HttpSession session;
-    protected String role;
+    protected Long uid;
     protected String name;
-    protected String uid;
     protected String email;
+    protected String role;
+    protected int interval;
+    
+    public SessionHandler(HttpServletRequest request, Long uid, String name, String email, String role,
+            int interval) {
+        this.session = request.getSession();
+        session.setAttribute("uid", uid);
+        session.setAttribute("name", name);
+        session.setAttribute("email", email);
+        session.setAttribute("role", role);
+        session.setMaxInactiveInterval(interval);
+    }
 
     public SessionHandler(HttpServletRequest request) {
         this.session = request.getSession();
@@ -44,6 +55,10 @@ public class SessionHandler {
 
     public void setName(String name) {
         session.setAttribute("name", name);
+    }
+
+    public int getInterval() {
+        return (int) session.getMaxInactiveInterval();
     }
 
     public void setInterval(int val) {

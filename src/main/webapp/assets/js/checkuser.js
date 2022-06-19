@@ -2,7 +2,7 @@
 const crole = window.location.pathname.split("/").pop(); // admin
 if (crole != "login")
   $.ajax({
-    url: "check",
+    url: "Auth/check",
     type: "GET",
     success: function (resp) {
       if (!crole.startsWith(resp)) window.location.replace(resp);
@@ -57,7 +57,7 @@ function deleteAllCookies() {
 function logout() {
   if (confirm("Are you sure to logout?")) {
     $.ajax({
-      url: "logout",
+      url: "Auth/logout",
       type: "GET",
     });
     deleteAllCookies();

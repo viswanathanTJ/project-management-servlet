@@ -1,13 +1,12 @@
-package activities;
+package service;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.json.JSONObject;
 
 public class ResponseHandler {
-    public static void successResponse(HttpServletResponse response, JSONObject jsonObj) {
+
+    protected static void successResponse(HttpServletResponse response, JSONObject jsonObj) {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         try {
@@ -18,9 +17,10 @@ public class ResponseHandler {
         }
     }
 
-    public static void successResponse(HttpServletResponse response, String msg) {
-        response.setContentType("application/json");
+    protected static void successResponse(HttpServletResponse response, String msg) {
+        response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
+        response.setStatus(200);
         try {
             response.getWriter().print(msg);
             response.getWriter().flush();
@@ -29,7 +29,7 @@ public class ResponseHandler {
         }
     }
 
-    public static void errorResponse(HttpServletResponse response, int scode, String message) {
+    protected static void errorResponse(HttpServletResponse response, int scode, String message) {
         response.setStatus(scode);
         try {
             response.getWriter().print(message);
@@ -38,4 +38,5 @@ public class ResponseHandler {
             e.printStackTrace();
         }
     }
+
 }

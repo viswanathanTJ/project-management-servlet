@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.Queries;
-import activities.DBUtil.DatabaseConnection;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/updateUser")
 public class UpdateUser extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

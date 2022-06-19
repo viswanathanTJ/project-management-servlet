@@ -16,13 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import activities.Hasher;
-import activities.Queries;
-import activities.DBUtil.DatabaseConnection;
 import models.User;
+import queries.Queries;
+import service.Hasher;
+import service.DBUtil.DatabaseConnection;
 
 @WebServlet("/AddUser")
 public class AddUser extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -65,7 +67,7 @@ public class AddUser extends HttpServlet {
 			response.getWriter().print(new Gson().toJson(user));
 			st.close();
 			con.close();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

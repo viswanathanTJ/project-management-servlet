@@ -1,4 +1,4 @@
-package activities;
+package queries;
 
 public class Queries {
         // GET all counts

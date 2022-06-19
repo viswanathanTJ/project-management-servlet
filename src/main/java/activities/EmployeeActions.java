@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import activities.DBUtil.DatabaseConnection;
+import queries.Queries;
+import service.ResponseHandler;
+import service.SessionHandler;
+import service.DBUtil.DatabaseConnection;
 
 public class EmployeeActions extends ResponseHandler {
 
@@ -39,7 +42,7 @@ public class EmployeeActions extends ResponseHandler {
             }
             jsonObject.put("tasks", array);
             successResponse(response, jsonObject);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, e.getMessage());
             e.printStackTrace();
         }
@@ -63,7 +66,7 @@ public class EmployeeActions extends ResponseHandler {
                 obj.put("open", r1.getInt("open"));
             }
             successResponse(response, obj);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, e.getMessage());
             e.printStackTrace();
         }

@@ -16,12 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
-import activities.Queries;
+import queries.Queries;
+import service.DBUtil.DatabaseConnection;
+import service.DBUtil.Query;
 
 @WebServlet("/getTaskByID")
 public class GetTaskByID extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -56,7 +58,7 @@ public class GetTaskByID extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().print(obj);
 			response.setStatus(200);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			response.getWriter().print(e.getMessage());
 			e.printStackTrace();
 		}

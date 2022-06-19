@@ -10,8 +10,8 @@ import java.text.SimpleDateFormat;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
+import service.DBUtil.DatabaseConnection;
+import service.DBUtil.Query;
 
 public class GetTasksObj {
 
@@ -50,7 +50,7 @@ public class GetTasksObj {
             }
             jsonObject.put("tasks", array);
             return jsonObject;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }

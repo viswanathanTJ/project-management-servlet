@@ -12,13 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
-import activities.Queries;
-import activities.SessionHandler;
+import queries.Queries;
+import service.SessionHandler;
+import service.DBUtil.DatabaseConnection;
+import service.DBUtil.Query;
 
 @WebServlet("/updateTask")
 public class UpdateTask extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

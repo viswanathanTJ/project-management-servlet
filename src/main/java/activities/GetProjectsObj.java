@@ -11,9 +11,9 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import activities.DBUtil.DatabaseConnection;
-import activities.DBUtil.Query;
 import models.Project;
+import service.DBUtil.DatabaseConnection;
+import service.DBUtil.Query;
 
 public class GetProjectsObj {
 
@@ -49,7 +49,7 @@ public class GetProjectsObj {
             jsonObject.put("projects", projects);
             System.out.println(jsonObject);
             return jsonObject;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
