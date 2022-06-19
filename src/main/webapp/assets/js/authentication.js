@@ -76,7 +76,6 @@ $(document).ready(function () {
       type: "POST",
       data: data,
       success: function (resp) {
-        alert(resp);
         error.innerHTML = "Login Successful";
         setCookie("username", lusername.value, 1);
         $("#loginBtn").removeClass("loading");

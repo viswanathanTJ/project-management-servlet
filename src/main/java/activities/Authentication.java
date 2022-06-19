@@ -21,7 +21,7 @@ public class Authentication extends ResponseHandler {
     private Connection con;
     private PreparedStatement st;
     private ResultSet r1;
-    public static int interval = 60 * 10;
+    public static int interval = 86400;
 
     private Authentication() {
         this.con = DatabaseConnection.getDatabase();
