@@ -54,6 +54,7 @@ public class AddProject extends HttpServlet {
 			st.setString(3, priority);
 			st.setString(4, oid);
 			st.executeUpdate();
+			System.out.println("Project added");
 			int pid;
 			ResultSet rs = st.getGeneratedKeys();
 			if (rs.next())

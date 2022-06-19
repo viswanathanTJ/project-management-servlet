@@ -259,6 +259,20 @@ $(document).keyup(function (event) {
   if (event.which === 27) $(".popover").popover("hide");
 });
 
+var popover = '[data-toggle="popover"]';
+
+$(document).click(function (e) {
+  $(popover).each(function () {
+    if (
+      !$(this).is(e.target) &&
+      $(this).has(e.target).length === 0 &&
+      $(".popover").has(e.target).length === 0
+    ) {
+      // $(".popover").popover("hide");
+      $(this).popover("hide");
+    }
+  });
+});
 function initializePopOver() {
   $("[data-toggle=popover]").hover(function (e) {
     var content = $(this).attr("data-popover-content");

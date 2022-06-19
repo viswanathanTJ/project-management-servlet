@@ -28,10 +28,12 @@ function setAssigneeByProject(project) {
       $("#assignee").empty();
       var assignees = resp.users;
       $.each(assignees, function (index, item) {
-        var option = document.createElement("option");
-        option.text = item.name;
-        option.value = item.uid;
-        assignee.add(option);
+        if (item.name != cookie_username) {
+          var option = document.createElement("option");
+          option.text = item.name;
+          option.value = item.uid;
+          assignee.add(option);
+        }
       });
     },
   });

@@ -59,11 +59,11 @@ $(document).on("click", "#editBtn", function () {
   edesc.value = document.getElementById("pdesc" + pid).innerHTML;
   eownerList.value = document.getElementById("powner" + pid).innerText;
   loadMembers(pid);
-  $(".popover").popover("hide");
+  $(".popover").fadeOut(300);
 });
 $(document).on("click", "#deleteBtn", function () {
   deleteModal.show();
-  $(".popover").popover("hide");
+  $(".popover").fadeOut(300);
 });
 
 // VALIDATION
@@ -156,12 +156,14 @@ function loadAddMemberList() {
     success: function (resp) {
       let users = resp.users;
       $.each(users, function (index, item) {
-        addMemberList.innerHTML += `
+        if (item.name != cookie_username) {
+          addMemberList.innerHTML += `
       <li class="list-group-item">
           <input class="form-check-input" id="${item.uid}" name="${item.uid}" type="checkbox" value="${item.uid}">
           <label for="${item.uid}">&nbsp;&nbsp;${item.name}</label>
       </li>
       `;
+        }
       });
     },
   });
@@ -256,11 +258,25 @@ loadData();
 loadAddMemberList();
 // DOCUMENT READY FUNCTIONS
 $(document).keyup(function (event) {
-  if (event.which === 27) $(".popover").popover("hide");
+  if (event.which === 27) $(".popover").fadeOut(300);
+});
+
+var popover = '[data-toggle="popover"]';
+
+$(document).on("click", function (e) {
+  $(popover).each(function () {
+    if (
+      !$(this).is(e.target) &&
+      $(this).has(e.target).length === 0 &&
+      $(".popover").has(e.target).length === 0
+    ) {
+      $(this).popover("hide");
+    }
+  });
 });
 
 function initializePopOver() {
-  $("[data-toggle=popover]").hover(function (e) {
+  $(popover).hover(function () {
     var content = $(this).attr("data-popover-content");
     pid = $(this).attr("pid");
     $("#editBtn").attr("pid", pid);
@@ -269,8 +285,9 @@ function initializePopOver() {
     loadPop(content, pid, ctitle);
   });
 
-  $("[data-toggle=popover]").on("click", function (e) {
-    $("[data-toggle=popover]").not(this).popover("hide");
+  $(popover).click(function (e) {
+    console.log("pop clicked");
+    $(popover).not(this).popover("hide");
     var content = $(this).attr("data-popover-content");
     pid = $(this).attr("pid");
     $("#editBtn").attr("pid", pid);
@@ -278,7 +295,7 @@ function initializePopOver() {
     var ctitle = $(this).attr("p-title");
     loadPop(content, pid, ctitle);
   });
-  $("[data-toggle=popover]").popover({
+  $(popover).popover({
     html: true,
     sanitize: false,
     content: function () {
@@ -307,7 +324,7 @@ $(document).ready(function () {
   loadOwner();
 
   $("#addProject").on("click", function () {
-    $(".popover").popover("hide");
+    $(".popover").fadeOut(300);
     $("#addModal").modal("show");
   });
 
@@ -328,6 +345,7 @@ $(document).ready(function () {
 
     var $form = $(this);
     var data = $form.serialize();
+    console.log(data);
     $.ajax({
       url: "AddProject",
       type: "POST",

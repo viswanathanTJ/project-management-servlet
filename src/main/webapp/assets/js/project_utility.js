@@ -7,7 +7,7 @@ function addCard(details) {
   else if (pri == 1) pri = med;
   else if (pri == 2) pri = high;
   cards.innerHTML += `<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" id="del${details.p_id}">
-                        <a pid="${details.p_id}" p-title="${details.name}" data-popover-content="#members" data-toggle="popover" data-trigger="focus hover">
+                        <a tabindex="0" role="button" pid="${details.p_id}" p-title="${details.name}" data-popover-content="#members" data-toggle="popover" data-trigger="click">
                             <div class="card-flyer">
                                 <div class="text-box">
                                     <div class="text-container" style="margin:5px">

@@ -11,12 +11,12 @@ if (crole != "login")
       window.location.replace("login");
     },
   });
-
+var cookie_username;
 $(document).ready(function () {
   var profile_img = document.getElementById("profile_img");
   if (profile_img instanceof Element) {
-    var username = getCookie("username");
-    profile_img.innerHTML = username.charAt(0).toUpperCase();
+    cookie_username = getCookie("username");
+    profile_img.innerHTML = cookie_username.charAt(0).toUpperCase();
   }
 });
 
