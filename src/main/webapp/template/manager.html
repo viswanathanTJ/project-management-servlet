@@ -1,15 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script src="assets/js/jquery/jquery.min.js"></script>
-    <script src="assets/js/checkuser.js"></script>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manager Dashboard</title>
-  </head>
-  <body>
-    Hello Manager
-    <button onclick="logout()">Logout</button>
-  </body>
+
+<head>
+  <script src="assets/js/jquery/jquery.min.js"></script>
+  <script src="assets/js/checkuser.js"></script>
+  <link rel="stylesheet" href="assets/css/toast.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/loader.css" />
+  <link rel="stylesheet" href="assets/css/dashboard.css" />
+
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manager Dashboard</title>
+  <link rel="icon" type="image/png" href="assets/icons/icon.png" sizes="96x96">
+  <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+
+<body id="body-pd">
+  <div class="loader-container" id="loader">
+    <div class="loader-viewer">
+      <div class="set1">
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+      <div class="set2">
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
+    </div>
+  </div>
+  <header class="header" id="header">
+    <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+    <div>
+      <h3>Dashboard</h3>
+    </div>
+    <div class="profile_img" id="profile_img">
+      A
+    </div>
+  </header>
+  <div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+      <div>
+        <a href="manager" class="nav_logo">
+          <img style="margin-left:-5px" width="30px" src="assets/icons/icon.png" alt="project_management">
+          <span class="nav_logo-name">
+            Projects
+          </span>
+        </a>
+        <div class="nav_list">
+          <a href="manager" class="nav_link active">
+            <i class='bx bx-grid-alt nav_icon'></i>
+            <span class="nav_name">Dashboard</span>
+          </a>
+          <a href="manager_projects" class="nav_link">
+            <i class='bx bx-briefcase nav_icon'></i>
+            <span class="nav_name">Projects</span>
+          </a>
+          <a href="manager_tasks" class="nav_link">
+            <i class='bx bx-task nav_icon'></i>
+            <span class="nav_name">Tasks</span>
+          </a>
+        </div>
+      </div>
+      <a href="#" onclick="return logout()" class="nav_link">
+        <i class='bx bx-log-out nav_icon'></i>
+        <span class="nav_name">SignOut</span>
+      </a>
+    </nav>
+  </div>
+
+  <div class="container mt-2">
+    <h3>Dashboard</h3>
+  </div>
+  <div class="clearfix"></div>
+  <br />
+  <div class="row">
+    <div class="col-lg-2"></div>
+
+    <!-- ======================= Cards ================== -->
+    <div class="cardBox col-lg-10">
+      <a href="manager_projects">
+        <div class="card">
+          <div>
+            <div class="numbers" id="projects">4</div>
+            <div class="cardName">Projects</div>
+          </div>
+
+          <div class="iconBx">
+            <i class='bx bx-briefcase'></i>
+          </div>
+        </div>
+      </a>
+
+      <a href="manager_tasks">
+
+        <div class="card">
+          <div>
+            <div class="numbers" id="tasks">5</div>
+            <div class="cardName">Tasks</div>
+          </div>
+
+          <div class="iconBx">
+            <i class='bx bx-task'></i>
+          </div>
+        </div>
+      </a>
+
+      <a href="manager_tasks">
+        <div class="card">
+          <div>
+            <div class="numbers" id="opentasks">4</div>
+            <div class="cardName">Open Tasks</div>
+          </div>
+
+          <div class="iconBx">
+            <i class="fas fa-tasks"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+      <!-- ================ Recent Tasks ================= -->
+      <div class="details" style="display: block;">
+        <div class="recentTasks">
+          <div class="cardHeader">
+            <h2>Recent Tasks</h2>
+            <a href="manager_tasks" class="btn">View All</a>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <td>Title</td>
+                <td>Project</td>
+                <td>Creator</td>
+                <td>Assignee</td>
+                <td>Priority</td>
+                <td>Start Date</td>
+              </tr>
+            </thead>
+
+            <tbody id="recentTasks">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</body>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/employee.js"></script>
+<script src="assets/js/jquery/jquery.min.js"></script>
+<script src="assets/js/bootstrap/bootstrap.min.js"></script>
+
 </html>
