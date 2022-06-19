@@ -44,11 +44,11 @@ function loadPop(content, pid, title) {
   heading.innerHTML = title;
   memberList.innerHTML = "";
   $.ajax({
-    url: "getProjectMembers?pid=" + pid,
+    url: "Get/getProjectMembers?pid=" + pid,
     type: "GET",
     async: false,
     success: function (resp) {
-      resp = JSON.parse(resp);
+      resp = resp;
       let members = resp.members;
       if (resp.hasMembers == false) {
         popMembers.hidden = true;
@@ -65,7 +65,7 @@ function loadPop(content, pid, title) {
 
 function addCardByProject(pid) {
   $.ajax({
-    url: "getProject?pid=" + pid,
+    url: "Get/getProject?pid=" + pid,
     type: "GET",
     success: function (resp) {
       addCard(resp);

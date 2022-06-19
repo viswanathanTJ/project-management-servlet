@@ -107,7 +107,7 @@ function loadData() {
 function loadOwner() {
   let users;
   $.ajax({
-    url: "getUsers",
+    url: "Get/getUsers",
     type: "GET",
     success: function (resp) {
       users = resp.users;
@@ -129,10 +129,10 @@ function loadOwner() {
 function loadMembers(pid) {
   listMembers.innerHTML = "";
   $.ajax({
-    url: "getProjectMembers?pid=" + pid,
+    url: "Get/getProjectMembers?pid=" + pid,
     type: "GET",
     success: function (resp) {
-      let members = JSON.parse(resp).members;
+      let members = resp.members;
       $.each(members, function (index, item) {
         if (item.isMember != "" || item.isMember != null)
           jsonObj[item.uid] = item.name;
@@ -151,7 +151,7 @@ function loadMembers(pid) {
 function loadAddMemberList() {
   addMemberList.innerHTML = "";
   $.ajax({
-    url: "getUsers",
+    url: "Get/getUsers",
     type: "GET",
     success: function (resp) {
       let users = resp.users;
@@ -183,10 +183,10 @@ $("#projectsTable").on("click", "#btnAdd", function (e) {
   pTitle.innerHTML = "Project: " + rowData[2];
   listMembers.innerHTML = "";
   $.ajax({
-    url: "getProjectMembers?pid=" + rowData[0],
+    url: "Get/getProjectMembers?pid=" + rowData[0],
     type: "GET",
     success: function (resp) {
-      let members = JSON.parse(resp).members;
+      let members = resp.members;
       $.each(members, function (index, item) {
         if (item.isMember != "" || item.isMember != null)
           jsonObj[item.uid] = item.name;
@@ -235,11 +235,11 @@ $("#projectsTable tbody").on("click", "td", function () {
   <h5>Members</h5>
   <ul class="list-group" id="displayMembers"></ul>`;
   $.ajax({
-    url: "getProjectMembers?pid=" + proData[0],
+    url: "Get/getProjectMembers?pid=" + proData[0],
     type: "GET",
     success: function (resp) {
       var displayMembers = document.getElementById("displayMembers");
-      let members = JSON.parse(resp).members;
+      let members = resp.members;
       console.log(members);
       $.each(members, function (index, member) {
         if (member.isMember == "checked") {

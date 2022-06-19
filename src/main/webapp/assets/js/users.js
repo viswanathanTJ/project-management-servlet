@@ -112,7 +112,7 @@ $(document).ready(function () {
         );
         sno += 1;
         addId += 1;
-        var item = JSON.parse(resp);
+        var item = resp;
         table.row
           .add([addId, sno, item.username, item.email, item.role, item.joined])
           .draw(false);

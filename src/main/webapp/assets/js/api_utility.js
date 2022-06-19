@@ -1,6 +1,6 @@
 function setAssignedUsers(pid, assignee) {
   $.ajax({
-    url: "getUsersInProject?pid=" + pid,
+    url: "Get/getUsersInProject?pid=" + pid,
     type: "GET",
     success: function (resp) {
       var users = resp.users;
@@ -18,7 +18,7 @@ function setAssignedUsers(pid, assignee) {
 
 function setAssigneeByProject(project) {
   $.ajax({
-    url: "getUsersInProject",
+    url: "Get/getUsersInProject",
     type: "GET",
     data: {
       pid: project,
@@ -41,7 +41,7 @@ function setAssigneeByProject(project) {
 
 function loadTaskById(tid) {
   $.ajax({
-    url: "getTaskByID?tid=" + tid,
+    url: "Get/getTaskByID?tid=" + tid,
     type: "GET",
     success: function (resp) {
       etitle.value = resp.title;

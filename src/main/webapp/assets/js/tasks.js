@@ -95,7 +95,7 @@ $("#project").change(function () {
 
 createBtn.addEventListener("click", function () {
   $.ajax({
-    url: "getProjects",
+    url: "Get/getProjects",
     type: "GET",
     success: function (resp) {
       var projects = resp.projects;
@@ -112,7 +112,7 @@ createBtn.addEventListener("click", function () {
 
 $(document).ready(function () {
   initializeDatabase();
-  loadData("getTasks");
+  loadData("Get/getTasks");
 
   // Add task
   $("form[name=add-task]").submit(function (e) {

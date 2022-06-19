@@ -23,6 +23,8 @@ public class AdminGetActions extends ResponseHandler {
     private Connection con;
     private PreparedStatement st;
     private ResultSet r1;
+    private JSONObject jsonObject;
+    private JSONArray array;
 
     private AdminGetActions() {
         this.con = DatabaseConnection.getDatabase();
@@ -55,8 +57,8 @@ public class AdminGetActions extends ResponseHandler {
             System.out.println("GetRecentUsers");
             st = con.prepareStatement(Queries.getRecentUsers);
             r1 = st.executeQuery();
-            JSONObject jsonObject = new JSONObject();
-            JSONArray array = new JSONArray();
+            jsonObject = new JSONObject();
+            array = new JSONArray();
             while (r1.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("name", r1.getString("name"));
@@ -76,8 +78,8 @@ public class AdminGetActions extends ResponseHandler {
             System.out.println("GetRecentTasks");
             st = con.prepareStatement(Queries.getRecentTasks);
             r1 = st.executeQuery();
-            JSONObject jsonObject = new JSONObject();
-            JSONArray array = new JSONArray();
+            jsonObject = new JSONObject();
+            array = new JSONArray();
             while (r1.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("title", r1.getString("title"));
@@ -96,8 +98,8 @@ public class AdminGetActions extends ResponseHandler {
     }
 
     public void getUsers(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject jsonObject = new JSONObject();
-        JSONArray array = new JSONArray();
+        jsonObject = new JSONObject();
+        array = new JSONArray();
         try {
             Connection con;
             con = DatabaseConnection.getDatabase();
@@ -125,8 +127,8 @@ public class AdminGetActions extends ResponseHandler {
     }
 
     public void getProjects(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject projects = GetProjectsObj.getProjects(Queries.getProjectsDetails, "");
-        successResponse(response, projects);
+        jsonObject = GetProjectsObj.getProjects(Queries.getProjectsDetails, "");
+        successResponse(response, jsonObject);
     }
     
 }
