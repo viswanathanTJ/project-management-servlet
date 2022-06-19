@@ -17,7 +17,7 @@ import service.ResponseHandler;
 import service.SessionHandler;
 import service.DBUtil.DatabaseConnection;
 
-public class EmployeeActions extends ResponseHandler {
+public class UserGetActions extends ResponseHandler {
 
     public void getRecentTasks(HttpServletRequest request, HttpServletResponse response) {
         SessionHandler session = new SessionHandler(request);
@@ -87,11 +87,9 @@ public class EmployeeActions extends ResponseHandler {
         JSONObject json = GetTasksObj.getTasks(Queries.getTasksForUser, uid);
         System.out.println(json);
         if (json != null) {
-            response.setContentType("application/json");
-            response.getWriter().print(json);
-            response.setStatus(200);
+            successResponse(response, json);
         } else {
-            response.getWriter().print("Error at backend");
+            errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, "No tasks found");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }

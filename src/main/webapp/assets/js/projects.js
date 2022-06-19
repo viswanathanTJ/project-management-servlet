@@ -92,7 +92,7 @@ $(document).on("click", "#deleteBtn", function () {
 function loadData() {
   var projects;
   $.ajax({
-    url: "Admin/getProjects",
+    url: "Get/getProjects",
     type: "GET",
     success: function (resp) {
       projects = resp.projects;
@@ -107,7 +107,7 @@ function loadData() {
 function loadOwner() {
   let users;
   $.ajax({
-    url: "Admin/getUsers",
+    url: "Get/getUsers",
     type: "GET",
     success: function (resp) {
       users = resp.users;
@@ -268,11 +268,11 @@ $(document).click(function (e) {
       $(this).has(e.target).length === 0 &&
       $(".popover").has(e.target).length === 0
     ) {
-      // $(".popover").popover("hide");
       $(this).popover("hide");
     }
   });
 });
+var loaded_pid = 0;
 function initializePopOver() {
   $("[data-toggle=popover]").hover(function (e) {
     var content = $(this).attr("data-popover-content");
@@ -280,7 +280,10 @@ function initializePopOver() {
     $("#editBtn").attr("pid", pid);
     $("#deleteBtn").attr("pid", pid);
     var ctitle = $(this).attr("p-title");
-    loadPop(content, pid, ctitle);
+    if (loaded_pid != pid) {
+      loadPop(content, pid, ctitle);
+      loaded_pid = pid;
+    }
   });
 
   $("[data-toggle=popover]").on("click", function (e) {

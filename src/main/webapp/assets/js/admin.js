@@ -10,7 +10,7 @@ function getAllCounts() {
     url: "Admin/getAllCounts",
     type: "GET",
     success: function (data) {
-      getRecentUsers();
+      // getRecentUsers();
       projects.innerHTML = data.projects;
       users.innerHTML = data.users;
       tasks.innerHTML = data.tasks;
@@ -23,7 +23,7 @@ function getRecentUsers() {
     url: "Admin/getRecentUsers",
     type: "GET",
     success: function (data) {
-      getRecentTasks();
+      // getRecentTasks();
       var users = data.users;
       rusers.innerHTML = "";
       $.each(users, function (index, user) {
@@ -65,6 +65,8 @@ function getRecentTasks() {
 
 $(document).ready(function () {
   getAllCounts();
+  getRecentTasks();
+  getRecentUsers();
 });
 
 window.addEventListener("load", function alertFunc() {

@@ -15,13 +15,13 @@ const edueDate = document.getElementById("dueDate");
 
 var option = document.createElement("option");
 option.text = username;
-$.ajax({ url: "Employee/getUserID", type: "GET" }).done(function (data) {
+$.ajax({ url: "User/getUserID", type: "GET" }).done(function (data) {
   option.value = data;
 });
 assignee.add(option);
 
 initializeDatabase();
-loadData("Employee/getTasks");
+loadData("User/getTasks");
 
 window.addEventListener("load", function alertFunc() {
   $("#loader").fadeOut("slow");
@@ -29,7 +29,7 @@ window.addEventListener("load", function alertFunc() {
 
 createBtn.addEventListener("click", function () {
   $.ajax({
-    url: "Employee/getProjects",
+    url: "User/getProjects",
     type: "GET",
     success: function (resp) {
       var projects = resp.projects;

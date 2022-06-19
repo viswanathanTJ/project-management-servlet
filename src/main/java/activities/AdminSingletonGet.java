@@ -15,13 +15,25 @@ import queries.Queries;
 import service.DBUtil.DatabaseConnection;
 import service.ResponseHandler;
 
-public class AdminGetActions extends ResponseHandler {
+public class AdminSingletonGet extends ResponseHandler {
+    private static final AdminSingletonGet instance = new AdminSingletonGet();
+
+    private Connection con;
+    private PreparedStatement st;
+    private ResultSet r1;
+    private JSONObject jsonObject;
+    private JSONArray array;
+
+    private AdminSingletonGet() {
+        this.con = DatabaseConnection.getDatabase();
+    }
+
+    public static AdminSingletonGet getInstance() {
+        return instance;
+    }
 
     public void getAllCounts(HttpServletRequest request, HttpServletResponse response) {
         try {
-            Connection con = DatabaseConnection.getDatabase();
-            PreparedStatement st;
-            ResultSet r1;
             st = con.prepareStatement(Queries.getAllCounts);
             r1 = st.executeQuery();
             JSONObject obj = new JSONObject();
@@ -41,11 +53,10 @@ public class AdminGetActions extends ResponseHandler {
     public void getRecentUsers(HttpServletRequest request, HttpServletResponse response) {
         try {
             System.out.println("GetRecentUsers");
-            Connection con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getRecentUsers);
-            ResultSet r1 = st.executeQuery();
-            JSONObject jsonObject = new JSONObject();
-            JSONArray array = new JSONArray();
+            st = con.prepareStatement(Queries.getRecentUsers);
+            r1 = st.executeQuery();
+            jsonObject = new JSONObject();
+            array = new JSONArray();
             while (r1.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("name", r1.getString("name"));
@@ -63,11 +74,10 @@ public class AdminGetActions extends ResponseHandler {
     public void getRecentTasks(HttpServletRequest request, HttpServletResponse response) {
         try {
             System.out.println("GetRecentTasks");
-            Connection con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getRecentTasks);
-            ResultSet r1 = st.executeQuery();
-            JSONObject jsonObject = new JSONObject();
-            JSONArray array = new JSONArray();
+            st = con.prepareStatement(Queries.getRecentTasks);
+            r1 = st.executeQuery();
+            jsonObject = new JSONObject();
+            array = new JSONArray();
             while (r1.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("title", r1.getString("title"));
@@ -84,5 +94,5 @@ public class AdminGetActions extends ResponseHandler {
             e.printStackTrace();
         }
     }
-
+    
 }

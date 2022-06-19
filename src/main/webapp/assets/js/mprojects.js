@@ -92,7 +92,7 @@ $(document).on("click", "#deleteBtn", function () {
 function loadData() {
   var projects;
   $.ajax({
-    url: "Employee/getProjects",
+    url: "User/getProjects",
     type: "GET",
     success: function (resp) {
       projects = resp.projects;

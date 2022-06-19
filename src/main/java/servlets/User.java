@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import activities.EmployeeActions;
+import activities.UserGetActions;
 
-@WebServlet("/Employee/*")
-public class Employee extends HttpServlet {
+@WebServlet("/User/*")
+public class User extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,22 +22,22 @@ public class Employee extends HttpServlet {
 		String[] uriSplit = uri.split("/");
 		String action = uriSplit[uriSplit.length - 1];
 		System.out.println(action);
-		EmployeeActions emp = new EmployeeActions();
+		UserGetActions user = new UserGetActions();
 		switch (action) {
 			case "getRecentTasks":
-				emp.getRecentTasks(request, response);
+				user.getRecentTasks(request, response);
 				break;
 			case "getRecentInfo":
-				emp.getRecentInfo(request, response);
+				user.getRecentInfo(request, response);
 				break;
 			case "getProjects":
-				emp.getProjects(request, response);
+				user.getProjects(request, response);
 				break;
 			case "getTasks":
-				emp.getTasks(request, response);
+				user.getTasks(request, response);
 				break;
 			case "getUserID":
-				emp.getUserID(request, response);
+				user.getUserID(request, response);
 				break;
 			default:
 				response.setStatus(404);

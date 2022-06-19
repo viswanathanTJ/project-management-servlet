@@ -72,11 +72,11 @@ public class Authentication extends ResponseHandler {
             if (row == 0)
                 throw new SQLException("Creating user failed, no rows affected.");
 
-            Long uid = 0L;
+            String uid;
             // Store user details in session
             try (ResultSet generatedKeys = st.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    uid = generatedKeys.getLong(1);
+                    uid = generatedKeys.getString(1);
                     System.out.println("User registered successfully with ID = " + generatedKeys.getLong(1));
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
@@ -115,7 +115,7 @@ public class Authentication extends ResponseHandler {
 
                     System.out.println("Login successful");
                     // Store user details in session
-                    new SessionHandler(request, r1.getLong("u_id"), username, email, dbrole, interval);
+                    new SessionHandler(request, r1.getString("u_id"), username, email, dbrole, interval);
                     // Send response
                     successResponse(response, dbrole);
                 }
@@ -136,6 +136,8 @@ public class Authentication extends ResponseHandler {
     public void UserCheck(HttpServletRequest request, HttpServletResponse response) {
         SessionHandler session = new SessionHandler(request);
         String role = session.getRole();
+        String uid = session.getUID();
+        System.out.println("User Check: " + role + " " + uid);
         if (role == null || role == "")
             errorResponse(response, HttpServletResponse.SC_FORBIDDEN, "login");
         else

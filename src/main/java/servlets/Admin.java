@@ -12,7 +12,6 @@ import service.GetAction;
 public class Admin extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private AdminGetActions adminActions = AdminGetActions.getInstance();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		doGet(request, response);
@@ -21,6 +20,7 @@ public class Admin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		String action = GetAction.get(request);
 		System.out.println("Admin: " + action);
+		AdminGetActions adminActions = new AdminGetActions();
 		switch (action) {
 			case "getAllCounts":
 				adminActions.getAllCounts(request, response);
@@ -30,12 +30,6 @@ public class Admin extends HttpServlet {
 				break;
 			case "getRecentTasks":
 				adminActions.getRecentTasks(request, response);
-				break;
-			case "getUsers":
-				adminActions.getUsers(request, response);
-				break;
-			case "getProjects":
-				adminActions.getProjects(request, response);
 				break;
 			default:
 				response.setStatus(404);

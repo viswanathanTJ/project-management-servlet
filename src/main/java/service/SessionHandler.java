@@ -5,13 +5,13 @@ import javax.servlet.http.HttpSession;
 
 public class SessionHandler {
     public HttpSession session;
-    protected Long uid;
+    protected String uid;
     protected String name;
     protected String email;
     protected String role;
     protected int interval;
     
-    public SessionHandler(HttpServletRequest request, Long uid, String name, String email, String role,
+    public SessionHandler(HttpServletRequest request, String uid, String name, String email, String role,
             int interval) {
         this.session = request.getSession();
         session.setAttribute("uid", uid);

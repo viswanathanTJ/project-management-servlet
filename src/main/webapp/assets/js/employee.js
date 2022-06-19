@@ -4,10 +4,9 @@ const opentasks = document.getElementById("opentasks");
 const rtasks = document.getElementById("recentTasks");
 
 $.ajax({
-  url: "Employee/getRecentInfo",
+  url: "User/getRecentInfo",
   type: "GET",
   success: function (data) {
-    console.log(data);
     projects.innerHTML = data.projects;
     tasks.innerHTML = data.tasks;
     opentasks.innerHTML = data.open;
@@ -15,12 +14,10 @@ $.ajax({
 });
 
 $.ajax({
-  url: "Employee/getRecentTasks",
+  url: "User/getRecentTasks",
   type: "GET",
   success: function (data) {
     var tasks = data.tasks;
-    console.log(tasks);
-    // rtasks.innerHTML = "";
     $.each(tasks, function (index, task) {
       rtasks.innerHTML += `
              <tr>
