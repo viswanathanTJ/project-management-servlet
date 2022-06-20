@@ -23,9 +23,9 @@ const estartDate = document.getElementById("estartDate");
 const edueDate = document.getElementById("dueDate");
 const eBtn = document.getElementById("eBtn");
 
+var url_prefix = "User";
 // Get user role
-if (crole.startsWith("admin")) var url_prefix = "Get";
-else var url_prefix = "User";
+if (crole.startsWith("admin")) url_prefix = "Get";
 
 // Initialize tasks table
 function initializeTasksTable() {

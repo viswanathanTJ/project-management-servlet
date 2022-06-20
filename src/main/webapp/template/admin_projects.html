@@ -143,14 +143,15 @@
                 <div class="modal-body">
                     <form name="add-project" id="add-project">
                         <div class="mb-3">
-                            <label for="ename">Name</label>
+                            <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp"
                                 placeholder="Enter Project Name" required />
                         </div>
                         <div class="mb-3">
-                            <label for="edesc">Description</label>
+                            <label for="desc">Description</label>
                             <textarea class="form-control" id="desc" name="desc" aria-describedby="edescHelp" rows="3"
                                 placeholder="Enter Description atleast 20 characters" required></textarea>
+                            <small id="error" class="form-text" style="color:red"></small>
                         </div>
                         <div class="mb-3">
                             <label for="priority">Priority</label>
@@ -268,7 +269,7 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 <script src="assets/js/toast.js"></script>
-<script src="assets/js/api_utility.js"></script>
+<script src="assets/js/project_api.js"></script>
 <script src="assets/js/project_utility.js"></script>
 <script src="assets/js/projects.js"></script>
 
