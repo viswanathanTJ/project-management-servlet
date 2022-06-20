@@ -23,24 +23,39 @@ import service.DBUtil.Query;
 import service.ResponseHandler;
 
 public class MainGetter extends ResponseHandler {
+
+    private static final MainGetter instance = new MainGetter();
+
+    private Connection con;
+    private PreparedStatement st;
+    private ResultSet r1;
+
+    private MainGetter() {
+        this.con = DatabaseConnection.getDatabase();
+    }
+
+    public static MainGetter getInstance() {
+        return instance;
+    }
+
+    private String parseTime(Timestamp t) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(t);
+    }
+
     public void getUsers(HttpServletRequest request, HttpServletResponse response) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
-            Connection con;
-            con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getUsers);
-            ResultSet r1 = st.executeQuery();
+            st = con.prepareStatement(Queries.getUsers);
+            r1 = st.executeQuery();
             while (r1.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("uid", r1.getInt("u_id"));
                 obj.put("name", r1.getString("name"));
                 obj.put("email", r1.getString("email"));
                 obj.put("role", r1.getString("role"));
-                Timestamp t = r1.getTimestamp("createdat");
-                SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-                String time = df.format(t);
-                obj.put("createdat", time);
+                obj.put("createdat", parseTime(r1.getTimestamp("createdat")));
                 array.put(obj);
             }
             jsonObject.put("users", array);
@@ -54,11 +69,9 @@ public class MainGetter extends ResponseHandler {
     public void getProject(HttpServletRequest request, HttpServletResponse response) {
         String pid = request.getParameter("pid");
         try {
-            Connection con;
-            con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getProjectByIDDetails);
+            st = con.prepareStatement(Queries.getProjectByIDDetails);
             st.setString(1, pid);
-            ResultSet r1 = st.executeQuery();
+            r1 = st.executeQuery();
             Project project = new Project();
             if (r1.next()) {
                 project.setP_id(r1.getString("p_id"));
@@ -72,10 +85,7 @@ public class MainGetter extends ResponseHandler {
                 project.setName(r1.getString("name"));
                 project.setDesc(r1.getString("description"));
                 project.setPriority(r1.getString("priority"));
-                Timestamp t = r1.getTimestamp("createdat");
-                SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-                String time = df.format(t);
-                project.setCreatedat(time);
+                project.setCreatedat(parseTime(r1.getTimestamp("createdat")));
             }
             successResponse(response, new Gson().toJson(project));
         } catch (SQLException e) {
@@ -92,11 +102,9 @@ public class MainGetter extends ResponseHandler {
     public void getTaskByID(HttpServletRequest request, HttpServletResponse response) {
         String tid = request.getParameter("tid");
         try {
-            Connection con;
-            con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getTaskByID);
+            st = con.prepareStatement(Queries.getTaskByID);
             st.setString(1, tid);
-            ResultSet r1 = st.executeQuery();
+            r1 = st.executeQuery();
             JSONObject obj = new JSONObject();
             if (r1.next()) {
                 obj.put("t_id", r1.getInt("t_id"));
@@ -113,10 +121,7 @@ public class MainGetter extends ResponseHandler {
                 obj.put("c_id", r1.getInt("creator_id"));
                 obj.put("cname", Query.getUserNameByID(r1.getString("creator_id")));
                 obj.put("desc", r1.getString("description"));
-                Timestamp t = r1.getTimestamp("createdat");
-                SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-                String time = df.format(t);
-                obj.put("createdat", time);
+                obj.put("createdat", r1.getTimestamp("createdat"));
             }
             successResponse(response, obj);
         } catch (SQLException e) {
@@ -138,11 +143,9 @@ public class MainGetter extends ResponseHandler {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
-            Connection con;
-            con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getUsersByPID);
+            st = con.prepareStatement(Queries.getUsersByPID);
             st.setString(1, pid);
-            ResultSet r1 = st.executeQuery();
+            r1 = st.executeQuery();
             while (r1.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("uid", r1.getInt("u_id"));
@@ -160,11 +163,9 @@ public class MainGetter extends ResponseHandler {
     public void getUsersByPID(HttpServletRequest request, HttpServletResponse response) {
         String pid = request.getParameter("pid");
         try {
-            Connection con;
-            con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getUsersByPID);
+            st = con.prepareStatement(Queries.getUsersByPID);
             st.setString(1, pid);
-            ResultSet r1 = st.executeQuery();
+            r1 = st.executeQuery();
             JSONObject jsonObject = new JSONObject();
             JSONArray array = new JSONArray();
             while (r1.next()) {
@@ -189,11 +190,9 @@ public class MainGetter extends ResponseHandler {
         HashSet<Integer> set = new HashSet<Integer>();
         boolean hasMembers = false;
         try {
-            Connection con;
-            con = DatabaseConnection.getDatabase();
-            PreparedStatement st = con.prepareStatement(Queries.getProjectMembers);
+            st = con.prepareStatement(Queries.getProjectMembers);
             st.setString(1, pid);
-            ResultSet r1 = st.executeQuery();
+            r1 = st.executeQuery();
             int oid = 1;
             while (r1.next()) {
                 oid = r1.getInt("o_id");

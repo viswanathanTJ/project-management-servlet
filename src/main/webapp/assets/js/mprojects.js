@@ -257,13 +257,10 @@ $("#projectsTable tbody").on("click", "td", function () {
 loadData();
 loadAddMemberList();
 // DOCUMENT READY FUNCTIONS
-$(document).keyup(function (event) {
-  if (event.which === 27) $(".popover").fadeOut(300);
-});
 
 var popover = '[data-toggle="popover"]';
 
-$(document).on("click", function (e) {
+$(document).click(function (e) {
   $(popover).each(function () {
     if (
       !$(this).is(e.target) &&
@@ -274,20 +271,22 @@ $(document).on("click", function (e) {
     }
   });
 });
-
+var loaded_pid = 0;
 function initializePopOver() {
-  $(popover).hover(function () {
+  $("[data-toggle=popover]").hover(function (e) {
     var content = $(this).attr("data-popover-content");
     pid = $(this).attr("pid");
     $("#editBtn").attr("pid", pid);
     $("#deleteBtn").attr("pid", pid);
     var ctitle = $(this).attr("p-title");
-    loadPop(content, pid, ctitle);
+    if (loaded_pid != pid) {
+      loadPop(content, pid, ctitle);
+      loaded_pid = pid;
+    }
   });
 
-  $(popover).click(function (e) {
-    console.log("pop clicked");
-    $(popover).not(this).popover("hide");
+  $("[data-toggle=popover]").on("click", function (e) {
+    $("[data-toggle=popover]").not(this).popover("hide");
     var content = $(this).attr("data-popover-content");
     pid = $(this).attr("pid");
     $("#editBtn").attr("pid", pid);
@@ -295,7 +294,7 @@ function initializePopOver() {
     var ctitle = $(this).attr("p-title");
     loadPop(content, pid, ctitle);
   });
-  $(popover).popover({
+  $("[data-toggle=popover]").popover({
     html: true,
     sanitize: false,
     content: function () {
@@ -324,7 +323,7 @@ $(document).ready(function () {
   loadOwner();
 
   $("#addProject").on("click", function () {
-    $(".popover").fadeOut(300);
+    $(".popover").popover("hide");
     $("#addModal").modal("show");
   });
 
@@ -347,7 +346,7 @@ $(document).ready(function () {
     var data = $form.serialize();
     console.log(data);
     $.ajax({
-      url: "AddProject",
+      url: "Add/addProject",
       type: "POST",
       data: data,
       success: function (resp) {

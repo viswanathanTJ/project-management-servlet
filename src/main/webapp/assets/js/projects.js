@@ -255,9 +255,6 @@ $("#projectsTable tbody").on("click", "td", function () {
 loadData();
 loadAddMemberList();
 // DOCUMENT READY FUNCTIONS
-$(document).keyup(function (event) {
-  if (event.which === 27) $(".popover").popover("hide");
-});
 
 var popover = '[data-toggle="popover"]';
 
@@ -346,7 +343,7 @@ $(document).ready(function () {
     var $form = $(this);
     var data = $form.serialize();
     $.ajax({
-      url: "AddProject",
+      url: "Add/addProject",
       type: "POST",
       data: data,
       success: function (resp) {

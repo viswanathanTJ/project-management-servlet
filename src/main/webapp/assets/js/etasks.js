@@ -57,7 +57,7 @@ $(document).ready(function () {
       return;
     }
     $.ajax({
-      url: "AddTask",
+      url: "Add/addTask",
       type: "POST",
       data: {
         title: title.value,

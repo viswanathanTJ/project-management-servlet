@@ -90,7 +90,7 @@ public class UserGetActions extends ResponseHandler {
             successResponse(response, json);
         } else {
             errorResponse(response, HttpServletResponse.SC_NOT_ACCEPTABLE, "No tasks found");
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

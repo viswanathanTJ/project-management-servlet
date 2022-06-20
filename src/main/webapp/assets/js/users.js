@@ -4,7 +4,7 @@ var eemail = document.getElementById("eemail");
 var erole = document.getElementById("erole");
 var pname = document.getElementById("name");
 var uid, rowData, row;
-var addId, sno;
+var sno;
 
 function initializeDatabase() {
   table = $("#usersTable").DataTable({
@@ -101,7 +101,7 @@ $(document).ready(function () {
     var $form = $(this);
     var data = $form.serialize();
     $.ajax({
-      url: "AddUser",
+      url: "Add/addUser",
       type: "POST",
       data: data + "&password=" + password.value,
       success: function (resp) {
@@ -111,10 +111,9 @@ $(document).ready(function () {
           ele.style.removeProperty("border")
         );
         sno += 1;
-        addId += 1;
-        var item = resp;
+        var item = JSON.parse(resp);
         table.row
-          .add([addId, sno, item.username, item.email, item.role, item.joined])
+          .add([item.aid, sno, item.username, item.email, item.role, item.joined])
           .draw(false);
         toastsFactory.createToast({
           type: "system",

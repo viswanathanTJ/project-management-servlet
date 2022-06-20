@@ -12,7 +12,7 @@ import service.GetAction;
 public class MainGet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private MainGetter getter = new MainGetter();
+	private MainGetter getter = MainGetter.getInstance();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		doGet(request, response);
@@ -20,7 +20,7 @@ public class MainGet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		String action = GetAction.get(request);
-		System.out.println("Main Getter: " + action);
+		// System.out.println("Main Getter: " + action);
 		switch (action) {
 			case "getUsers":
 				getter.getUsers(request, response);
