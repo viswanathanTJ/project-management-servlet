@@ -55,7 +55,7 @@ public class Queries {
                         SELECT t.t_id, t.title, (SELECT name FROM user WHERE u_id = t.creator_id) AS cname,
                         (SELECT name FROM user WHERE u_id = t.assignee_id) AS assignee, t.priority, t.completed,
                         (SELECT name FROM projects WHERE p_id = t.p_id) AS project, t.start_date FROM tasks t
-                        WHERE assignee_id=?
+                        WHERE creator_id=? OR assignee_id=?;
                         """;
         public static String getTaskByID = "SELECT * FROM tasks where t_id=?";
         public static String getTaskCount = "SELECT COUNT(t_id) AS tasks FROM tasks WHERE p_id=? AND completed = 0;";

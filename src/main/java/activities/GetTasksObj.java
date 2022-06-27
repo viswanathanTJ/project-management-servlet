@@ -21,8 +21,10 @@ public class GetTasksObj {
             Connection con;
             con = DatabaseConnection.getDatabase();
             PreparedStatement st = con.prepareStatement(query);
-            if (uid != null)
+            if (uid != null) {
                 st.setString(1, uid);
+                st.setString(2, uid);
+            }
             ResultSet r1 = st.executeQuery();
             while (r1.next()) {
                 Task task = new Task();

@@ -1,19 +1,19 @@
 // Fill DOM based on API response
 function createFormLoader() {
-    $.ajax({
-      url: `${url_prefix}/getProjects`,
-      type: "GET",
-      success: function (resp) {
-        var projects = resp.projects;
-        $.each(projects, function (index, item) {
-          if (index === 0) setAssigneeByProject(item.p_id);
-          var option = document.createElement("option");
-          option.text = item.name;
-          option.value = item.p_id;
-          project.add(option);
-        });
-      },
-    });
+  $.ajax({
+    url: `${url_prefix}/getProjects`,
+    type: "GET",
+    success: function (resp) {
+      var projects = resp.projects;
+      $.each(projects, function (index, item) {
+        if (index === 0) setAssigneeByProject(item.p_id);
+        var option = document.createElement("option");
+        option.text = item.name;
+        option.value = item.p_id;
+        project.add(option);
+      });
+    },
+  });
 }
 function setAssignedUsers(pid, assignee) {
   $.ajax({
@@ -142,6 +142,7 @@ function addTask() {
     },
     success: function (resp) {
       console.log(resp);
+      resp = JSON.parse(resp);
       var tmp = resp.priority;
       if (tmp == 0) tmp = `<span class="priority low">low</span>`;
       else if (tmp == 1) tmp = `<span class="priority medium">medium</span>`;

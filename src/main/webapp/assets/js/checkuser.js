@@ -58,7 +58,7 @@ function logout() {
   if (confirm("Are you sure to logout?")) {
     $.ajax({
       url: "Auth/logout",
-      type: "GET",
+      type: "POST",
     });
     deleteAllCookies();
     window.location.replace("login");

@@ -125,15 +125,15 @@ function addProject() {
 }
 
 function editProject() {
-  if (pname.value.length < 3 || desc.value.length < 20) {
-    toastsFactory.createToast({
-      type: "error",
-      icon: "info-circle",
-      message: "Please fill all the fields without error",
-      duration: 1000,
-    });
-    return false;
-  }
+  // if (pname.value.length < 3 || desc.value.length < 20) {
+  //   toastsFactory.createToast({
+  //     type: "error",
+  //     icon: "info-circle",
+  //     message: "Please fill all the fields without error",
+  //     duration: 1000,
+  //   });
+  //   return false;
+  // }
   var $form = $(this);
   var data = $form.serialize();
   console.log(data + "&pid=" + pid);
